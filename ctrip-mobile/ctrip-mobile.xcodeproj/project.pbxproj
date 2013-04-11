@@ -1,0 +1,308 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B17DD8717163AC600C7AB97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17DD8617163AC600C7AB97 /* UIKit.framework */; };
+		2B17DD8917163AC600C7AB97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17DD8817163AC600C7AB97 /* Foundation.framework */; };
+		2B17DD8B17163AC600C7AB97 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17DD8A17163AC600C7AB97 /* CoreGraphics.framework */; };
+		2B17DD9117163AC600C7AB97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DD8F17163AC600C7AB97 /* InfoPlist.strings */; };
+		2B17DD9317163AC600C7AB97 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DD9217163AC600C7AB97 /* main.m */; };
+		2B17DD9717163AC600C7AB97 /* RococoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DD9617163AC600C7AB97 /* RococoAppDelegate.m */; };
+		2B17DDA017163AC600C7AB97 /* RococoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DD9F17163AC600C7AB97 /* RococoViewController.m */; };
+		2B17DDA317163AC600C7AB97 /* RococoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDA117163AC600C7AB97 /* RococoViewController.xib */; };
+		2B17DDAA17163BF400C7AB97 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDA917163BF400C7AB97 /* airplane.png */; };
+		2B17DDAE1716569E00C7AB97 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDAB1716569E00C7AB97 /* Default-568h@2x.png */; };
+		2B17DDAF1716569E00C7AB97 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDAC1716569E00C7AB97 /* Default.png */; };
+		2B17DDB01716569E00C7AB97 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDAD1716569E00C7AB97 /* Default@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2B17DD8317163AC500C7AB97 /* ctrip-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ctrip-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B17DD8617163AC600C7AB97 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2B17DD8817163AC600C7AB97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2B17DD8A17163AC600C7AB97 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2B17DD8E17163AC600C7AB97 /* ctrip-mobile-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ctrip-mobile-Info.plist"; sourceTree = "<group>"; };
+		2B17DD9017163AC600C7AB97 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2B17DD9217163AC600C7AB97 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2B17DD9417163AC600C7AB97 /* ctrip-mobile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ctrip-mobile-Prefix.pch"; sourceTree = "<group>"; };
+		2B17DD9517163AC600C7AB97 /* RococoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RococoAppDelegate.h; sourceTree = "<group>"; };
+		2B17DD9617163AC600C7AB97 /* RococoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RococoAppDelegate.m; sourceTree = "<group>"; };
+		2B17DD9E17163AC600C7AB97 /* RococoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RococoViewController.h; sourceTree = "<group>"; };
+		2B17DD9F17163AC600C7AB97 /* RococoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RococoViewController.m; sourceTree = "<group>"; };
+		2B17DDA217163AC600C7AB97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RococoViewController.xib; sourceTree = "<group>"; };
+		2B17DDA917163BF400C7AB97 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
+		2B17DDAB1716569E00C7AB97 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		2B17DDAC1716569E00C7AB97 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		2B17DDAD1716569E00C7AB97 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2B17DD8017163AC500C7AB97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B17DD8717163AC600C7AB97 /* UIKit.framework in Frameworks */,
+				2B17DD8917163AC600C7AB97 /* Foundation.framework in Frameworks */,
+				2B17DD8B17163AC600C7AB97 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B17DD7A17163AC500C7AB97 = {
+			isa = PBXGroup;
+			children = (
+				2B17DD8C17163AC600C7AB97 /* ctrip-mobile */,
+				2B17DD8517163AC500C7AB97 /* Frameworks */,
+				2B17DD8417163AC500C7AB97 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2B17DD8417163AC500C7AB97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2B17DD8317163AC500C7AB97 /* ctrip-mobile.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2B17DD8517163AC500C7AB97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2B17DD8617163AC600C7AB97 /* UIKit.framework */,
+				2B17DD8817163AC600C7AB97 /* Foundation.framework */,
+				2B17DD8A17163AC600C7AB97 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B17DD8C17163AC600C7AB97 /* ctrip-mobile */ = {
+			isa = PBXGroup;
+			children = (
+				2B17DD9517163AC600C7AB97 /* RococoAppDelegate.h */,
+				2B17DD9617163AC600C7AB97 /* RococoAppDelegate.m */,
+				2B17DD9E17163AC600C7AB97 /* RococoViewController.h */,
+				2B17DD9F17163AC600C7AB97 /* RococoViewController.m */,
+				2B17DDA117163AC600C7AB97 /* RococoViewController.xib */,
+				2B17DD8D17163AC600C7AB97 /* Supporting Files */,
+			);
+			path = "ctrip-mobile";
+			sourceTree = "<group>";
+		};
+		2B17DD8D17163AC600C7AB97 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2B17DDAB1716569E00C7AB97 /* Default-568h@2x.png */,
+				2B17DDAC1716569E00C7AB97 /* Default.png */,
+				2B17DDAD1716569E00C7AB97 /* Default@2x.png */,
+				2B17DDA917163BF400C7AB97 /* airplane.png */,
+				2B17DD8E17163AC600C7AB97 /* ctrip-mobile-Info.plist */,
+				2B17DD8F17163AC600C7AB97 /* InfoPlist.strings */,
+				2B17DD9217163AC600C7AB97 /* main.m */,
+				2B17DD9417163AC600C7AB97 /* ctrip-mobile-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2B17DD8217163AC500C7AB97 /* ctrip-mobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B17DDA617163AC600C7AB97 /* Build configuration list for PBXNativeTarget "ctrip-mobile" */;
+			buildPhases = (
+				2B17DD7F17163AC500C7AB97 /* Sources */,
+				2B17DD8017163AC500C7AB97 /* Frameworks */,
+				2B17DD8117163AC500C7AB97 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ctrip-mobile";
+			productName = "ctrip-mobile";
+			productReference = 2B17DD8317163AC500C7AB97 /* ctrip-mobile.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2B17DD7B17163AC500C7AB97 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Rococo;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = caoguangyao;
+			};
+			buildConfigurationList = 2B17DD7E17163AC500C7AB97 /* Build configuration list for PBXProject "ctrip-mobile" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2B17DD7A17163AC500C7AB97;
+			productRefGroup = 2B17DD8417163AC500C7AB97 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2B17DD8217163AC500C7AB97 /* ctrip-mobile */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2B17DD8117163AC500C7AB97 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B17DD9117163AC600C7AB97 /* InfoPlist.strings in Resources */,
+				2B17DDA317163AC600C7AB97 /* RococoViewController.xib in Resources */,
+				2B17DDAA17163BF400C7AB97 /* airplane.png in Resources */,
+				2B17DDAE1716569E00C7AB97 /* Default-568h@2x.png in Resources */,
+				2B17DDAF1716569E00C7AB97 /* Default.png in Resources */,
+				2B17DDB01716569E00C7AB97 /* Default@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2B17DD7F17163AC500C7AB97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B17DD9317163AC600C7AB97 /* main.m in Sources */,
+				2B17DD9717163AC600C7AB97 /* RococoAppDelegate.m in Sources */,
+				2B17DDA017163AC600C7AB97 /* RococoViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2B17DD8F17163AC600C7AB97 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B17DD9017163AC600C7AB97 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2B17DDA117163AC600C7AB97 /* RococoViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B17DDA217163AC600C7AB97 /* en */,
+			);
+			name = RococoViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2B17DDA417163AC600C7AB97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2B17DDA517163AC600C7AB97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2B17DDA717163AC600C7AB97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ctrip-mobile/ctrip-mobile-Prefix.pch";
+				INFOPLIST_FILE = "ctrip-mobile/ctrip-mobile-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2B17DDA817163AC600C7AB97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ctrip-mobile/ctrip-mobile-Prefix.pch";
+				INFOPLIST_FILE = "ctrip-mobile/ctrip-mobile-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2B17DD7E17163AC500C7AB97 /* Build configuration list for PBXProject "ctrip-mobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B17DDA417163AC600C7AB97 /* Debug */,
+				2B17DDA517163AC600C7AB97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B17DDA617163AC600C7AB97 /* Build configuration list for PBXNativeTarget "ctrip-mobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B17DDA717163AC600C7AB97 /* Debug */,
+				2B17DDA817163AC600C7AB97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2B17DD7B17163AC500C7AB97 /* Project object */;
+}
