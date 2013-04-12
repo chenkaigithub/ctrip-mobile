@@ -13,12 +13,17 @@
 		2B17DD9117163AC600C7AB97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DD8F17163AC600C7AB97 /* InfoPlist.strings */; };
 		2B17DD9317163AC600C7AB97 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DD9217163AC600C7AB97 /* main.m */; };
 		2B17DD9717163AC600C7AB97 /* RococoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DD9617163AC600C7AB97 /* RococoAppDelegate.m */; };
-		2B17DDA017163AC600C7AB97 /* RococoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DD9F17163AC600C7AB97 /* RococoViewController.m */; };
-		2B17DDA317163AC600C7AB97 /* RococoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDA117163AC600C7AB97 /* RococoViewController.xib */; };
 		2B17DDAA17163BF400C7AB97 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDA917163BF400C7AB97 /* airplane.png */; };
 		2B17DDAE1716569E00C7AB97 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDAB1716569E00C7AB97 /* Default-568h@2x.png */; };
 		2B17DDAF1716569E00C7AB97 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDAC1716569E00C7AB97 /* Default.png */; };
 		2B17DDB01716569E00C7AB97 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDAD1716569E00C7AB97 /* Default@2x.png */; };
+		2B17DDB31717935700C7AB97 /* button_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDB21717935700C7AB97 /* button_back.png */; };
+		2B17DDB51717935F00C7AB97 /* button_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDB41717935F00C7AB97 /* button_normal.png */; };
+		2B17DDB71717936800C7AB97 /* navbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDB61717936800C7AB97 /* navbar_bg.png */; };
+		2B17DDB91717936E00C7AB97 /* navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B17DDB81717936E00C7AB97 /* navbar_bg@2x.png */; };
+		2B17DDBC1717958D00C7AB97 /* MNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DDBB1717958C00C7AB97 /* MNavigationController.m */; };
+		2B17DDBE17179F1B00C7AB97 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17DDBD17179F1B00C7AB97 /* CoreLocation.framework */; };
+		2B17DDC11717A26B00C7AB97 /* MItemListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B17DDC01717A26B00C7AB97 /* MItemListController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,13 +37,19 @@
 		2B17DD9417163AC600C7AB97 /* ctrip-mobile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ctrip-mobile-Prefix.pch"; sourceTree = "<group>"; };
 		2B17DD9517163AC600C7AB97 /* RococoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RococoAppDelegate.h; sourceTree = "<group>"; };
 		2B17DD9617163AC600C7AB97 /* RococoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RococoAppDelegate.m; sourceTree = "<group>"; };
-		2B17DD9E17163AC600C7AB97 /* RococoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RococoViewController.h; sourceTree = "<group>"; };
-		2B17DD9F17163AC600C7AB97 /* RococoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RococoViewController.m; sourceTree = "<group>"; };
-		2B17DDA217163AC600C7AB97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RococoViewController.xib; sourceTree = "<group>"; };
 		2B17DDA917163BF400C7AB97 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
 		2B17DDAB1716569E00C7AB97 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2B17DDAC1716569E00C7AB97 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2B17DDAD1716569E00C7AB97 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		2B17DDB21717935700C7AB97 /* button_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_back.png; sourceTree = "<group>"; };
+		2B17DDB41717935F00C7AB97 /* button_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_normal.png; sourceTree = "<group>"; };
+		2B17DDB61717936800C7AB97 /* navbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar_bg.png; sourceTree = "<group>"; };
+		2B17DDB81717936E00C7AB97 /* navbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_bg@2x.png"; sourceTree = "<group>"; };
+		2B17DDBA1717958C00C7AB97 /* MNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNavigationController.h; sourceTree = "<group>"; };
+		2B17DDBB1717958C00C7AB97 /* MNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNavigationController.m; sourceTree = "<group>"; };
+		2B17DDBD17179F1B00C7AB97 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2B17DDBF1717A26B00C7AB97 /* MItemListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MItemListController.h; sourceTree = "<group>"; };
+		2B17DDC01717A26B00C7AB97 /* MItemListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MItemListController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B17DDBE17179F1B00C7AB97 /* CoreLocation.framework in Frameworks */,
 				2B17DD8717163AC600C7AB97 /* UIKit.framework in Frameworks */,
 				2B17DD8917163AC600C7AB97 /* Foundation.framework in Frameworks */,
 				2B17DD8B17163AC600C7AB97 /* CoreGraphics.framework in Frameworks */,
@@ -75,6 +87,7 @@
 		2B17DD8517163AC500C7AB97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B17DDBD17179F1B00C7AB97 /* CoreLocation.framework */,
 				2B17DD8617163AC600C7AB97 /* UIKit.framework */,
 				2B17DD8817163AC600C7AB97 /* Foundation.framework */,
 				2B17DD8A17163AC600C7AB97 /* CoreGraphics.framework */,
@@ -87,10 +100,11 @@
 			children = (
 				2B17DD9517163AC600C7AB97 /* RococoAppDelegate.h */,
 				2B17DD9617163AC600C7AB97 /* RococoAppDelegate.m */,
-				2B17DD9E17163AC600C7AB97 /* RococoViewController.h */,
-				2B17DD9F17163AC600C7AB97 /* RococoViewController.m */,
-				2B17DDA117163AC600C7AB97 /* RococoViewController.xib */,
 				2B17DD8D17163AC600C7AB97 /* Supporting Files */,
+				2B17DDBA1717958C00C7AB97 /* MNavigationController.h */,
+				2B17DDBB1717958C00C7AB97 /* MNavigationController.m */,
+				2B17DDBF1717A26B00C7AB97 /* MItemListController.h */,
+				2B17DDC01717A26B00C7AB97 /* MItemListController.m */,
 			);
 			path = "ctrip-mobile";
 			sourceTree = "<group>";
@@ -98,6 +112,10 @@
 		2B17DD8D17163AC600C7AB97 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2B17DDB81717936E00C7AB97 /* navbar_bg@2x.png */,
+				2B17DDB61717936800C7AB97 /* navbar_bg.png */,
+				2B17DDB41717935F00C7AB97 /* button_normal.png */,
+				2B17DDB21717935700C7AB97 /* button_back.png */,
 				2B17DDAB1716569E00C7AB97 /* Default-568h@2x.png */,
 				2B17DDAC1716569E00C7AB97 /* Default.png */,
 				2B17DDAD1716569E00C7AB97 /* Default@2x.png */,
@@ -163,11 +181,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B17DD9117163AC600C7AB97 /* InfoPlist.strings in Resources */,
-				2B17DDA317163AC600C7AB97 /* RococoViewController.xib in Resources */,
 				2B17DDAA17163BF400C7AB97 /* airplane.png in Resources */,
 				2B17DDAE1716569E00C7AB97 /* Default-568h@2x.png in Resources */,
 				2B17DDAF1716569E00C7AB97 /* Default.png in Resources */,
 				2B17DDB01716569E00C7AB97 /* Default@2x.png in Resources */,
+				2B17DDB31717935700C7AB97 /* button_back.png in Resources */,
+				2B17DDB51717935F00C7AB97 /* button_normal.png in Resources */,
+				2B17DDB71717936800C7AB97 /* navbar_bg.png in Resources */,
+				2B17DDB91717936E00C7AB97 /* navbar_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +201,8 @@
 			files = (
 				2B17DD9317163AC600C7AB97 /* main.m in Sources */,
 				2B17DD9717163AC600C7AB97 /* RococoAppDelegate.m in Sources */,
-				2B17DDA017163AC600C7AB97 /* RococoViewController.m in Sources */,
+				2B17DDBC1717958D00C7AB97 /* MNavigationController.m in Sources */,
+				2B17DDC11717A26B00C7AB97 /* MItemListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,14 +215,6 @@
 				2B17DD9017163AC600C7AB97 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		2B17DDA117163AC600C7AB97 /* RococoViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B17DDA217163AC600C7AB97 /* en */,
-			);
-			name = RococoViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -266,6 +280,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ctrip-mobile/ctrip-mobile-Prefix.pch";
 				INFOPLIST_FILE = "ctrip-mobile/ctrip-mobile-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -277,6 +292,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ctrip-mobile/ctrip-mobile-Prefix.pch";
 				INFOPLIST_FILE = "ctrip-mobile/ctrip-mobile-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -301,6 +317,7 @@
 				2B17DDA817163AC600C7AB97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,7 +8,8 @@
 
 #import "RococoAppDelegate.h"
 
-#import "RococoViewController.h"
+#import "MItemListController.h"
+#import "MNavigationController.h"
 
 @implementation RococoAppDelegate
 
@@ -23,8 +24,11 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    self.viewController = [[[RococoViewController alloc] initWithNibName:@"RococoViewController" bundle:nil] autorelease];
-    self.window.rootViewController = self.viewController;
+    self.viewController = [[[MItemListController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+    //self.window.rootViewController = self.viewController;
+    
+    MNavigationController *nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     
     [self startAnimation];

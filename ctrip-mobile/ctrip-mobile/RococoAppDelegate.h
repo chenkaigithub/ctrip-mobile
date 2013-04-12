@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class RococoViewController;
+@class MItemListController;
 
 @interface RococoAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) RococoViewController *viewController;
+@property (strong, nonatomic) MItemListController *viewController;
 
 @end
