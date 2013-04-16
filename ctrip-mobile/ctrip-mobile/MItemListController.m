@@ -27,10 +27,7 @@
 {
     [super viewDidLoad];
     
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
+    
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -45,29 +42,7 @@
     [super dealloc];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    [self locationManager:manager didUpdateToLocation:[locations objectAtIndex:0] fromLocation:[locations objectAtIndex:0]];
-}
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    [manager stopUpdatingLocation];
-    
-    CLGeocoder *geoCoder = [[[CLGeocoder alloc] init]autorelease];
-    
-    [geoCoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        
-        NSLog(@"%@",placemark.locality);
-    }];
-}
-
--(void)locationManager:(CLLocationManager *)manager
-      didFailWithError:(NSError *)error
-{
-    NSLog(@"69,%@",error);
-}
 
 - (void)didReceiveMemoryWarning
 {

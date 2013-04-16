@@ -6,14 +6,18 @@
 //  Copyright (c) 2013年 caoguangyao. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
+#import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 @class MItemListController;
 
-@interface RococoAppDelegate : UIResponder <UIApplicationDelegate>
+@interface RococoAppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MItemListController *viewController;
 
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation;
 @end
