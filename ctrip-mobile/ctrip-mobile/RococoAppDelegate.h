@@ -9,9 +9,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+
 @class MItemListController;
 
 @interface RococoAppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
+
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;

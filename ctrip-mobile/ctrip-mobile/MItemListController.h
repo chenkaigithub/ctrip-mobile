@@ -7,15 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
-
-@interface MItemListController : UITableViewController<CLLocationManagerDelegate>
-{
-    CLLocationManager *locationManager;
+#import "MBProgressHUD.h"
+#import "MBaseController.h"
+@interface MItemListController : MBaseController<MBProgressHUDDelegate>{
+    MBProgressHUD *hudView;
 }
-@property (nonatomic,retain) CLLocationManager *locationManager;
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation;
+@property(retain, nonatomic) NSMutableArray *items;
+@property(retain, nonatomic) NSString *title;
 @end
