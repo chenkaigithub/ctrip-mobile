@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MBaseController.h"
+
+
 @interface MConfigController : MBaseController
+
 
 @end

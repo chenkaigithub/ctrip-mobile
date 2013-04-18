@@ -14,6 +14,7 @@
 @synthesize keyWords;
 @synthesize beginDate;
 @synthesize endDate;
+@synthesize timeRange;
 @synthesize lowPrice;
 @synthesize upperPrice;
 @synthesize sortType;

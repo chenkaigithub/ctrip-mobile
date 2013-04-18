@@ -14,6 +14,7 @@
 #import "AFJSONRequestOperation.h"
 #import "NSString+URLEncoding.h"
 #import "Item.h"
+#import "Const.h"
 
 static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_list/";
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
@@ -40,7 +41,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         
         [self setDefaultValues:cityName];
         
-        NSLog(@"43:%@",cityName);
+       
         
     }];
 }
@@ -67,6 +68,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     [defaults setValue:@"8000" forKey:@"upper_price"];
     [defaults setValue:@"10" forKey:@"top_count"];
     [defaults setValue:@"0" forKey:@"sort_type"];
+    [defaults setValue:[[[Const sharedObject]arrayForTimeRange] objectAtIndex:0] forKey:@"time_range"];
     
     [defaults synchronize];
     
@@ -127,7 +129,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        //NSLog(@"json: %@",[JSON objectAtIndex:0]);
+        
         if ([JSON isKindOfClass:[NSArray class]]) {
             NSArray *dataList = [NSArray arrayWithArray:JSON];
             NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
@@ -151,10 +153,9 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         }
         } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
-            
             NSLog(@"Failed: %@",[error localizedDescription]);
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
+        }];
     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     [operation start];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

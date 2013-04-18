@@ -12,8 +12,11 @@
 
 @property (nonatomic,retain) NSString *cityName;
 @property (nonatomic,retain) NSString *keyWords;
+
 @property (nonatomic,retain) NSString *beginDate;
 @property (nonatomic,retain) NSString *endDate;
+@property (nonatomic,retain) NSString *timeRange;
+
 @property (nonatomic,retain) NSString *lowPrice;
 @property (nonatomic,retain) NSString *upperPrice;
 @property (nonatomic,retain) NSString *sortType;

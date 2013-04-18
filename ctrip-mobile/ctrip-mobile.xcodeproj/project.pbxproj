@@ -38,6 +38,8 @@
 		2B189003171D24F2000CC570 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B188FF9171D24F2000CC570 /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		2B189004171D24F2000CC570 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B188FFB171D24F2000CC570 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		2B189008171D389D000CC570 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B189007171D389C000CC570 /* NSString+URLEncoding.m */; };
+		2B289F98171F819100A3CE7B /* Const.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F97171F819100A3CE7B /* Const.m */; };
+		2B289F9C171FAF2700A3CE7B /* MSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F9B171FAF2700A3CE7B /* MSelectController.m */; };
 		2B82CB92171E2AEC00A5A4EC /* MItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B82CB91171E2AEC00A5A4EC /* MItemCell.m */; };
 		2B82CB94171E2E4000A5A4EC /* MItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B82CB93171E2E4000A5A4EC /* MItemCell.xib */; };
 		2B82CB99171E399A00A5A4EC /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B82CB98171E399A00A5A4EC /* Item.m */; };
@@ -122,6 +124,10 @@
 		2B188FFB171D24F2000CC570 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		2B189006171D389C000CC570 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		2B189007171D389C000CC570 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		2B289F96171F819100A3CE7B /* Const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
+		2B289F97171F819100A3CE7B /* Const.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Const.m; sourceTree = "<group>"; };
+		2B289F9A171FAF2600A3CE7B /* MSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSelectController.h; sourceTree = "<group>"; };
+		2B289F9B171FAF2700A3CE7B /* MSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSelectController.m; sourceTree = "<group>"; };
 		2B82CB90171E2AEC00A5A4EC /* MItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MItemCell.h; sourceTree = "<group>"; };
 		2B82CB91171E2AEC00A5A4EC /* MItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MItemCell.m; sourceTree = "<group>"; };
 		2B82CB93171E2E4000A5A4EC /* MItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MItemCell.xib; sourceTree = "<group>"; };
@@ -174,6 +180,8 @@
 		2B17DD7A17163AC500C7AB97 = {
 			isa = PBXGroup;
 			children = (
+				2B289F96171F819100A3CE7B /* Const.h */,
+				2B289F97171F819100A3CE7B /* Const.m */,
 				2B82CBB2171E811200A5A4EC /* Controllers */,
 				2B82CB96171E395600A5A4EC /* Models */,
 				2B82CB95171E2E4700A5A4EC /* Views */,
@@ -334,6 +342,8 @@
 		2B82CBB2171E811200A5A4EC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2B289F9A171FAF2600A3CE7B /* MSelectController.h */,
+				2B289F9B171FAF2700A3CE7B /* MSelectController.m */,
 				2B17DDBA1717958C00C7AB97 /* MNavigationController.h */,
 				2B17DDBB1717958C00C7AB97 /* MNavigationController.m */,
 				2B17DDBF1717A26B00C7AB97 /* MItemListController.h */,
@@ -451,6 +461,8 @@
 				2B82CBB8171E84F300A5A4EC /* MCell.m in Sources */,
 				2B82CBBD171E8A6B00A5A4EC /* MTextFieldCell.m in Sources */,
 				2B82CBC2171E9B0400A5A4EC /* UserDefaults.m in Sources */,
+				2B289F98171F819100A3CE7B /* Const.m in Sources */,
+				2B289F9C171FAF2700A3CE7B /* MSelectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
