@@ -9,13 +9,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "MWindow.h"
 
 @class MItemListController;
 
 @interface RococoAppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
 
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) MWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MItemListController *viewController;
 

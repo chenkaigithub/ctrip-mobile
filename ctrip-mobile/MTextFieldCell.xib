@@ -72,7 +72,7 @@
 							<object class="IBUILabel" id="1059950313">
 								<reference key="NSNextResponder" ref="320368277"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 10}, {68, 21}}</string>
+								<string key="NSFrame">{{20, 11}, {68, 21}}</string>
 								<reference key="NSSuperview" ref="320368277"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="377693385"/>
@@ -127,6 +127,7 @@
 				<reference key="NSNextKeyView" ref="320368277"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="320368277"/>
 				<string key="IBUIReuseIdentifier">MTextFieldCell</string>
 			</object>

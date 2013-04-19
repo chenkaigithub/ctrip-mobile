@@ -66,7 +66,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     [defaults setValue:city forKey:@"city"];
     [defaults setValue:@"0" forKey:@"low_price"];
     [defaults setValue:@"8000" forKey:@"upper_price"];
-    [defaults setValue:@"10" forKey:@"top_count"];
+    [defaults setValue:@"100" forKey:@"top_count"];
     [defaults setValue:@"0" forKey:@"sort_type"];
     [defaults setValue:[[[Const sharedObject]arrayForTimeRange] objectAtIndex:0] forKey:@"time_range"];
     
@@ -85,7 +85,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
    
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[[MWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.viewController = [[[MItemListController alloc] initWithStyle:UITableViewStylePlain] autorelease];
     

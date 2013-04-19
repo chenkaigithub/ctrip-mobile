@@ -10,7 +10,7 @@
 #import "MBaseController.h"
 
 
-@interface MConfigController : MBaseController
+@interface MConfigController : MBaseController<UITextFieldDelegate>
 
 
 @end

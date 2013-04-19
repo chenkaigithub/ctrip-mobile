@@ -13,6 +13,9 @@
 #import "Const.h"
 #import "MSelectController.h"
 #import "AFJSONRequestOperation.h"
+#import "NSString+URLEncoding.h"
+#import "MItemListController.h"
+#import "Item.h"
 @interface MConfigController ()
 
 @end
@@ -47,7 +50,74 @@
     userDefaults.timeRange = [defaults valueForKey:@"time_range"];
 }
 
+-(NSString *)makeURL
+{
+    NSString *timeRange = userDefaults.timeRange;
+    
+    NSDate *now = [NSDate date];
+    NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    userDefaults.beginDate = [formatter stringFromDate:now];
+    NSTimeInterval timeInterval;
+    
+    if ([timeRange isEqualToString:ONE_MONTH]) {
+        timeInterval = DAY_INTERVAL *30;
+
+    }
+    
+    if ([timeRange isEqualToString:THREE_MONTH]){
+        timeInterval =DAY_INTERVAL *30 *3;
+    }
+    
+    if ([timeRange isEqualToString:HALF_A_YEAR]){
+        timeInterval = DAY_INTERVAL *30 * 6;
+    }
+    
+    if ([timeRange isEqualToString:ONE_YEAR]){
+        timeInterval = DAY_INTERVAL *30 * 12;
+    }
+    
+    
+    NSDate *endDate = [now initWithTimeIntervalSinceNow:timeInterval];
+    userDefaults.endDate = [formatter stringFromDate:endDate];
+    
+    MTextFieldCell *keywordCell = (MTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    userDefaults.keyWords = keywordCell.textField.text;
+    
+    MTextFieldCell *lowPriceCell = (MTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    
+    userDefaults.lowPrice = lowPriceCell.textField.text;
+    
+    MTextFieldCell  *upperPriceCell = (MTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    
+    userDefaults.upperPrice =upperPriceCell.textField.text;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setValue:userDefaults.beginDate forKey:@"begin_date"];
+    [defaults setValue:userDefaults.endDate forKey:@"end_date"];
+    [defaults setValue:userDefaults.keyWords forKey:@"key_words"];
+    [defaults setValue:userDefaults.lowPrice forKey:@"low_price"];
+    [defaults setValue:userDefaults.upperPrice forKey:@"upper_price"];
+    
+    [defaults synchronize];
+    
+    
+    NSString *str = [NSString stringWithFormat:@"%@?key_words=%@&city=%@&begin_date=%@&=end_date=%@&low_price=%@&upper_price=%@&sort_type=%@",BASE_URL,[userDefaults.keyWords URLEncode],[userDefaults.cityName URLEncode],userDefaults.beginDate,userDefaults.endDate,userDefaults.lowPrice,userDefaults.upperPrice,userDefaults.sortType];
+    
+    return str;
+}
+
 -(void) doSearch{
+    NSString *urlString = [self makeURL];
+    
+    NSLog(@"62%@",urlString);
+    
+    MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
+    
+    [self requireURL:urlString ToController:controller];
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -71,6 +141,9 @@
     UIBarButtonItem *btnDone = [[[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(doSearch)] autorelease];
     
     self.navigationItem.rightBarButtonItem = btnDone;
+    
+    //UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    //[self.tableView addGestureRecognizer:gestureRecognizer];
    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -89,6 +162,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - TextField delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog (@"should return?");
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -127,6 +210,7 @@
             
             if (userDefaults.keyWords!=nil) {
                 cell.textField.text = userDefaults.keyWords;
+                
             }
         }
         else if (row ==1)
@@ -135,6 +219,8 @@
             NSLog(@"137,%@",userDefaults.lowPrice);
             if (userDefaults.lowPrice!=nil) {
                 cell.textField.text = userDefaults.lowPrice;
+                cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
+                
             }
 
         
@@ -144,27 +230,12 @@
             
             if (userDefaults.upperPrice != nil) {
                 cell.textField.text = userDefaults.upperPrice;
+                cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
             }
         };
         
-        /*if (section == 1) {
-            if (row == 2) {
-                cell.titleLabel.text = @"最低价格";
-                NSLog(@"137,%@",userDefaults.lowPrice);
-                if (userDefaults.lowPrice!=nil) {
-                    cell.textField.text = userDefaults.lowPrice;
-                }
-                
-            }
-            else if(row == 3){
-                cell.titleLabel.text = @"最高价格";
-            
-                if (userDefaults.upperPrice != nil) {
-                    cell.textField.text = userDefaults.upperPrice;
-                }
-            }
-        }*/
-        
+        cell.textField.delegate = self;
+              
         return cell;
     }
     else{
@@ -220,44 +291,6 @@
     
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -296,6 +329,44 @@
     }
     
  }
+-(void) requireURL:(NSString *) urlString ToController:(MItemListController *) controller{
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        NSArray *dataList = [NSArray arrayWithArray:JSON];
+        NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
+        for (id data in dataList) {
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                Item *i = [[Item new] autorelease];
+                i.name = [data valueForKey:@"name"];
+                i.price = [data valueForKey:@"price"];
+                i.thumbnailURL = [data valueForKey:@"img"];
+                i.productID = [[data valueForKey:@"product_id"] integerValue];
+                
+                [itemList addObject:i];
+                
+            }
+        }
+        
+        controller.items = itemList;
+        
+        [controller.tableView reloadData];
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+    } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
+        NSLog(@"Failed: %@",[error localizedDescription]);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    [operation start];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
 
 -(void) requireDataWithURL:(NSString *) urlString ToController:(MSelectController *) controller{
     NSURL *url = [NSURL URLWithString:urlString];
@@ -310,7 +381,6 @@
                 NSString *province = [dic valueForKey:@"name"];
                 [province_list addObject:province];
             }
-            NSLog(@"list@296,%@",province_list);
             controller.dataList = province_list;
             [controller.tableView reloadData];
         }
