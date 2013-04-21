@@ -15,12 +15,42 @@
 #import "NSString+URLEncoding.h"
 #import "Item.h"
 #import "Const.h"
+#import "MNetWork.h"
 
 static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_list/";
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
 
 @implementation RococoAppDelegate
 
+#pragma mark - net work delegate
+
+-(void) setJson:(id)json
+{
+    if ([json isKindOfClass:[NSArray class]]) {
+        NSArray *dataList = [NSArray arrayWithArray:json];
+        NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
+        for (id data in dataList) {
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                Item *i = [[Item new] autorelease];
+                i.name = [data valueForKey:@"name"];
+                i.price = [data valueForKey:@"price"];
+                i.thumbnailURL = [data valueForKey:@"img"];
+                i.productID = [[data valueForKey:@"product_id"] integerValue];
+                
+                [itemList addObject:i];
+                
+            }
+        }
+        
+        self.viewController.items = itemList;
+        
+        [self.viewController.tableView reloadData];
+    }
+    
+    
+}
+#pragma mark - location manager delegate
+    
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self locationManager:manager didUpdateToLocation:[locations objectAtIndex:0] fromLocation:[locations objectAtIndex:0]];
@@ -37,11 +67,9 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         
         NSString *cityName = [placemark.locality stringByReplacingOccurrencesOfString:@"市" withString:@""];
         
-        [self requireDataWithURL:[NSString stringWithFormat:@"%@?city=%@",requireURL,[cityName URLEncode]]];
+        [self.network getJsonDataWithURL:[NSString stringWithFormat:@"%@?city=%@",requireURL,[cityName URLEncode]]];
         
         [self setDefaultValues:cityName];
-        
-       
         
     }];
 }
@@ -53,6 +81,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 }
 
 -(void) locateDevice{
+
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -76,6 +105,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 
 - (void)dealloc
 {
+    [_network release];
     [_window release];
     [_viewController release];
     [_locationManager release];
@@ -88,6 +118,9 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     self.window = [[[MWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.viewController = [[[MItemListController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+    
+    self.network = [[MNetWork alloc] init];
+    self.network.delegate = self;
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AlreadyBeenLaunched"]) {
         // This is our very first launch
@@ -106,9 +139,32 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         NSString *topCount = [defaults valueForKey:@"top_count"];
         NSString *sortType = [defaults valueForKey:@"sort_type"];
         
-        NSString *url = [NSString stringWithFormat:@"%@?city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",requireURL,[city URLEncode],lowPrice,upperPrice,topCount,sortType,@""];
+        if (city.length == 0) {
+            city =@"";
+        }
         
-        [self requireDataWithURL:url];
+        if (lowPrice.length == 0 ) {
+            lowPrice =@"0";
+        }
+        
+        if (upperPrice.length ==0) {
+            upperPrice = @"800";
+        }
+        
+        if (topCount.length ==0) {
+            topCount =@"100";
+        }
+        
+        if (sortType == nil) {
+            sortType =@"";
+        }
+        
+        NSString *url = [NSString stringWithFormat:@"%@?city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",requireURL,[city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],@""];
+        
+        NSLog(@"144@,%@",[city URLEncode]);
+        [self.network getJsonDataWithURL:url];
+        
+    
     }
     
     MNavigationController *nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
@@ -121,44 +177,6 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     [self startAnimation];
     
     return YES;
-}
-
--(void) requireDataWithURL:(NSString *) urlString {
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        if ([JSON isKindOfClass:[NSArray class]]) {
-            NSArray *dataList = [NSArray arrayWithArray:JSON];
-            NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
-            for (id data in dataList) {
-                if ([data isKindOfClass:[NSDictionary class]]) {
-                    Item *i = [[Item new] autorelease];
-                    i.name = [data valueForKey:@"name"];
-                    i.price = [data valueForKey:@"price"];
-                    i.thumbnailURL = [data valueForKey:@"img"];
-                    i.productID = [[data valueForKey:@"product_id"] integerValue];
-                    
-                    [itemList addObject:i];
-                    
-                }
-            }
-            
-            self.viewController.items = itemList;
-            
-            [self.viewController.tableView reloadData];
-            
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        }
-        } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
-            NSLog(@"Failed: %@",[error localizedDescription]);
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        }];
-    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
-    [operation start];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 

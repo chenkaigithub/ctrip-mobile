@@ -10,6 +10,11 @@
 
 @implementation NSString (URLEncoding)
 - (NSString *)URLEncode{
+    if ([self length] == 0) {
+        NSString *str_empty = @"";
+        [str_empty autorelease];
+        return str_empty;
+    }
     NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
                                                                            (CFStringRef)self,
                                                                            NULL,
@@ -21,6 +26,10 @@
 
 - (NSString*)URLDecode
 {
+    if ([self length] == 0 ) {
+        return @"";
+    }
+    
 	NSString *result = (NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
 																						   (CFStringRef)self,
 																						   CFSTR(""),

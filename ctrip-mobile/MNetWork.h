@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol jsonDelegate <NSObject>
+
+-(void) setJson:(id)json;
+
+@end
+
 @interface MNetWork : NSObject
--(void)getJsonDataWithURL:(NSString *)str doSomeThing:(id)function;
+
+@property (assign,nonatomic) id<jsonDelegate> delegate;
+
+-(void)getJsonDataWithURL:(NSString *)str;
+
 @end

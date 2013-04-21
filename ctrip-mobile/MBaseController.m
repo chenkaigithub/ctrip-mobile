@@ -7,6 +7,7 @@
 //
 
 #import "MBaseController.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @interface MBaseController ()
 
@@ -14,13 +15,28 @@
 
 @implementation MBaseController
 
+@synthesize network=_network;
+
+-(void)setJson:(id)json
+{
+    [[AFNetworkActivityIndicatorManager sharedManager]setEnabled:NO];
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.network =[[MNetWork alloc] init];
+        self.network.delegate = self;
     }
     return self;
+}
+
+-(void) dealloc
+{
+    [_network release];
+    [super dealloc];
 }
 
 - (void)viewDidLoad

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MNetWork.h"
+@interface MBaseController : UITableViewController<jsonDelegate>
 
-@interface MBaseController : UITableViewController
+@property (retain,nonatomic)MNetWork *network;
 
 @end

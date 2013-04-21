@@ -24,6 +24,27 @@
 @synthesize tag;
 @synthesize dataList;
 
+-(void)setJson:(id)json
+{
+    MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
+    
+    
+    NSMutableArray *city_list = [NSMutableArray arrayWithCapacity:35];
+    if ([json isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *dic in (NSArray *)json) {
+            NSString *city = [dic valueForKey:@"name"];
+            [city_list addObject:city];
+        }
+        
+        
+    }
+    controller.dataList = city_list;
+    controller.title = @"城市";
+    controller.tag = 101;
+    [self.navigationController pushViewController:controller animated:YES];
+    
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -198,15 +219,9 @@
     }
     else if (self.tag ==100)
     {
-        MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
+        NSString *city_encode = [[tableView cellForRowAtIndexPath:indexPath].textLabel.text URLEncode];
         
-        controller.title = @"城市";
-        controller.tag = 101;
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        NSString *city_encode = [cell.textLabel.text URLEncode];
-        [self requireDataWithURL:[NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/city_list/?province_name=%@",city_encode] ToController:controller];
-        [self.navigationController pushViewController:controller animated:YES];
-        
+        [self.network getJsonDataWithURL:[NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/city_list/?province_name=%@",city_encode]];
     }
     else if (self.tag == 101)
     {

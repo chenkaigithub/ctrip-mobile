@@ -10,15 +10,17 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "MWindow.h"
+#import "MNetWork.h"
 
 @class MItemListController;
 
-@interface RococoAppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
+@interface RococoAppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate,jsonDelegate>
 
 
 @property (strong, nonatomic) MWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MItemListController *viewController;
+@property (strong, nonatomic) MNetWork *network;
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation

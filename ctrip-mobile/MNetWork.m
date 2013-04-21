@@ -8,26 +8,35 @@
 
 #import "MNetWork.h"
 #import "AFJSONRequestOperation.h"
-
+#import "AFNetworkActivityIndicatorManager.h"
 @implementation MNetWork
 
--(void)getJsonDataWithURL:(NSString *)str doSomeThing:IMP function;{
+@synthesize delegate;
+-(void)getJsonDataWithURL:(NSString *)str
+{
+    NSLog(@"17@,%@",str);
     NSURL *url = [NSURL URLWithString:str];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
+        [delegate setJson:JSON];
         
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+ 
         
     } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
         NSLog(@"Failed: %@",[error localizedDescription]);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+        [[AFNetworkActivityIndicatorManager  sharedManager] setEnabled:NO];
     }];
+    
     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
     [operation start];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
 }
 
 @end

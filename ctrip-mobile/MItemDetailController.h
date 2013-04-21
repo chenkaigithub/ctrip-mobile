@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MItemDetailController : UIViewController
+#import "MNetWork.h"
+@interface MItemDetailController : UIViewController<jsonDelegate>
 
 @end

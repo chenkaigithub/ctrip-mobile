@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBaseController.h"
 
-
-@interface MSelectController : UITableViewController
+@interface MSelectController : MBaseController
 
 
 @property (nonatomic,assign)NSInteger tag;
