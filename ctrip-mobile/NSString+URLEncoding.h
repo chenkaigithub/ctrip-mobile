@@ -12,5 +12,5 @@
 
 - (NSString *)URLEncode;
 - (NSString *)URLDecode;
-
+- (NSString *)stringByConvertingHTMLToPlainText;
 @end

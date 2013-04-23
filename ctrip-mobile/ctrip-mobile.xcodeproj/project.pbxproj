@@ -69,6 +69,11 @@
 		2B82CBBD171E8A6B00A5A4EC /* MTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B82CBBC171E8A6B00A5A4EC /* MTextFieldCell.m */; };
 		2B82CBBF171E8AD600A5A4EC /* MTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B82CBBE171E8AD600A5A4EC /* MTextFieldCell.xib */; };
 		2B82CBC2171E9B0400A5A4EC /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B82CBC1171E9B0400A5A4EC /* UserDefaults.m */; };
+		2B8725481724F61200FC5FC7 /* MDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8725471724F61100FC5FC7 /* MDetailCell.m */; };
+		2B87254A1724F62B00FC5FC7 /* MDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8725491724F62B00FC5FC7 /* MDetailCell.xib */; };
+		2B87254F1724FD6200FC5FC7 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B87254E1724FD6200FC5FC7 /* ItemDetail.m */; };
+		2B8725511724FF4B00FC5FC7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8725501724FF4B00FC5FC7 /* MapKit.framework */; };
+		2B8725A21725343500FC5FC7 /* NSString+GTMNSString_HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8725A11725343500FC5FC7 /* NSString+GTMNSString_HTML.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -179,6 +184,14 @@
 		2B82CBBE171E8AD600A5A4EC /* MTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MTextFieldCell.xib; sourceTree = "<group>"; };
 		2B82CBC0171E9B0400A5A4EC /* UserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
 		2B82CBC1171E9B0400A5A4EC /* UserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
+		2B8725461724F61100FC5FC7 /* MDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDetailCell.h; sourceTree = "<group>"; };
+		2B8725471724F61100FC5FC7 /* MDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDetailCell.m; sourceTree = "<group>"; };
+		2B8725491724F62B00FC5FC7 /* MDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MDetailCell.xib; sourceTree = "<group>"; };
+		2B87254D1724FD6200FC5FC7 /* ItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetail.h; sourceTree = "<group>"; };
+		2B87254E1724FD6200FC5FC7 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
+		2B8725501724FF4B00FC5FC7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		2B8725A01725343500FC5FC7 /* NSString+GTMNSString_HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+GTMNSString_HTML.h"; sourceTree = "<group>"; };
+		2B8725A11725343500FC5FC7 /* NSString+GTMNSString_HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+GTMNSString_HTML.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8725511724FF4B00FC5FC7 /* MapKit.framework in Frameworks */,
 				2B774CB7172110BE00FFD9DF /* QuartzCore.framework in Frameworks */,
 				2B188FE5171D1DFC000CC570 /* libz.dylib in Frameworks */,
 				2B188FE1171D1C6E000CC570 /* MobileCoreServices.framework in Frameworks */,
@@ -204,9 +218,11 @@
 		2B17DD7A17163AC500C7AB97 = {
 			isa = PBXGroup;
 			children = (
+				2B8725A01725343500FC5FC7 /* NSString+GTMNSString_HTML.h */,
+				2B8725A11725343500FC5FC7 /* NSString+GTMNSString_HTML.m */,
+				2B8725501724FF4B00FC5FC7 /* MapKit.framework */,
 				2B774CB8172129BD00FFD9DF /* MNetWork.h */,
 				2B774CB9172129BD00FFD9DF /* MNetWork.m */,
-				2B774CA8172105A000FFD9DF /* iCarousel */,
 				2B289F96171F819100A3CE7B /* Const.h */,
 				2B289F97171F819100A3CE7B /* Const.m */,
 				2B82CBB2171E811200A5A4EC /* Controllers */,
@@ -363,6 +379,7 @@
 		2B82CB95171E2E4700A5A4EC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2B774CA8172105A000FFD9DF /* iCarousel */,
 				2B82CB93171E2E4000A5A4EC /* MItemCell.xib */,
 				2B82CB90171E2AEC00A5A4EC /* MItemCell.h */,
 				2B82CB91171E2AEC00A5A4EC /* MItemCell.m */,
@@ -374,6 +391,9 @@
 				2B82CBBE171E8AD600A5A4EC /* MTextFieldCell.xib */,
 				2B774CA31721051300FFD9DF /* CarouselView.h */,
 				2B774CA41721051300FFD9DF /* CarouselView.m */,
+				2B8725461724F61100FC5FC7 /* MDetailCell.h */,
+				2B8725471724F61100FC5FC7 /* MDetailCell.m */,
+				2B8725491724F62B00FC5FC7 /* MDetailCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -385,6 +405,8 @@
 				2B82CBC1171E9B0400A5A4EC /* UserDefaults.m */,
 				2B82CB97171E399A00A5A4EC /* Item.h */,
 				2B82CB98171E399A00A5A4EC /* Item.m */,
+				2B87254D1724FD6200FC5FC7 /* ItemDetail.h */,
+				2B87254E1724FD6200FC5FC7 /* ItemDetail.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -486,6 +508,7 @@
 				2B774CAF17210E6A00FFD9DF /* background.png in Resources */,
 				2B774CB017210E6A00FFD9DF /* page.png in Resources */,
 				2B774CB117210E6A00FFD9DF /* placeholder.png in Resources */,
+				2B87254A1724F62B00FC5FC7 /* MDetailCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +548,9 @@
 				2B774CAB172105A000FFD9DF /* iCarousel.m in Sources */,
 				2B774CB517210ED800FFD9DF /* MItemDetailController.m in Sources */,
 				2B774CBA172129BD00FFD9DF /* MNetWork.m in Sources */,
+				2B8725481724F61200FC5FC7 /* MDetailCell.m in Sources */,
+				2B87254F1724FD6200FC5FC7 /* ItemDetail.m in Sources */,
+				2B8725A21725343500FC5FC7 /* NSString+GTMNSString_HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

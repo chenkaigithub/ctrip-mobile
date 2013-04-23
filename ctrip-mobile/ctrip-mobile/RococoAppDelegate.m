@@ -78,6 +78,12 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
       didFailWithError:(NSError *)error
 {
     NSLog(@"error@50,%@",error);
+    
+    NSString *city = @"北京";
+    [self.network getJsonDataWithURL:[NSString stringWithFormat:@"%@?city=%@",requireURL,[city URLEncode]]];
+    
+    [self setDefaultValues:city];
+    
 }
 
 -(void) locateDevice{

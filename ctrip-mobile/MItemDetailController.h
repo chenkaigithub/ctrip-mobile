@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MNetWork.h"
-@interface MItemDetailController : UIViewController<jsonDelegate>
+#import "CarouselView.h"
+#import "ItemDetail.h"
 
+@interface MItemDetailController :UIViewController <jsonDelegate,UITableViewDataSource,UITableViewDelegate>
+
+@property (retain,nonatomic)CarouselView *carouselView;
+@property (retain,nonatomic)UITableView *tableView;
+@property (retain,nonatomic)ItemDetail *detal;
 @end
