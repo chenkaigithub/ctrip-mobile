@@ -15,5 +15,5 @@
 
 @property (retain,nonatomic)CarouselView *carouselView;
 @property (retain,nonatomic)UITableView *tableView;
-@property (retain,nonatomic)ItemDetail *detal;
+@property (retain,nonatomic)ItemDetail *detail;
 @end

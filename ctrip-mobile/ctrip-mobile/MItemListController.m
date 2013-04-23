@@ -186,7 +186,7 @@
     }
     
     detail.imageList = images;
-    controller.detal = detail;
+    controller.detail = detail;
     
     [self.navigationController pushViewController:controller animated:YES];
 

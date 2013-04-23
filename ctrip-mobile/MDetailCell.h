@@ -2,7 +2,7 @@
 //  MDetailCell.h
 //  ctrip-mobile
 //
-//  Created by caoguangyao on 13-4-22.
+//  Created by caoguangyao on 13-4-23.
 //  Copyright (c) 2013年 caoguangyao. All rights reserved.
 //
 
@@ -10,6 +10,7 @@
 
 @interface MDetailCell : UITableViewCell
 
-@property (retain,nonatomic)IBOutlet UILabel *titleLabel;
-@property (retain,nonatomic)IBOutlet UILabel *detailLabel;
+@property (nonatomic,retain) IBOutlet UILabel *titleLabel;
+@property (nonatomic,retain) IBOutlet UILabel *detailLabel;
+
 @end
