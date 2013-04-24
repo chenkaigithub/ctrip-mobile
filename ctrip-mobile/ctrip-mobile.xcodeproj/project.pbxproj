@@ -74,6 +74,8 @@
 		2B87254F1724FD6200FC5FC7 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B87254E1724FD6200FC5FC7 /* ItemDetail.m */; };
 		2B8725511724FF4B00FC5FC7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8725501724FF4B00FC5FC7 /* MapKit.framework */; };
 		2B8725A21725343500FC5FC7 /* NSString+GTMNSString_HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8725A11725343500FC5FC7 /* NSString+GTMNSString_HTML.m */; };
+		2BF13BAC172776AA0031AE64 /* TOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF13BAB172776AA0031AE64 /* TOrder.m */; };
+		2BF13BAF172778200031AE64 /* MOrderCreateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF13BAE172778200031AE64 /* MOrderCreateController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -192,6 +194,10 @@
 		2B8725501724FF4B00FC5FC7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2B8725A01725343500FC5FC7 /* NSString+GTMNSString_HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+GTMNSString_HTML.h"; sourceTree = "<group>"; };
 		2B8725A11725343500FC5FC7 /* NSString+GTMNSString_HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+GTMNSString_HTML.m"; sourceTree = "<group>"; };
+		2BF13BAA172776AA0031AE64 /* TOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOrder.h; sourceTree = "<group>"; };
+		2BF13BAB172776AA0031AE64 /* TOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOrder.m; sourceTree = "<group>"; };
+		2BF13BAD172778200031AE64 /* MOrderCreateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOrderCreateController.h; sourceTree = "<group>"; };
+		2BF13BAE172778200031AE64 /* MOrderCreateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOrderCreateController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,7 +226,6 @@
 			children = (
 				2B8725A01725343500FC5FC7 /* NSString+GTMNSString_HTML.h */,
 				2B8725A11725343500FC5FC7 /* NSString+GTMNSString_HTML.m */,
-				2B8725501724FF4B00FC5FC7 /* MapKit.framework */,
 				2B774CB8172129BD00FFD9DF /* MNetWork.h */,
 				2B774CB9172129BD00FFD9DF /* MNetWork.m */,
 				2B289F96171F819100A3CE7B /* Const.h */,
@@ -250,6 +255,7 @@
 		2B17DD8517163AC500C7AB97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B8725501724FF4B00FC5FC7 /* MapKit.framework */,
 				2B188FE4171D1DFC000CC570 /* libz.dylib */,
 				2B774CB6172110BE00FFD9DF /* QuartzCore.framework */,
 				2B188FE0171D1C6E000CC570 /* MobileCoreServices.framework */,
@@ -407,6 +413,8 @@
 				2B82CB98171E399A00A5A4EC /* Item.m */,
 				2B87254D1724FD6200FC5FC7 /* ItemDetail.h */,
 				2B87254E1724FD6200FC5FC7 /* ItemDetail.m */,
+				2BF13BAA172776AA0031AE64 /* TOrder.h */,
+				2BF13BAB172776AA0031AE64 /* TOrder.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -428,6 +436,8 @@
 				2B774CA11720E5D400FFD9DF /* MWindow.m */,
 				2B774CB317210ED800FFD9DF /* MItemDetailController.h */,
 				2B774CB417210ED800FFD9DF /* MItemDetailController.m */,
+				2BF13BAD172778200031AE64 /* MOrderCreateController.h */,
+				2BF13BAE172778200031AE64 /* MOrderCreateController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -551,6 +561,8 @@
 				2B87254F1724FD6200FC5FC7 /* ItemDetail.m in Sources */,
 				2B8725A21725343500FC5FC7 /* NSString+GTMNSString_HTML.m in Sources */,
 				2B0A0D64172628D30057D9DD /* MDetailCell.m in Sources */,
+				2BF13BAC172776AA0031AE64 /* TOrder.m in Sources */,
+				2BF13BAF172778200031AE64 /* MOrderCreateController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

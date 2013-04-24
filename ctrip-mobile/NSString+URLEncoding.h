@@ -13,4 +13,5 @@
 - (NSString *)URLEncode;
 - (NSString *)URLDecode;
 - (NSString *)stringByConvertingHTMLToPlainText;
++ (BOOL) NSStringIsValidEmail:(NSString *)checkString;
 @end

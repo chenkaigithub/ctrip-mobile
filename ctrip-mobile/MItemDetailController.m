@@ -9,6 +9,8 @@
 #import "MItemDetailController.h"
 #import "MDetailCell.h"
 #import "NSString+URLEncoding.h"
+#import "MOrderCreateController.h"
+#import "TOrder.h"
 
 @interface MItemDetailController ()
 
@@ -23,6 +25,9 @@
 @synthesize tableView=_tableView;
 @synthesize detail =_detail;
 @synthesize cellHeightValues = _cellHeightValues;
+
+
+
 -(void)setJson:(id)json {
 
 }
@@ -38,7 +43,17 @@
 
 -(void)orderProduct
 {
-
+    TOrder *order = [[[TOrder alloc] init]autorelease];
+    order.productID = [ NSString stringWithFormat:@"%d",self.detail.productID];
+    order.productName = self.detail.name;
+    order.price = self.detail.price;
+    
+    MOrderCreateController *controller = [[[MOrderCreateController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+    
+    controller.order = order;
+    
+    [self.navigationController pushViewController:controller animated:YES];
+    
 }
 
 - (void)viewDidLoad
