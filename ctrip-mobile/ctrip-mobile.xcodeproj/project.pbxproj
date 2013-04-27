@@ -41,6 +41,7 @@
 		2B189008171D389D000CC570 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B189007171D389C000CC570 /* NSString+URLEncoding.m */; };
 		2B289F98171F819100A3CE7B /* Const.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F97171F819100A3CE7B /* Const.m */; };
 		2B289F9C171FAF2700A3CE7B /* MSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F9B171FAF2700A3CE7B /* MSelectController.m */; };
+		2B5DA96F1728BD0C0025A3B9 /* MPaymentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5DA96E1728BD0C0025A3B9 /* MPaymentController.m */; };
 		2B774CA21720E5D400FFD9DF /* MWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA11720E5D400FFD9DF /* MWindow.m */; };
 		2B774CA51721051300FFD9DF /* CarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA41721051300FFD9DF /* CarouselView.m */; };
 		2B774CAB172105A000FFD9DF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CAA172105A000FFD9DF /* iCarousel.m */; };
@@ -146,6 +147,8 @@
 		2B289F97171F819100A3CE7B /* Const.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Const.m; sourceTree = "<group>"; };
 		2B289F9A171FAF2600A3CE7B /* MSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSelectController.h; sourceTree = "<group>"; };
 		2B289F9B171FAF2700A3CE7B /* MSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSelectController.m; sourceTree = "<group>"; };
+		2B5DA96D1728BD0C0025A3B9 /* MPaymentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPaymentController.h; sourceTree = "<group>"; };
+		2B5DA96E1728BD0C0025A3B9 /* MPaymentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPaymentController.m; sourceTree = "<group>"; };
 		2B774CA01720E5D400FFD9DF /* MWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWindow.h; sourceTree = "<group>"; };
 		2B774CA11720E5D400FFD9DF /* MWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWindow.m; sourceTree = "<group>"; };
 		2B774CA31721051300FFD9DF /* CarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselView.h; sourceTree = "<group>"; };
@@ -438,6 +441,8 @@
 				2B774CB417210ED800FFD9DF /* MItemDetailController.m */,
 				2BF13BAD172778200031AE64 /* MOrderCreateController.h */,
 				2BF13BAE172778200031AE64 /* MOrderCreateController.m */,
+				2B5DA96D1728BD0C0025A3B9 /* MPaymentController.h */,
+				2B5DA96E1728BD0C0025A3B9 /* MPaymentController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -563,6 +568,7 @@
 				2B0A0D64172628D30057D9DD /* MDetailCell.m in Sources */,
 				2BF13BAC172776AA0031AE64 /* TOrder.m in Sources */,
 				2BF13BAF172778200031AE64 /* MOrderCreateController.m in Sources */,
+				2B5DA96F1728BD0C0025A3B9 /* MPaymentController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -49,6 +49,8 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     
     
 }
+
+
 #pragma mark - location manager delegate
     
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -222,7 +224,13 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     
     [splashView release];
 }
-
+-(BOOL) application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if ([[url scheme] isEqualToString:@"ctrip"]) {
+        return YES;
+    }
+    return NO;
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

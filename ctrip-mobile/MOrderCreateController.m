@@ -8,7 +8,8 @@
 
 #import "MOrderCreateController.h"
 #import "NSString+URLEncoding.h"
-#import "AFHTTPClient.h"
+#import "AFNetworking.h"
+#import "MPaymentController.h"
 @interface MOrderCreateController ()
 
 @end
@@ -93,23 +94,30 @@
         self.order.price = [dic valueForKey:@"price"];
         self.order.status = [dic valueForKey:@"status"];
         
-        //NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/get_payment/?business_type=Tuan&order_type=6&description=%@&order_id=%@",[self.order.productName URLEncode],self.order.orderID];
+        NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/get_payment/?business_type=Tuan&order_type=6&description=%@&order_id=%@",[self.order.productName URLEncode],self.order.orderID];
         
-        NSURL *url = [NSURL URLWithString:@"http://ctrip.herokuapp.com"];
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                self.order.description,@"description",
-                                self.order.orderID,@"order_id",
-                                @"Tuan",@"business_type",
-                                @"6",@"order_type"
-                                , nil];
-        [httpClient postPath:@"/api/get_payment/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            NSLog(@"Request Successful, response '%@'", responseStr);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
-        }]; 
+        NSLog(@"@98,%@",url);
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         
+        /*
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+        
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op,id response){
+            NSString *redirectHtml = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            
+            MPaymentController *controller = [[[MPaymentController alloc] init] autorelease];
+            
+            controller.redirectHtml = redirectHtml;
+            
+            [self.navigationController pushViewController:controller animated:YES];
+            
+            
+        } failure:^(AFHTTPRequestOperation *op,NSError *err){
+            NSLog(@"103,%@",err.localizedDescription);
+        }];
+      
+        [operation start];
+        */
     }
     else{
         NSLog(@"99");
