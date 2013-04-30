@@ -10,6 +10,7 @@
 #import "MDetailCell.h"
 #import "NSString+Category.h"
 #import "MOrderCreateController.h"
+#import "MMapController.h"
 #import "TOrder.h"
 
 @interface MItemDetailController ()
@@ -208,10 +209,16 @@
             case 4:
                 cell.titleLabel.text =@"地址:";
                 cell.detailLabel.text =self.detail.address;
+                if (self.detail.address.length>0) {
+                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                }
                 break;
             case 5:
                 cell.titleLabel.text = @"电话:";
                 cell.detailLabel.text = self.detail.tel;
+                if (self.detail.tel.length>0) {
+                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                }
                 break;
             default:
                 break;
@@ -264,6 +271,40 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    
+    if (row == 4) {
+        //address view
+        MMapController *controller = [[[MMapController alloc] init] autorelease];
+        
+        controller.name = [NSString stringWithString:self.detail.name];
+        controller.address = [NSString stringWithString:self.detail.address];
+        controller.coordinate = self.detail.location;
+        
+        [self.navigationController pushViewController:controller animated:YES];
+        
+    }
+    
+    if (row == 5) {
+        //call
+        NSString *num = self.detail.tel;
+        UIAlertView *alert =[ [UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"是否确认拨打：%@",num] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        
+        [alert show];
+        
+        [alert release];
+        
+    }
+}
 
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+    
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.detail.tel]]];
+    }
+}
 @end

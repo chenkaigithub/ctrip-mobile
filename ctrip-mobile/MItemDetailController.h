@@ -11,7 +11,7 @@
 #import "CarouselView.h"
 #import "ItemDetail.h"
 
-@interface MItemDetailController :UIViewController <jsonDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface MItemDetailController :UIViewController <UIAlertViewDelegate,jsonDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (retain,nonatomic)CarouselView *carouselView;
 @property (retain,nonatomic)UITableView *tableView;

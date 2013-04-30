@@ -74,6 +74,7 @@
 		2B8725511724FF4B00FC5FC7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8725501724FF4B00FC5FC7 /* MapKit.framework */; };
 		2BF13BAC172776AA0031AE64 /* TOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF13BAB172776AA0031AE64 /* TOrder.m */; };
 		2BF13BAF172778200031AE64 /* MOrderCreateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF13BAE172778200031AE64 /* MOrderCreateController.m */; };
+		801343A0172F74D0007FEBB1 /* MMapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8013439F172F74D0007FEBB1 /* MMapController.m */; };
 		80D37959172E29D6008075AF /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D37958172E29D6008075AF /* Utility.m */; };
 		80D3795D172E2AD2008075AF /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D3795C172E2AD2008075AF /* NSString+Category.m */; };
 		80D37969172E354B008075AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D37968172E354B008075AF /* Reachability.m */; };
@@ -200,6 +201,8 @@
 		2BF13BAB172776AA0031AE64 /* TOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOrder.m; sourceTree = "<group>"; };
 		2BF13BAD172778200031AE64 /* MOrderCreateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOrderCreateController.h; sourceTree = "<group>"; };
 		2BF13BAE172778200031AE64 /* MOrderCreateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOrderCreateController.m; sourceTree = "<group>"; };
+		8013439E172F74D0007FEBB1 /* MMapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMapController.h; sourceTree = "<group>"; };
+		8013439F172F74D0007FEBB1 /* MMapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMapController.m; sourceTree = "<group>"; };
 		80D37957172E29D6008075AF /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		80D37958172E29D6008075AF /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		80D3795B172E2AD2008075AF /* NSString+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
@@ -460,6 +463,8 @@
 				2B774CB417210ED800FFD9DF /* MItemDetailController.m */,
 				2BF13BAD172778200031AE64 /* MOrderCreateController.h */,
 				2BF13BAE172778200031AE64 /* MOrderCreateController.m */,
+				8013439E172F74D0007FEBB1 /* MMapController.h */,
+				8013439F172F74D0007FEBB1 /* MMapController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -591,6 +596,7 @@
 				80D3795D172E2AD2008075AF /* NSString+Category.m in Sources */,
 				80D37969172E354B008075AF /* Reachability.m in Sources */,
 				80D379AD172EDE73008075AF /* JSNotifier.m in Sources */,
+				801343A0172F74D0007FEBB1 /* MMapController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
