@@ -11,11 +11,14 @@
 
 #import "MItemListController.h"
 #import "MNavigationController.h"
-#import "AFJSONRequestOperation.h"
-#import "NSString+URLEncoding.h"
+#import "AFNetworking.h"
+#import "NSString+Category.h"
 #import "Item.h"
 #import "Const.h"
 #import "MNetWork.h"
+#import "Reachability.h"
+#import "Utility.h"
+#import "NSString+Category.h"
 
 static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_list/";
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
@@ -26,6 +29,8 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 
 -(void) setJson:(id)json
 {
+    
+    
     if ([json isKindOfClass:[NSArray class]]) {
         NSArray *dataList = [NSArray arrayWithArray:json];
         NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
@@ -36,7 +41,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
                 i.price = [data valueForKey:@"price"];
                 i.thumbnailURL = [data valueForKey:@"img"];
                 i.productID = [[data valueForKey:@"product_id"] integerValue];
-                
+                i.desc = [[data valueForKey:@"description"] stringByConvertingHTMLToPlainText];
                 [itemList addObject:i];
                 
             }
@@ -69,7 +74,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         
         NSString *cityName = [placemark.locality stringByReplacingOccurrencesOfString:@"市" withString:@""];
         
-        [self.network getJsonDataWithURL:[NSString stringWithFormat:@"%@?city=%@",requireURL,[cityName URLEncode]]];
+        [self.network httpJsonResponse:[NSString stringWithFormat:@"%@?city=%@",requireURL,[cityName URLEncode]] byController:self.viewController];
         
         [self setDefaultValues:cityName];
         
@@ -82,7 +87,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     NSLog(@"error@50,%@",error);
     
     NSString *city = @"北京";
-    [self.network getJsonDataWithURL:[NSString stringWithFormat:@"%@?city=%@",requireURL,[city URLEncode]]];
+    [self.network httpJsonResponse:[NSString stringWithFormat:@"%@?city=%@",requireURL,[city URLEncode]]byController:self.viewController];
     
     [self setDefaultValues:city];
     
@@ -120,22 +125,65 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     [super dealloc];
 }
 
+# pragma mark -- reachability method
+
+-(void)setReachability
+{
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    */
+    Reachability * reach = [Reachability reachabilityWithHostname:@"www.apple.com"];
+    
+    reach.reachableBlock = ^(Reachability * reachability)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog( @"Block Says Reachable");
+        });
+    };
+    
+    reach.unreachableBlock = ^(Reachability * reachability)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog( @"Block Says Unreachable");
+            [[Utility sharedObject] showNotificationWithMessage:@"你的网络连接断开了" inController:self.viewController];
+        });
+    };
+    
+    [reach startNotifier];
+}
+
+-(void)reachabilityChanged:(NSNotification*)note
+{
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
    
     self.window = [[[MWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
+    
     self.viewController = [[[MItemListController alloc] initWithStyle:UITableViewStylePlain] autorelease];
     
     self.network = [[MNetWork alloc] init];
     self.network.delegate = self;
+    
+    [self setReachability];
+    
+    MNavigationController *nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
+    
+    self.window.rootViewController = nav;
+    
+    self.viewController.title = @"团购";
+    
+    
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AlreadyBeenLaunched"]) {
         // This is our very first launch
         NSLog(@"value==%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"AlreadyBeenLaunched"]);
         
         [self locateDevice];
-               // Setting userDefaults for next time
+        // Setting userDefaults for next time
         [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:@"AlreadyBeenLaunched"];
     }
     else{
@@ -170,15 +218,13 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         NSString *url = [NSString stringWithFormat:@"%@?city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",requireURL,[city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],@""];
         
         NSLog(@"144@,%@",[city URLEncode]);
-        [self.network getJsonDataWithURL:url];
+        
+        [self.network httpJsonResponse:url byController:self.viewController];
         
     
     }
     
-    MNavigationController *nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
-         
-    self.window.rootViewController = nav;
-    self.viewController.title = @"团购";
+    
     
     [self.window makeKeyAndVisible];
     
@@ -224,9 +270,56 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     
     [splashView release];
 }
+# pragma mark -ipc method
 -(BOOL) application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    if ([[url scheme] isEqualToString:@"ctrip"]) {
+    NSString *scheme = [url scheme];
+    if ([scheme isEqualToString:@"ctrip"]) {
+        
+        NSString *query = [url query];
+        NSLog(@"@231,%@",query);
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
+        for (NSString *param in [query componentsSeparatedByString:@"&"]) {
+            
+            NSArray *kv = [param componentsSeparatedByString:@"="];
+            
+            if ([kv count]<2) {
+            
+                [params setObject:@"" forKey:[kv objectAtIndex:0]];
+                
+                continue;
+            }
+            
+            id value = [kv objectAtIndex:1];
+            
+            if ([value isKindOfClass:[NSString class]]) {
+                NSString *v = (NSString *)[value URLDecode];
+                NSLog(@"@253,v==%@",v);
+                [params setObject:v forKey:[kv objectAtIndex:0]];
+                continue;
+            }
+            
+            [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
+        }
+        
+        NSLog(@"252,%@",params);
+        
+        /*NSString *amount = [params valueForKey:@"Amount"];
+        NSString *currencyCode = [params objectForKey:@"CurrencyCode"];
+        NSString *merchantData = [[params valueForKey:@"MerchantData"] URLDecode];
+        NSString *orderID = [params objectForKey:@"OrderID"];*/
+        NSInteger status = [[params objectForKey:@"Status"] intValue];
+        //NSString *transactionID = [params objectForKey:@"TransactionID"];
+        
+        if (status==1) {
+            
+            [[Utility sharedObject] setAlertView:@"支付成功" withMessage:@"稍后将有短信和邮件提醒，请注意查收，如有任何疑问，请拨打1010-6666客服热线。"];
+            
+            
+        }
+        
         return YES;
     }
     return NO;

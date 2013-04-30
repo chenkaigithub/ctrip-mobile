@@ -8,7 +8,7 @@
 
 #import "MItemDetailController.h"
 #import "MDetailCell.h"
-#import "NSString+URLEncoding.h"
+#import "NSString+Category.h"
 #import "MOrderCreateController.h"
 #import "TOrder.h"
 
@@ -59,6 +59,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //back button
+    UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil] autorelease];
+    
+    self.navigationItem.backBarButtonItem =backButton;
+    
+    //order button
     
     UIBarButtonItem *btnDone = [[[UIBarButtonItem alloc] initWithTitle:@"预定" style:UIBarButtonItemStyleBordered target:self action:@selector(orderProduct)] autorelease];
     
@@ -70,7 +76,12 @@
     [self.view addSubview:self.carouselView];
     
     
-    self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 240, 320, 240)]autorelease];
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    //CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 240, 320, screenHeight-240-64)]autorelease];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:self.tableView];
     
@@ -205,13 +216,15 @@
             default:
                 break;
         }
+        
+        UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+        
+        UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+        cellBackgroundView.image = background;
+        cell.backgroundView = cellBackgroundView;
     }
        
-    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
     
-    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
-    cellBackgroundView.image = background;
-    cell.backgroundView = cellBackgroundView;
     
 
     return cell;

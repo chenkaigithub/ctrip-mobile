@@ -10,7 +10,7 @@
 #import "Const.h"
 #import "MConfigController.h"
 #import "AFJSONRequestOperation.h"
-#import "NSString+URLEncoding.h"
+#import "NSString+Category.h"
 @interface MSelectController ()
 
 @end
@@ -83,14 +83,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.dataList count];
 }
@@ -221,7 +219,7 @@
     {
         NSString *city_encode = [[tableView cellForRowAtIndexPath:indexPath].textLabel.text URLEncode];
         
-        [self.network getJsonDataWithURL:[NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/city_list/?province_name=%@",city_encode]];
+        [self.network httpJsonResponse:[NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/city_list/?province_name=%@",city_encode] byController:self];
     }
     else if (self.tag == 101)
     {

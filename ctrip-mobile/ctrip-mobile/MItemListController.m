@@ -121,6 +121,7 @@
     [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL]];
     cell.nameLabel.text = item.name;
     cell.priceLabel.text = item.price;
+    cell.descLabel.text = item.desc;
     
     UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
     
@@ -148,7 +149,7 @@
     
     NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_product_info/?product_id=%d",productID];
     
-    [self.network getJsonDataWithURL:url];
+    [self.network httpJsonResponse:url byController:self];
 }
 
 -(void)setJson:(id)json

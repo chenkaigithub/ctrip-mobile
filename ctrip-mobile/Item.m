@@ -13,6 +13,7 @@
 @synthesize productID;
 @synthesize name;
 @synthesize price;
+@synthesize desc;
 @synthesize thumbnailURL;
 
 

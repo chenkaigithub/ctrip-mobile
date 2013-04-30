@@ -11,7 +11,6 @@
 @implementation MTextFieldCell
 
 @synthesize textField=_textField;
-@synthesize titleLabel =_titleLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

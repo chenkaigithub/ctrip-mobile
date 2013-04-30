@@ -13,6 +13,7 @@
 @property (nonatomic,assign) NSUInteger productID;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *price;
+@property (nonatomic,retain) NSString *desc;
 @property (nonatomic, retain) NSString *thumbnailURL;
 
 @end

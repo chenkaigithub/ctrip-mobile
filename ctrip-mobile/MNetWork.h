@@ -7,17 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "MBProgressHUD.h"
 @protocol jsonDelegate <NSObject>
 
 -(void) setJson:(id)json;
 
 @end
 
-@interface MNetWork : NSObject
+@interface MNetWork : NSObject<MBProgressHUDDelegate>
 
 @property (assign,nonatomic) id<jsonDelegate> delegate;
 
--(void)getJsonDataWithURL:(NSString *)str;
+-(void)httpJsonResponse:(NSString *)str byController:(UIViewController *)controller;
 
 @end

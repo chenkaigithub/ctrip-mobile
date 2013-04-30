@@ -13,6 +13,7 @@
 @synthesize nameLabel= _nameLabel;
 @synthesize priceLabel = _priceLabel;
 @synthesize thumbnailView = _thumbnailView;
+@synthesize descLabel =_descLabel;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

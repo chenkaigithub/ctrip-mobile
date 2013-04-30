@@ -7,9 +7,8 @@
 //
 
 #import "MOrderCreateController.h"
-#import "NSString+URLEncoding.h"
-#import "AFNetworking.h"
-#import "MPaymentController.h"
+#import "NSString+Category.h"
+#import "Utility.h"
 @interface MOrderCreateController ()
 
 @end
@@ -41,9 +40,9 @@
                 NSString *field = textField.placeholder;
                 
                 if (value == nil ||[value isEqualToString:@""]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:[NSString stringWithFormat:@"请输入%@...",field] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                    [alertView show];
-                    [alertView release];
+                    
+                    [[Utility sharedObject] setAlertView:@"错误" withMessage:[NSString stringWithFormat:@"请输入%@...",field]];
+                    
                     return;
                 }
                 
@@ -54,9 +53,8 @@
                         }
                         else
                         {
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:@"请输入有效的Email..." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                            [alert show];
-                            [alert release];
+                            [[Utility sharedObject] setAlertView:@"错误" withMessage:@"请输入有效的Email..."];
+                            
                             return;
                         }
                         
@@ -81,7 +79,7 @@
     
     NSLog(@"80,%@",url);
     
-    [self.network getJsonDataWithURL:url];
+    [self.network httpJsonResponse:url byController:self];
 }
 
 -(void) setJson:(id)json
@@ -97,32 +95,11 @@
         NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/get_payment/?business_type=Tuan&order_type=6&description=%@&order_id=%@",[self.order.productName URLEncode],self.order.orderID];
         
         NSLog(@"@98,%@",url);
+        
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         
-        /*
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
         
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op,id response){
-            NSString *redirectHtml = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-            
-            MPaymentController *controller = [[[MPaymentController alloc] init] autorelease];
-            
-            controller.redirectHtml = redirectHtml;
-            
-            [self.navigationController pushViewController:controller animated:YES];
-            
-            
-        } failure:^(AFHTTPRequestOperation *op,NSError *err){
-            NSLog(@"103,%@",err.localizedDescription);
-        }];
-      
-        [operation start];
-        */
     }
-    else{
-        NSLog(@"99");
-    }
-    
     
 }
 

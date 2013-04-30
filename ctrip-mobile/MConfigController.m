@@ -13,7 +13,7 @@
 #import "Const.h"
 #import "MSelectController.h"
 #import "AFJSONRequestOperation.h"
-#import "NSString+URLEncoding.h"
+#import "NSString+Category.h"
 #import "MItemListController.h"
 #import "Item.h"
 @interface MConfigController ()
@@ -86,11 +86,23 @@
     
     MTextFieldCell *lowPriceCell = (MTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     
-    userDefaults.lowPrice = lowPriceCell.textField.text;
+    if ([lowPriceCell.textField.text isEqualToString:@""]) {
+        userDefaults.lowPrice = @"0";
+    }
+    else
+    {
+        userDefaults.lowPrice = lowPriceCell.textField.text;
+    }
     
     MTextFieldCell  *upperPriceCell = (MTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
     
-    userDefaults.upperPrice =upperPriceCell.textField.text;
+    if ([upperPriceCell.textField.text isEqualToString:@""]) {
+        userDefaults.upperPrice = @"8000";
+    }
+    else{
+        userDefaults.upperPrice =upperPriceCell.textField.text;
+    }
+    
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -206,7 +218,7 @@
         }
         
         if (row ==0) {
-            cell.titleLabel.text = @"关键字";
+            cell.textField.placeholder = @"关键字";
             
             if (userDefaults.keyWords!=nil) {
                 cell.textField.text = userDefaults.keyWords;
@@ -215,8 +227,8 @@
         }
         else if (row ==1)
         {
-            cell.titleLabel.text = @"最低价格";
-            NSLog(@"137,%@",userDefaults.lowPrice);
+            cell.textField.placeholder = @"最低价格";
+            
             if (userDefaults.lowPrice!=nil) {
                 cell.textField.text = userDefaults.lowPrice;
                 cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -226,7 +238,7 @@
         
         }
         else if (row ==2){
-            cell.titleLabel.text = @"最高价格";
+            cell.textField.placeholder = @"最高价格";
             
             if (userDefaults.upperPrice != nil) {
                 cell.textField.text = userDefaults.upperPrice;
@@ -254,6 +266,10 @@
             
             if (userDefaults.cityName!= nil) {
                 cell.detailTextLabel.text =userDefaults.cityName;
+            }
+            else
+            {
+                cell.detailTextLabel.text = @"北京";
             }
             
         }

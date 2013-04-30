@@ -1,32 +1,18 @@
 //
-//  GTMNSString+HTML.m
-//  Dealing with NSStrings that contain HTML
+//  NSString+Category.m
+//  ctrip-mobile
 //
-//  Copyright 2006-2008 Google Inc.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License"); you may not
-//  use this file except in compliance with the License.  You may obtain a copy
-//  of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-//  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-//  License for the specific language governing permissions and limitations under
-//  the License.
+//  Created by cao guangyao on 13-4-29.
+//  Copyright (c) 2013年 caoguangyao. All rights reserved.
 //
 
-//#import "GTMDefines.h"
-#import "NSString+GTMNSString_HTML.h"
+#import "NSString+Category.h"
 
 typedef struct {
 	NSString *escapeSequence;
 	unichar uchar;
 } HTMLEscapeMap;
 
-// Taken from http://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Special_characters
-// Ordered by uchar lowest to highest for bsearching
 static HTMLEscapeMap gAsciiHTMLEscapeMap[] = {
 	// A.2.2. Special characters
 	{ @"&quot;", 34 },
@@ -308,9 +294,6 @@ static HTMLEscapeMap gAsciiHTMLEscapeMap[] = {
 	{ @"&hearts;", 9829 },
 	{ @"&diams;", 9830 }
 };
-
-// Taken from http://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Special_characters
-// This is table A.2.2 Special Characters
 static HTMLEscapeMap gUnicodeHTMLEscapeMap[] = {
 	// C0 Controls and Basic Latin
 	{ @"&quot;", 34 },
@@ -370,7 +353,8 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 	return val;
 }
 
-@implementation NSString (GTMNSStringHTMLAdditions)
+
+@implementation NSString (Category)
 
 - (NSString *)gtm_stringByEscapingHTMLUsingTable:(HTMLEscapeMap*)table
                                           ofSize:(NSUInteger)size
@@ -516,7 +500,348 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 	} while ((subrange = [self rangeOfString:@"&" options:NSBackwardsSearch range:range]).length != 0);
 	return finalString;
 } // gtm_stringByUnescapingHTML
++(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = YES; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSString *laxString = @".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
+- (NSString *)stringByConvertingHTMLToPlainText {
+    
+	// Pool
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+	// Character sets
+	NSCharacterSet *stopCharacters = [NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"< \t\n\r%C%C%C%C", 0x0085, 0x000C, 0x2028, 0x2029]];
+	NSCharacterSet *newLineAndWhitespaceCharacters = [NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@" \t\n\r%C%C%C%C", 0x0085, 0x000C, 0x2028, 0x2029]];
+	NSCharacterSet *tagNameCharacters = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+    
+	// Scan and find all tags
+	NSMutableString *result = [[NSMutableString alloc] initWithCapacity:self.length];
+	NSScanner *scanner = [[NSScanner alloc] initWithString:self];
+	[scanner setCharactersToBeSkipped:nil];
+	[scanner setCaseSensitive:YES];
+	NSString *str = nil, *tagName = nil;
+	BOOL dontReplaceTagWithSpace = NO;
+	do {
+        
+		// Scan up to the start of a tag or whitespace
+		if ([scanner scanUpToCharactersFromSet:stopCharacters intoString:&str]) {
+			[result appendString:str];
+			str = nil; // reset
+		}
+        
+		// Check if we've stopped at a tag/comment or whitespace
+		if ([scanner scanString:@"<" intoString:NULL]) {
+            
+			// Stopped at a comment or tag
+			if ([scanner scanString:@"!--" intoString:NULL]) {
+                
+				// Comment
+				[scanner scanUpToString:@"-->" intoString:NULL];
+				[scanner scanString:@"-->" intoString:NULL];
+                
+			} else {
+                
+				// Tag - remove and replace with space unless it's
+				// a closing inline tag then dont replace with a space
+				if ([scanner scanString:@"/" intoString:NULL]) {
+                    
+					// Closing tag - replace with space unless it's inline
+					tagName = nil; dontReplaceTagWithSpace = NO;
+					if ([scanner scanCharactersFromSet:tagNameCharacters intoString:&tagName]) {
+						tagName = [tagName lowercaseString];
+						dontReplaceTagWithSpace = ([tagName isEqualToString:@"a"] ||
+												   [tagName isEqualToString:@"b"] ||
+												   [tagName isEqualToString:@"i"] ||
+												   [tagName isEqualToString:@"q"] ||
+												   [tagName isEqualToString:@"span"] ||
+												   [tagName isEqualToString:@"em"] ||
+												   [tagName isEqualToString:@"strong"] ||
+												   [tagName isEqualToString:@"cite"] ||
+												   [tagName isEqualToString:@"abbr"] ||
+												   [tagName isEqualToString:@"acronym"] ||
+												   [tagName isEqualToString:@"label"]);
+					}
+                    
+					// Replace tag with string unless it was an inline
+					if (!dontReplaceTagWithSpace && result.length > 0 && ![scanner isAtEnd]) [result appendString:@" "];
+                    
+				}
+                
+				// Scan past tag
+				[scanner scanUpToString:@">" intoString:NULL];
+				[scanner scanString:@">" intoString:NULL];
+                
+			}
+            
+		} else {
+            
+			// Stopped at whitespace - replace all whitespace and newlines with a space
+			if ([scanner scanCharactersFromSet:newLineAndWhitespaceCharacters intoString:NULL]) {
+				if (result.length > 0 && ![scanner isAtEnd]) [result appendString:@" "]; // Dont append space to beginning or end of result
+			}
+            
+		}
+        
+	} while (![scanner isAtEnd]);
+    
+	// Cleanup
+	[scanner release];
+    
+	// Decode HTML entities and return
+	NSString *retString = [[result stringByDecodingHTMLEntities] retain];
+	[result release];
+    
+	// Drain
+	[pool drain];
+    
+	// Return
+	return [retString autorelease];
+    
+}
+
+- (NSString *)stringByDecodingHTMLEntities {
+    // Can return self so create new string if we're a mutable string
+    return [NSString stringWithString:[self gtm_stringByUnescapingFromHTML]];
+}
 
 
+- (NSString *)stringByEncodingHTMLEntities {
+    // Can return self so create new string if we're a mutable string
+    return [NSString stringWithString:[self gtm_stringByEscapingForAsciiHTML]];
+}
+
+- (NSString *)stringByEncodingHTMLEntities:(BOOL)isUnicode {
+    // Can return self so create new string if we're a mutable string
+    return [NSString stringWithString:(isUnicode ? [self gtm_stringByEscapingForHTML] : [self gtm_stringByEscapingForAsciiHTML])];
+}
+
+- (NSString *)stringWithNewLinesAsBRs {
+    
+	// Pool
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+	// Strange New lines:
+	//	Next Line, U+0085
+	//	Form Feed, U+000C
+	//	Line Separator, U+2028
+	//	Paragraph Separator, U+2029
+    
+	// Scanner
+	NSScanner *scanner = [[NSScanner alloc] initWithString:self];
+	[scanner setCharactersToBeSkipped:nil];
+	NSMutableString *result = [[NSMutableString alloc] init];
+	NSString *temp;
+	NSCharacterSet *newLineCharacters = [NSCharacterSet characterSetWithCharactersInString:
+										 [NSString stringWithFormat:@"\n\r%C%C%C%C", 0x0085, 0x000C, 0x2028, 0x2029]];
+	// Scan
+	do {
+        
+		// Get non new line characters
+		temp = nil;
+		[scanner scanUpToCharactersFromSet:newLineCharacters intoString:&temp];
+		if (temp) [result appendString:temp];
+		temp = nil;
+        
+		// Add <br /> s
+		if ([scanner scanString:@"\r\n" intoString:nil]) {
+            
+			// Combine \r\n into just 1 <br />
+			[result appendString:@"<br />"];
+            
+		} else if ([scanner scanCharactersFromSet:newLineCharacters intoString:&temp]) {
+            
+			// Scan other new line characters and add <br /> s
+			if (temp) {
+				for (NSUInteger i = 0; i < temp.length; i++) {
+					[result appendString:@"<br />"];
+				}
+			}
+            
+		}
+        
+	} while (![scanner isAtEnd]);
+    
+	// Cleanup & return
+	[scanner release];
+	NSString *retString = [[NSString stringWithString:result] retain];
+	[result release];
+    
+	// Drain
+	[pool drain];
+    
+	// Return
+	return [retString autorelease];
+    
+}
+
+- (NSString *)stringByRemovingNewLinesAndWhitespace {
+    
+	// Pool
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+	// Strange New lines:
+	//	Next Line, U+0085
+	//	Form Feed, U+000C
+	//	Line Separator, U+2028
+	//	Paragraph Separator, U+2029
+    
+	// Scanner
+	NSScanner *scanner = [[NSScanner alloc] initWithString:self];
+	[scanner setCharactersToBeSkipped:nil];
+	NSMutableString *result = [[NSMutableString alloc] init];
+	NSString *temp;
+	NSCharacterSet *newLineAndWhitespaceCharacters = [NSCharacterSet characterSetWithCharactersInString:
+													  [NSString stringWithFormat:@" \t\n\r%C%C%C%C", 0x0085, 0x000C, 0x2028, 0x2029]];
+	// Scan
+	while (![scanner isAtEnd]) {
+        
+		// Get non new line or whitespace characters
+		temp = nil;
+		[scanner scanUpToCharactersFromSet:newLineAndWhitespaceCharacters intoString:&temp];
+		if (temp) [result appendString:temp];
+        
+		// Replace with a space
+		if ([scanner scanCharactersFromSet:newLineAndWhitespaceCharacters intoString:NULL]) {
+			if (result.length > 0 && ![scanner isAtEnd]) // Dont append space to beginning or end of result
+				[result appendString:@" "];
+		}
+        
+	}
+    
+	// Cleanup
+	[scanner release];
+    
+	// Return
+	NSString *retString = [[NSString stringWithString:result] retain];
+	[result release];
+    
+	// Drain
+	[pool drain];
+    
+	// Return
+	return [retString autorelease];
+    
+}
+
+- (NSString *)stringByLinkifyingURLs {
+    if (!NSClassFromString(@"NSRegularExpression")) return self;
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *pattern = @"(?<!=\")\\b((http|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%%&amp;:/~\\+#]*[\\w\\-\\@?^=%%&amp;/~\\+#])?)";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    NSString *modifiedString = [[regex stringByReplacingMatchesInString:self options:0 range:NSMakeRange(0, [self length])
+                                                           withTemplate:@"<a href=\"$1\" class=\"linkified\">$1</a>"] retain];
+    [pool drain];
+    return [modifiedString autorelease];
+}
+
+- (NSString *)stringByStrippingTags {
+    
+	// Pool
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+	// Find first & and short-cut if we can
+	NSUInteger ampIndex = [self rangeOfString:@"<" options:NSLiteralSearch].location;
+	if (ampIndex == NSNotFound) {
+		return [NSString stringWithString:self]; // return copy of string as no tags found
+	}
+    
+	// Scan and find all tags
+	NSScanner *scanner = [NSScanner scannerWithString:self];
+	[scanner setCharactersToBeSkipped:nil];
+	NSMutableSet *tags = [[NSMutableSet alloc] init];
+	NSString *tag;
+	do {
+        
+		// Scan up to <
+		tag = nil;
+		[scanner scanUpToString:@"<" intoString:NULL];
+		[scanner scanUpToString:@">" intoString:&tag];
+        
+		// Add to set
+		if (tag) {
+			NSString *t = [[NSString alloc] initWithFormat:@"%@>", tag];
+			[tags addObject:t];
+			[t release];
+		}
+        
+	} while (![scanner isAtEnd]);
+    
+	// Strings
+	NSMutableString *result = [[NSMutableString alloc] initWithString:self];
+	NSString *finalString;
+    
+	// Replace tags
+	NSString *replacement;
+	for (NSString *t in tags) {
+        
+		// Replace tag with space unless it's an inline element
+		replacement = @" ";
+		if ([t isEqualToString:@"<a>"] ||
+			[t isEqualToString:@"</a>"] ||
+			[t isEqualToString:@"<span>"] ||
+			[t isEqualToString:@"</span>"] ||
+			[t isEqualToString:@"<strong>"] ||
+			[t isEqualToString:@"</strong>"] ||
+			[t isEqualToString:@"<em>"] ||
+			[t isEqualToString:@"</em>"]) {
+			replacement = @"";
+		}
+        
+		// Replace
+		[result replaceOccurrencesOfString:t
+								withString:replacement
+								   options:NSLiteralSearch
+									 range:NSMakeRange(0, result.length)];
+	}
+    
+	// Remove multi-spaces and line breaks
+	finalString = [[result stringByRemovingNewLinesAndWhitespace] retain];
+    
+	// Cleanup
+	[result release];
+	[tags release];
+    
+	// Drain
+	[pool drain];
+    
+	// Return
+    return [finalString autorelease];
+    
+}
+
+- (NSString *)URLEncode{
+    if ([self length] == 0) {
+        NSString *str_empty = @"";
+        [str_empty autorelease];
+        return str_empty;
+    }
+    NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                           (CFStringRef)self,
+                                                                           NULL,
+																		   CFSTR("!*'();:@&=+$,/?%#[]"),
+                                                                           kCFStringEncodingUTF8);
+    [result autorelease];
+	return result;
+}
+
+- (NSString*)URLDecode
+{
+    if ([self length] == 0 ) {
+        return @"";
+    }
+    
+	NSString *result = (NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+																						   (CFStringRef)self,
+																						   CFSTR(""),
+																						   kCFStringEncodingUTF8);
+    [result autorelease];
+	return result;
+}
 
 @end

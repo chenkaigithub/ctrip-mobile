@@ -7,36 +7,78 @@
 //
 
 #import "MNetWork.h"
-#import "AFJSONRequestOperation.h"
-#import "AFNetworkActivityIndicatorManager.h"
+#import "AFNetworking.h"
+
 @implementation MNetWork
 
-@synthesize delegate;
--(void)getJsonDataWithURL:(NSString *)str
+@synthesize delegate=_delegate;
+
+#pragma mark -- mbprogresshud delegate
+
+-(void) hudWasHidden:(MBProgressHUD *)hud
 {
-    NSLog(@"17@,%@",str);
+    [hud removeFromSuperview];
+	[hud release];
+	hud = nil;
+}
+
+-(void)httpJsonResponse:(NSString *)str byController:(UIViewController *)controller
+{
     NSURL *url = [NSURL URLWithString:str];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        [delegate setJson:JSON];
-        
- 
-        
-    } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
-        NSLog(@"Failed: %@",[error localizedDescription]);
-        
-        [[AFNetworkActivityIndicatorManager  sharedManager] setEnabled:NO];
-    }];
+    AFNetworkActivityIndicatorManager *indicatorManger = [AFNetworkActivityIndicatorManager sharedManager];
     
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:controller.view];
+    
+    [controller.view addSubview:hud];
+    
+    [hud setDelegate:self];
+    [hud setLabelText:@"请稍后"];
+    
+    [hud setDetailsLabelText:@"正在读取数据..."];
+    
+    [hud setSquare:YES];
+    
+    [hud show:YES];
+    
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        [indicatorManger setEnabled:NO];
+        
+        [hud hide:YES];
+        
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        
+        [self.delegate setJson:JSON];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        NSLog(@"Failed:@25,%@",[error localizedDescription]);
+        
+        [indicatorManger setEnabled:NO];
+        
+        [hud hide:YES];
+        
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        
+    }];
     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
     
-    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    [indicatorManger setEnabled:YES];
     
-    [operation start];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
+    [op start];
+    
+}
+
+
+-(void)dealloc
+{
+    [_delegate release];
+ 
+    [super dealloc];
 }
 
 @end

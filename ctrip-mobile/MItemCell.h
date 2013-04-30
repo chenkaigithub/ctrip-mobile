@@ -12,5 +12,6 @@
 
 @property(nonatomic,retain) IBOutlet UILabel *nameLabel;
 @property(nonatomic,retain) IBOutlet UILabel *priceLabel;
+@property(nonatomic,retain) IBOutlet UILabel *descLabel;
 @property(nonatomic,retain) IBOutlet UIImageView *thumbnailView;
 @end

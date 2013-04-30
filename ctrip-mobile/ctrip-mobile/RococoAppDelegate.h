@@ -12,9 +12,13 @@
 #import "MWindow.h"
 #import "MNetWork.h"
 
+
 @class MItemListController;
 
 @interface RococoAppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate,jsonDelegate>
+{
+    
+}
 
 
 @property (strong, nonatomic) MWindow *window;

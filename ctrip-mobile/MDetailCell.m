@@ -35,8 +35,12 @@
     
     [super layoutSubviews];
     
+    self.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
+    
+    self.detailLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
+    
     [self resizeLabel:self.titleLabel fitSize:NO];
-    [self resizeLabel:self.detailLabel fitSize:NO];
+    [self resizeLabel:self.detailLabel fitSize:YES];
 
     
 }
@@ -57,5 +61,8 @@
         
     }
     
+    //[label setBackgroundColor:[UIColor greenColor]];
+
 }
+
 @end

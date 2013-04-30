@@ -25,7 +25,7 @@
         // Initialization code
         carousel = [[iCarousel alloc] initWithFrame:self.bounds];
         carousel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        carousel.type = iCarouselTypeCoverFlow2;
+        carousel.type = iCarouselTypeInvertedTimeMachine;
         carousel.delegate = self;
         carousel.dataSource = self;
     }
@@ -72,6 +72,10 @@
         view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] autorelease];
         
         [((UIImageView *)view) setImageWithURL:url];
+        
+        NSLog(@"url:%@",url);
+        NSLog(@"width:%.0f height:%.0f",view.frame.size.width,view.frame.size.height);
+        
         view.contentMode = UIViewContentModeCenter;
     }
     

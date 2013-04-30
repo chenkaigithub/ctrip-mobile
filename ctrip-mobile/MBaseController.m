@@ -43,9 +43,15 @@
 {
     [super viewDidLoad];
     
+    //set back button in navigation bar
+    UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil] autorelease];
+    
+    self.navigationItem.backBarButtonItem =backButton;
+    
     // Assign our own backgroud for the view
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"common_bg"]];
     self.tableView.backgroundColor = [UIColor clearColor];
+    
     
     // Add padding to the top of the table view
     UIEdgeInsets inset = UIEdgeInsetsMake(5, 0, 0, 0);
@@ -68,14 +74,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 0;
 }
