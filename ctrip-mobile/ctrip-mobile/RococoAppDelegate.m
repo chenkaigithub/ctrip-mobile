@@ -217,7 +217,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         
         NSString *url = [NSString stringWithFormat:@"%@?city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",requireURL,[city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],@""];
         
-        NSLog(@"144@,%@",[city URLEncode]);
+        NSLog(@"144@,%@,%@",[city URLEncode],city);
         
         [self.network httpJsonResponse:url byController:self.viewController];
         
@@ -242,6 +242,11 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     
     UIImageView *splashView = [[UIImageView alloc] initWithFrame:screenRect];
     splashView.image = [UIImage imageNamed:@"Default.png"];
+    
+    UIImageView *houseView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 256, 256)] autorelease];
+    houseView.image = [UIImage imageNamed:@"House-icon.png"];
+    houseView.center = CGPointMake(screenWidth/2, screenHeight/2);
+    [splashView addSubview:houseView];
     
     UIImageView *planeView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 155, 100)];
     planeView.image = [UIImage imageNamed:@"airplane.png"];

@@ -29,7 +29,14 @@
     
     self.title = self.name;
     
-    MKMapView *mapView = [[[MKMapView alloc] initWithFrame:self.view.bounds] autorelease];
+    //MKMapView *mapView = [[[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)] autorelease];
+    CGFloat height = [[UIScreen mainScreen] bounds].size.height-64;
+    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+    
+    NSLog(@"width == %f",width);
+    
+    CGRect frame = CGRectMake(0, 0, width, height);
+    MKMapView *mapView = [[[MKMapView alloc] initWithFrame:frame] autorelease];
     mapView.delegate = self;
     
     MKCoordinateRegion region;

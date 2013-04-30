@@ -8,6 +8,7 @@
 
 #import "MNetWork.h"
 #import "AFNetworking.h"
+#import "UIAlertView+Blocks.h"
 
 @implementation MNetWork
 
@@ -61,6 +62,21 @@
         [hud hide:YES];
         
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        
+        
+        RIButtonItem *retryButton = [RIButtonItem item];
+        retryButton.label =@"重试";
+        retryButton.action = ^{
+            [self httpJsonResponse:str byController:controller];
+        };
+        
+        RIButtonItem *cancelButton = [RIButtonItem itemWithLabel:@"取消"];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:@"发生异常，请检查网络连接，让后重试。" cancelButtonItem:cancelButton otherButtonItems:retryButton, nil];
+        [alert show];
+        
+        [alert release];
+        
         
     }];
     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];

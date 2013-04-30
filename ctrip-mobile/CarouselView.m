@@ -25,7 +25,7 @@
         // Initialization code
         carousel = [[iCarousel alloc] initWithFrame:self.bounds];
         carousel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        carousel.type = iCarouselTypeInvertedTimeMachine;
+        carousel.type = 1;
         carousel.delegate = self;
         carousel.dataSource = self;
     }
@@ -69,14 +69,17 @@
     {
         NSURL *url=[NSURL URLWithString: [items objectAtIndex:index]];
         
-        view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] autorelease];
+        view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 280, 280)] autorelease];
+        
+        //((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
         
         [((UIImageView *)view) setImageWithURL:url];
+        
         
         NSLog(@"url:%@",url);
         NSLog(@"width:%.0f height:%.0f",view.frame.size.width,view.frame.size.height);
         
-        view.contentMode = UIViewContentModeCenter;
+        view.contentMode = UIViewContentModeScaleAspectFit;
     }
     
     return view;

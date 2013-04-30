@@ -46,13 +46,11 @@
     
     self.navigationItem.title = self.title;
     
-    UIBarButtonItem *btnConfig = [[[UIBarButtonItem alloc] initWithTitle:@"选项" style:UIBarButtonItemStyleBordered target:self action:@selector(showConfig)] autorelease];
+    //UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(showConfig)] autorelease];
+    UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithTitle:@"选项" style:UIBarButtonItemStyleBordered target:self action:@selector(showConfig)] autorelease];
     
-    self.navigationItem.rightBarButtonItem = btnConfig;
+    self.navigationItem.rightBarButtonItem = settingsButton;//btnConfig;
     
-    
-    /*UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    [[self navigationItem] setBackBarButtonItem:backButton];*/
     
     // Remove table cell separator
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -114,22 +112,20 @@
     if (cell==nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MItemCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
+        
+        Item *item = [items objectAtIndex:[indexPath row]];
+        
+        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL]];
+        cell.nameLabel.text = item.name;
+        cell.priceLabel.text = [NSString stringWithFormat:@"价格：%@",item.price];
+        cell.descLabel.text = item.desc;
+        
+        UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+        
+        UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+        cellBackgroundView.image = background;
+        cell.backgroundView = cellBackgroundView;
     }
-    
-    Item *item = [items objectAtIndex:[indexPath row]];
-    
-    [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL]];
-    cell.nameLabel.text = item.name;
-    cell.priceLabel.text = item.price;
-    cell.descLabel.text = item.desc;
-    
-    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
-    
-    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
-    cellBackgroundView.image = background;
-    cell.backgroundView = cellBackgroundView;
-    
-  
     
     return cell;
 }

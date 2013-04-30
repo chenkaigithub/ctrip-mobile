@@ -12,10 +12,10 @@
 #import "UserDefaults.h"
 #import "Const.h"
 #import "MSelectController.h"
-#import "AFJSONRequestOperation.h"
 #import "NSString+Category.h"
 #import "MItemListController.h"
 #import "Item.h"
+#import "Utility.h"
 @interface MConfigController ()
 
 @end
@@ -125,12 +125,65 @@
     
     NSLog(@"62%@",urlString);
     
-    MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
+    [self.network httpJsonResponse:urlString byController:self];
     
-    [self requireURL:urlString ToController:controller];
-    
-    
-    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)setJson:(id)json
+{
+    NSLog(@"@134,%@",json);
+    if ([json isKindOfClass:[NSArray class]]) {
+        
+        NSArray *dataList = [NSArray arrayWithArray:json];
+        NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
+        
+        NSDictionary *dataItem = (NSDictionary *)[dataList lastObject];
+        
+        if ([[dataItem allKeys] count]==2) {
+            MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
+            NSMutableArray *province_list = [NSMutableArray arrayWithCapacity:35];
+            
+            for (NSDictionary *dic in (NSArray *)json) {
+                NSString *province = [dic valueForKey:@"name"];
+                [province_list addObject:province];
+            }
+            
+            controller.dataList = province_list;
+            controller.tag=100;
+            controller.title = @"省市自治区";
+            
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+        else{
+            MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
+            
+            for (id data in dataList) {
+                if ([data isKindOfClass:[NSDictionary class]]) {
+                    Item *i = [[Item new] autorelease];
+                    i.name = [data valueForKey:@"name"];
+                    i.price = [data valueForKey:@"price"];
+                    i.thumbnailURL = [data valueForKey:@"img"];
+                    i.productID = [[data valueForKey:@"product_id"] integerValue];
+                    i.desc = [[data valueForKey:@"description"] stringByConvertingHTMLToPlainText];
+                    [itemList addObject:i];
+                    
+                }
+            }
+            
+            controller.items = itemList;
+            
+            [controller.tableView reloadData];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        
+    }
+    else
+    {
+        NSLog(@"@166,%@",json);
+        
+        [[Utility sharedObject] setAlertView:@"错误" withMessage:@"对不起，找不到您需要的内容..."];
+    }
     
 }
 
@@ -154,14 +207,6 @@
     
     self.navigationItem.rightBarButtonItem = btnDone;
     
-    //UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    //[self.tableView addGestureRecognizer:gestureRecognizer];
-   
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -319,10 +364,8 @@
         MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
         if (row ==0) {
             //cities
-            controller.tag=100;
-            controller.title = @"省市自治区";
-            [self requireDataWithURL:@"http://ctrip.herokuapp.com/api/province_list/" ToController:controller];
-            
+            [self.network httpJsonResponse:@"http://ctrip.herokuapp.com/api/province_list/" byController:self];
+            return;
             
         }
         else if(row == 1){
@@ -345,72 +388,7 @@
     }
     
  }
--(void) requireURL:(NSString *) urlString ToController:(MItemListController *) controller{
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSArray *dataList = [NSArray arrayWithArray:JSON];
-        NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
-        for (id data in dataList) {
-            if ([data isKindOfClass:[NSDictionary class]]) {
-                Item *i = [[Item new] autorelease];
-                i.name = [data valueForKey:@"name"];
-                i.price = [data valueForKey:@"price"];
-                i.thumbnailURL = [data valueForKey:@"img"];
-                i.productID = [[data valueForKey:@"product_id"] integerValue];
-                
-                [itemList addObject:i];
-                
-            }
-        }
-        
-        controller.items = itemList;
-        
-        [controller.tableView reloadData];
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        
-    } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
-        NSLog(@"Failed: %@",[error localizedDescription]);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
-    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
-    [operation start];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
 
 
--(void) requireDataWithURL:(NSString *) urlString ToController:(MSelectController *) controller{
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSMutableArray *province_list = [NSMutableArray arrayWithCapacity:35];
-        if ([JSON isKindOfClass:[NSArray class]]) {
-            for (NSDictionary *dic in (NSArray *)JSON) {
-                NSString *province = [dic valueForKey:@"name"];
-                [province_list addObject:province];
-            }
-            controller.dataList = province_list;
-            [controller.tableView reloadData];
-        }
-        
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        
-    } failure:^(NSURLRequest *request , NSURLResponse *response , NSError *error , id JSON){
-        NSLog(@"Failed: %@",[error localizedDescription]);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
-    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
-    [operation start];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
 
 @end
