@@ -120,12 +120,14 @@
         cell.priceLabel.text = [NSString stringWithFormat:@"价格：%@",item.price];
         cell.descLabel.text = item.desc;
         
-        UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
         
-        UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
-        cellBackgroundView.image = background;
-        cell.backgroundView = cellBackgroundView;
     }
+    
+    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+    
+    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+    cellBackgroundView.image = background;
+    cell.backgroundView = cellBackgroundView;
     
     return cell;
 }
