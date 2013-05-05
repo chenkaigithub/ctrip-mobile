@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "MBaseController.h"
-@interface MItemListController : MBaseController<MBProgressHUDDelegate>{
+@interface MItemListController : MBaseController<MBProgressHUDDelegate,UIActionSheetDelegate>{
     MBProgressHUD *hudView;
 }
 

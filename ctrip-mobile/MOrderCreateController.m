@@ -9,6 +9,8 @@
 #import "MOrderCreateController.h"
 #import "NSString+Category.h"
 #import "Utility.h"
+#import "OrderEntity.h"
+#import "RococoAppDelegate.h"
 @interface MOrderCreateController ()
 
 @end
@@ -95,6 +97,30 @@
         NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/get_payment/?business_type=Tuan&order_type=6&description=%@&order_id=%@",[self.order.productName URLEncode],self.order.orderID];
         
         NSLog(@"@98,%@",url);
+        
+        //save to local database
+        //need data orderid = self.order.orderID & productid = self.order.productID
+        
+        NSManagedObjectContext *context = [(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        OrderEntity *o = (OrderEntity *)[NSEntityDescription insertNewObjectForEntityForName:@"OrderEntity" inManagedObjectContext:context];
+        o.orderID = self.order.orderID;
+        o.orderStatus = @"尚未支付";//self.order.status;
+        o.orderEmail = self.order.email;
+        o.orderTel = self.order.mobile;
+        o.orderPrice = self.order.price;
+        o.orderQuantity = self.order.quantity;
+        
+        
+        o.productID = self.order.productID;
+        o.productName = self.order.productName;
+        NSError *error;
+        
+        if (![context save:&error]) {
+            NSLog(@"error!");
+        }else {
+            NSLog(@"save order ok.");
+        }
+        
         
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         

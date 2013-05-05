@@ -19,12 +19,75 @@
 #import "Reachability.h"
 #import "Utility.h"
 #import "NSString+Category.h"
+#import "OrderEntity.h"
 
 static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_list/";
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
 
 @implementation RococoAppDelegate
 
+- (void)saveContext
+{
+    
+    NSError *error = nil;
+    NSManagedObjectContext *objectContext = self.managedObjectContext;
+    if (objectContext != nil)
+    {
+        if ([objectContext hasChanges] && ![objectContext save:&error])
+        {
+            // add error handling here
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+//Explicitly write Core Data accessors
+- (NSManagedObjectContext *) managedObjectContext {
+    if (managedObjectContext != nil) {
+        return managedObjectContext;
+    }
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [managedObjectContext setPersistentStoreCoordinator: coordinator];
+    }
+    
+    return managedObjectContext;
+}
+
+- (NSManagedObjectModel *)managedObjectModel {
+    if (managedObjectModel != nil) {
+        return managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"MDB" withExtension:@"momd"];
+    managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    //managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+    
+    return managedObjectModel;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+    if (persistentStoreCoordinator != nil) {
+        return persistentStoreCoordinator;
+    }
+    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory]
+                                               stringByAppendingPathComponent: @"ctrip-mobile.sqlite"]];
+    NSError *error = nil;
+    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]
+                                  initWithManagedObjectModel:[self managedObjectModel]];
+    if(![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                                 configuration:nil URL:storeUrl options:nil error:&error]) {
+        /*Error for store creation should be handled in here*/
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return persistentStoreCoordinator;
+}
+
+- (NSString *)applicationDocumentsDirectory {
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
 #pragma mark - net work delegate
 
 -(void) setJson:(id)json
@@ -118,6 +181,10 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 
 - (void)dealloc
 {
+    [managedObjectContext release];
+    [managedObjectModel release];
+    [persistentStoreCoordinator release];
+    
     [_network release];
     [_window release];
     [_viewController release];
@@ -161,6 +228,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
    
+    
     self.window = [[[MWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     self.viewController = [[[MItemListController alloc] initWithStyle:UITableViewStylePlain] autorelease];
@@ -175,6 +243,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     self.window.rootViewController = nav;
     
     self.viewController.title = @"团购";
+    
     
     
     
@@ -311,14 +380,44 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
         
         NSLog(@"252,%@",params);
         
-        /*NSString *amount = [params valueForKey:@"Amount"];
-        NSString *currencyCode = [params objectForKey:@"CurrencyCode"];
-        NSString *merchantData = [[params valueForKey:@"MerchantData"] URLDecode];
-        NSString *orderID = [params objectForKey:@"OrderID"];*/
+        NSString *amount = [params valueForKey:@"Amount"];
+        //NSString *currencyCode = [params objectForKey:@"CurrencyCode"];
+        //NSString *merchantData = [[params valueForKey:@"MerchantData"] URLDecode];
+        NSString *orderID = [params objectForKey:@"OrderID"];
         NSInteger status = [[params objectForKey:@"Status"] intValue];
-        //NSString *transactionID = [params objectForKey:@"TransactionID"];
+        NSString *transactionID = [params objectForKey:@"TransactionID"];
         
         if (status==1) {
+            
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:[self managedObjectContext]];
+            [request setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
+            
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            
+            NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
+            
+            if ([objects count]==0) {
+                NSLog(@"no matches");
+            }
+            else{
+                OrderEntity *o = [objects objectAtIndex:0];
+                o.orderStatus = @"支付成功";//[NSString stringWithFormat:@"%d",status];
+                NSError *error;
+                
+                if (![[self managedObjectContext] save:&error]) {
+                    NSLog(@"error!");
+                }else {
+                    NSLog(@"save order ok.");
+                }
+
+            }
+            [request release];
             
             [[Utility sharedObject] setAlertView:@"支付成功" withMessage:@"稍后将有短信和邮件提醒，请注意查收，如有任何疑问，请拨打1010-6666客服热线。"];
             

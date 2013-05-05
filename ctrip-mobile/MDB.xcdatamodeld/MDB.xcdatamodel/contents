@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="OrderEntity" representedClassName="OrderEntity" syncable="YES">
+        <attribute name="expirationDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderPrice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderQuantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderTel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ticketID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ticketPassword" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="OrderEntity" positionX="160" positionY="192" width="128" height="210"/>
+    </elements>
+</model>

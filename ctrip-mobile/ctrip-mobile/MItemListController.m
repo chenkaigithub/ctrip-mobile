@@ -15,6 +15,8 @@
 #import "Const.h"
 #import "ItemDetail.h"
 #import <MapKit/MapKit.h>
+#import "UIActionSheet+Blocks.h"
+#import "MMyOrderController.h"
 @interface MItemListController ()
     
 @end
@@ -40,6 +42,35 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+-(void)showOrders
+{
+    MMyOrderController *controller = [[[MMyOrderController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+
+}
+
+-(void)showActionSheet
+{
+    RIButtonItem *configItem = [RIButtonItem item];
+    configItem.label = @"选项";
+    configItem.action = ^{
+        [self showConfig];
+    };
+    
+    RIButtonItem *myorderItem = [RIButtonItem item];
+    myorderItem.label = @"我的订单";
+    myorderItem.action = ^{
+        [self showOrders];
+    };
+    
+    RIButtonItem *cancelButton = [RIButtonItem itemWithLabel:@"取消"];
+    
+    UIActionSheet *actionSheet  = [[[UIActionSheet alloc] initWithTitle:nil cancelButtonItem:cancelButton destructiveButtonItem:nil otherButtonItems:configItem,myorderItem, nil] autorelease ];
+    actionSheet.actionSheetStyle =UIActionSheetStyleBlackTranslucent;
+    [actionSheet showInView:self.view];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,9 +78,11 @@
     self.navigationItem.title = self.title;
     
     //UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(showConfig)] autorelease];
-    UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithTitle:@"选项" style:UIBarButtonItemStyleBordered target:self action:@selector(showConfig)] autorelease];
+    UIBarButtonItem *actionButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)] autorelease];
     
-    self.navigationItem.rightBarButtonItem = settingsButton;//btnConfig;
+    //UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithTitle:@"选项" style:UIBarButtonItemStyleBordered target:self action:@selector(showConfig)] autorelease];
+    
+    self.navigationItem.rightBarButtonItem = actionButton;//settingsButton;//btnConfig;
     
     
     // Remove table cell separator

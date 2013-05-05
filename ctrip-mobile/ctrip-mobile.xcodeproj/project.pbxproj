@@ -100,6 +100,12 @@
 		801343DF172FA8DC007FEBB1 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 801343DA172FA8DC007FEBB1 /* RIButtonItem.m */; };
 		801343E0172FA8DC007FEBB1 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 801343DC172FA8DC007FEBB1 /* UIActionSheet+Blocks.m */; };
 		801343E1172FA8DC007FEBB1 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 801343DE172FA8DC007FEBB1 /* UIAlertView+Blocks.m */; };
+		802E60871733DE7500E7BBE3 /* MDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 802E60851733DE7500E7BBE3 /* MDB.xcdatamodeld */; };
+		802E608A1733E0B600E7BBE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802E60891733E0B600E7BBE3 /* CoreData.framework */; };
+		802E60941734C99300E7BBE3 /* MMyOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 802E60931734C99300E7BBE3 /* MMyOrderController.m */; };
+		80C963321736339A007A983A /* OrderEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C963311736339A007A983A /* OrderEntity.m */; };
+		80C9633917363E1C007A983A /* MOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C9633817363E1C007A983A /* MOrderCell.m */; };
+		80C9633C17364E6A007A983A /* MOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C9633B17364E6A007A983A /* MOrderDetailController.m */; };
 		80D37959172E29D6008075AF /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D37958172E29D6008075AF /* Utility.m */; };
 		80D3795D172E2AD2008075AF /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D3795C172E2AD2008075AF /* NSString+Category.m */; };
 		80D379A7172EDE55008075AF /* NotifyCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 80D379A3172EDE53008075AF /* NotifyCheck.png */; };
@@ -256,6 +262,16 @@
 		801343DC172FA8DC007FEBB1 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
 		801343DD172FA8DC007FEBB1 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
 		801343DE172FA8DC007FEBB1 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
+		802E60861733DE7500E7BBE3 /* MDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MDB.xcdatamodel; sourceTree = "<group>"; };
+		802E60891733E0B600E7BBE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		802E60921734C99300E7BBE3 /* MMyOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyOrderController.h; sourceTree = "<group>"; };
+		802E60931734C99300E7BBE3 /* MMyOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyOrderController.m; sourceTree = "<group>"; };
+		80C963301736339A007A983A /* OrderEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderEntity.h; sourceTree = "<group>"; };
+		80C963311736339A007A983A /* OrderEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderEntity.m; sourceTree = "<group>"; };
+		80C9633717363E1C007A983A /* MOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOrderCell.h; sourceTree = "<group>"; };
+		80C9633817363E1C007A983A /* MOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOrderCell.m; sourceTree = "<group>"; };
+		80C9633A17364E6A007A983A /* MOrderDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOrderDetailController.h; sourceTree = "<group>"; };
+		80C9633B17364E6A007A983A /* MOrderDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOrderDetailController.m; sourceTree = "<group>"; };
 		80D37957172E29D6008075AF /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		80D37958172E29D6008075AF /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		80D3795B172E2AD2008075AF /* NSString+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
@@ -273,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				802E608A1733E0B600E7BBE3 /* CoreData.framework in Frameworks */,
 				2B8725511724FF4B00FC5FC7 /* MapKit.framework in Frameworks */,
 				2B774CB7172110BE00FFD9DF /* QuartzCore.framework in Frameworks */,
 				2B188FE5171D1DFC000CC570 /* libz.dylib in Frameworks */,
@@ -324,6 +341,7 @@
 		2B17DD8517163AC500C7AB97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				802E60891733E0B600E7BBE3 /* CoreData.framework */,
 				2B8725501724FF4B00FC5FC7 /* MapKit.framework */,
 				2B188FE4171D1DFC000CC570 /* libz.dylib */,
 				2B774CB6172110BE00FFD9DF /* QuartzCore.framework */,
@@ -496,6 +514,8 @@
 				2B8725491724F62B00FC5FC7 /* MDetailCell.xib */,
 				2B0A0D62172628D30057D9DD /* MDetailCell.h */,
 				2B0A0D63172628D30057D9DD /* MDetailCell.m */,
+				80C9633717363E1C007A983A /* MOrderCell.h */,
+				80C9633817363E1C007A983A /* MOrderCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -503,6 +523,9 @@
 		2B82CB96171E395600A5A4EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				80C963301736339A007A983A /* OrderEntity.h */,
+				80C963311736339A007A983A /* OrderEntity.m */,
+				802E60851733DE7500E7BBE3 /* MDB.xcdatamodeld */,
 				2B82CBC0171E9B0400A5A4EC /* UserDefaults.h */,
 				2B82CBC1171E9B0400A5A4EC /* UserDefaults.m */,
 				2B82CB97171E399A00A5A4EC /* Item.h */,
@@ -536,6 +559,10 @@
 				2BF13BAE172778200031AE64 /* MOrderCreateController.m */,
 				8013439E172F74D0007FEBB1 /* MMapController.h */,
 				8013439F172F74D0007FEBB1 /* MMapController.m */,
+				802E60921734C99300E7BBE3 /* MMyOrderController.h */,
+				802E60931734C99300E7BBE3 /* MMyOrderController.m */,
+				80C9633A17364E6A007A983A /* MOrderDetailController.h */,
+				80C9633B17364E6A007A983A /* MOrderDetailController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -707,6 +734,11 @@
 				801343E0172FA8DC007FEBB1 /* UIActionSheet+Blocks.m in Sources */,
 				801343E1172FA8DC007FEBB1 /* UIAlertView+Blocks.m in Sources */,
 				2BCB41851733AFDF00B4C12E /* Reachability.m in Sources */,
+				802E60871733DE7500E7BBE3 /* MDB.xcdatamodeld in Sources */,
+				802E60941734C99300E7BBE3 /* MMyOrderController.m in Sources */,
+				80C963321736339A007A983A /* OrderEntity.m in Sources */,
+				80C9633917363E1C007A983A /* MOrderCell.m in Sources */,
+				80C9633C17364E6A007A983A /* MOrderDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +869,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		802E60851733DE7500E7BBE3 /* MDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				802E60861733DE7500E7BBE3 /* MDB.xcdatamodel */,
+			);
+			currentVersion = 802E60861733DE7500E7BBE3 /* MDB.xcdatamodel */;
+			path = MDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2B17DD7B17163AC500C7AB97 /* Project object */;
 }
