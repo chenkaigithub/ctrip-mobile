@@ -8,6 +8,7 @@
 
 #import "Utility.h"
 #import "JSNotifier.h"
+#import "NSString+Category.h"
 //#import "NotiView.h"
 //#import "NSTimer+Blocks.h"
 @implementation Utility
@@ -23,6 +24,41 @@ static Utility *sharedObject = nil;
     }
     
     return sharedObject;
+}
+
+-(NSDictionary *)getRequestParams:(NSURLRequest *) request
+{
+    NSURL *url = [request URL];
+    NSString *query = [url query];
+    
+    NSMutableDictionary *params = [[[NSMutableDictionary alloc] init]autorelease];
+    
+    for (NSString *param in [query componentsSeparatedByString:@"&"]) {
+        
+        NSArray *kv = [param componentsSeparatedByString:@"="];
+        
+        if ([kv count]<2) {
+            
+            [params setObject:@"" forKey:[kv objectAtIndex:0]];
+            
+            continue;
+        }
+        
+        id value = [kv objectAtIndex:1];
+        
+        if ([value isKindOfClass:[NSString class]]) {
+            NSString *v = (NSString *)[value URLDecode];
+            [params setObject:v forKey:[kv objectAtIndex:0]];
+            continue;
+        }
+        
+        [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
+    }
+    
+    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:params];
+    
+    return dic;
+    
 }
 
 -(void) setAlertView:(NSString *)title withMessage:(NSString *)message

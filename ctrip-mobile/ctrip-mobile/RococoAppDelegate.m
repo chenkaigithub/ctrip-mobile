@@ -20,6 +20,8 @@
 #import "Utility.h"
 #import "NSString+Category.h"
 #import "OrderEntity.h"
+#import "UIAlertView+Blocks.h"
+#import "MOrderDetailController.h"
 
 static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_list/";
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
@@ -90,7 +92,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
 }
 #pragma mark - net work delegate
 
--(void) setJson:(id)json
+-(void) setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
     
     
@@ -185,6 +187,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     [managedObjectModel release];
     [persistentStoreCoordinator release];
     
+    [_nav release];
     [_network release];
     [_window release];
     [_viewController release];
@@ -238,11 +241,11 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     
     [self setReachability];
     
-    MNavigationController *nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
+    self.nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
     
-    self.window.rootViewController = nav;
+    self.window.rootViewController = self.nav;
     
-    self.viewController.title = @"团购";
+    self.viewController.title = @"宅宅团购";
     
     
     
@@ -407,7 +410,7 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
             }
             else{
                 OrderEntity *o = [objects objectAtIndex:0];
-                o.orderStatus = @"支付成功";//[NSString stringWithFormat:@"%d",status];
+                o.orderStatus = @"已提交";//[NSString stringWithFormat:@"%d",status];
                 NSError *error;
                 
                 if (![[self managedObjectContext] save:&error]) {
@@ -419,7 +422,23 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
             }
             [request release];
             
-            [[Utility sharedObject] setAlertView:@"支付成功" withMessage:@"稍后将有短信和邮件提醒，请注意查收，如有任何疑问，请拨打1010-6666客服热线。"];
+            if ([[[self.nav viewControllers] lastObject] isKindOfClass:[MOrderDetailController class]]) {
+                MOrderDetailController *controller = (MOrderDetailController *)[[self.nav viewControllers] lastObject];
+                [controller loadDataFromDB];
+            }
+            
+            RIButtonItem *callButton = [RIButtonItem item];
+            callButton.label = @"致电客服";
+            callButton.action = ^{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://10106666"]];
+            };
+            
+            RIButtonItem *cancelButton = [RIButtonItem item];
+            cancelButton.label = @"确定";
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"稍后将有短信和邮件提醒，请注意查收。\n如有任何疑问，请拨打1010-6666客服热线。" cancelButtonItem:cancelButton otherButtonItems:callButton, nil];
+            [alert show];
+            [alert release];
             
             
         }

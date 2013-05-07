@@ -12,7 +12,7 @@
 #import "MWindow.h"
 #import "MNetWork.h"
 #import <CoreData/CoreData.h>
-
+#import "MNavigationController.h"
 
 @class MItemListController;
 
@@ -28,6 +28,7 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MItemListController *viewController;
 @property (strong, nonatomic) MNetWork *network;
+@property (nonatomic,retain) MNavigationController *nav;
 
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

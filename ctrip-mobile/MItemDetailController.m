@@ -29,7 +29,8 @@
 
 
 
--(void)setJson:(id)json {
+-(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
+{
 
 }
 

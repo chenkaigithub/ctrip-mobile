@@ -69,15 +69,9 @@
     {
         NSURL *url=[NSURL URLWithString: [items objectAtIndex:index]];
         
-        view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 280, 280)] autorelease];
+        view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 285, 190)] autorelease];
         
-        //((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
-        
-        [((UIImageView *)view) setImageWithURL:url];
-        
-        
-        NSLog(@"url:%@",url);
-        NSLog(@"width:%.0f height:%.0f",view.frame.size.width,view.frame.size.height);
+        [((UIImageView *)view) setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
         
         view.contentMode = UIViewContentModeScaleAspectFit;
     }

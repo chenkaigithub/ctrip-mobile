@@ -9,5 +9,7 @@
 #import "MBaseController.h"
 #import "OrderEntity.h"
 @interface MOrderDetailController : MBaseController
-@property (nonatomic,retain) OrderEntity *order;
+@property (nonatomic,retain) NSString *orderID;
+
+-(void)loadDataFromDB;
 @end

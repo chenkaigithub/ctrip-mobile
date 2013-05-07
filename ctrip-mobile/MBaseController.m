@@ -17,7 +17,7 @@
 
 @synthesize network=_network;
 
--(void)setJson:(id)json
+-(void)setJSON:(id)json fromRequest:(NSURLRequest *)request 
 {
     [[AFNetworkActivityIndicatorManager sharedManager]setEnabled:NO];
 }

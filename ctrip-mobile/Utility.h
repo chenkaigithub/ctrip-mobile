@@ -11,6 +11,7 @@
 @interface Utility : NSObject
 
 +(id) sharedObject;
+-(NSDictionary *)getRequestParams:(NSURLRequest *) request;
 
 -(void) setAlertView:(NSString *)title withMessage:(NSString *)message;
 

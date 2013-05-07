@@ -45,7 +45,7 @@
 -(void)showOrders
 {
     MMyOrderController *controller = [[[MMyOrderController alloc] initWithStyle:UITableViewStylePlain] autorelease];
-    
+    controller.title = @"购买纪录";
     [self.navigationController pushViewController:controller animated:YES];
 
 }
@@ -59,7 +59,7 @@
     };
     
     RIButtonItem *myorderItem = [RIButtonItem item];
-    myorderItem.label = @"我的订单";
+    myorderItem.label = @"购买纪录";
     myorderItem.action = ^{
         [self showOrders];
     };
@@ -148,7 +148,8 @@
         
         Item *item = [items objectAtIndex:[indexPath row]];
         
-        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL]];
+        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
+        
         cell.nameLabel.text = item.name;
         cell.priceLabel.text = [NSString stringWithFormat:@"价格：%@",item.price];
         cell.descLabel.text = item.desc;
@@ -183,7 +184,7 @@
     [self.network httpJsonResponse:url byController:self];
 }
 
--(void)setJson:(id)json
+-(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
     MItemDetailController *controller = [[[MItemDetailController alloc] init] autorelease];
     

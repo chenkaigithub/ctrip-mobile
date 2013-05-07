@@ -10,11 +10,14 @@
 #import "MBProgressHUD.h"
 @protocol jsonDelegate <NSObject>
 
--(void) setJson:(id)json;
+//-(void) setJson:(id)json;
+//@optional
+-(void) setJSON:(id)json fromRequest:(NSURLRequest *)request;
 
 @end
 
 @interface MNetWork : NSObject<MBProgressHUDDelegate>
+
 
 @property (assign,nonatomic) id<jsonDelegate> delegate;
 

@@ -52,7 +52,9 @@
         
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         
-        [self.delegate setJson:JSON];
+        [self.delegate setJSON:JSON fromRequest:request];
+        //[self.delegate setJson:JSON];
+        
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         NSLog(@"Failed:@25,%@",[error localizedDescription]);

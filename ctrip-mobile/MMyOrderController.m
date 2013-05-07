@@ -14,6 +14,7 @@
 #import "UIAlertView+Blocks.h"
 #import "Utility.h"
 #import "MOrderDetailController.h"
+#import "NSString+Category.h"
 @interface MMyOrderController ()
 
 @property (nonatomic,retain) NSMutableArray *orderEntitys;
@@ -23,39 +24,38 @@
 @synthesize orderEntitys=_orderEntitys;
 
 #pragma mark -- network delegate
--(void)setJson:(id)json
+
+
+-(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
-    NSManagedObjectContext *context = [(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSURL *url = [request URL];
+    NSString *path = [url path];
+    NSDictionary *params =[[Utility sharedObject] getRequestParams:request];
+    //get order id from url 
+    NSString *orderID = [params valueForKey:@"order_id"];
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
+    NSManagedObjectContext *context =[(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
     
-    [request setEntity:entity];
+    NSLog(@"@38,%@",path);
     
-    if ([json isKindOfClass:[NSDictionary class]]) {
-        
-        NSDictionary *data = (NSDictionary *)json;
-        
-        
-        
-        if ([data objectForKey:@"error_msg"]) {
-            [[Utility sharedObject] setAlertView:[data valueForKey:@"error_msg"] withMessage:nil];
-            //return;
-        }
-        /*
-            NSString *dataTicketID = [data valueForKey:@"ticket_number"];
-            NSString *dataTicketStatus = [data valueForKey:@"ticket_status"];
-        
-            NSLog(@"@32,cancel ticket:ticket_number:%@,\nticket_status%@",dataTicketID,dataTicketStatus);
-        
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(ticketID = %@)",dataTicketID];
+    if ([path isEqualToString:@"/api/group_order_list"]) {
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            if ([json objectForKey:@"error_msg"]) {
+                [[Utility sharedObject] setAlertView:@"" withMessage:[json valueForKey:@"error_msg"]];
+                [fetchRequest release];
+                return;
+            }
             
-            [request setPredicate:predicate];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
+            
+            [fetchRequest setPredicate:predicate];
             
             NSError *error;
             
-            NSArray *objects = [context executeFetchRequest:request error:&error];
+            NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
             
             if ([objects count]==0) {
                 NSLog(@"no matches");
@@ -63,54 +63,66 @@
             else{
                 OrderEntity *o = [objects objectAtIndex:0];
                 
-                if (dataTicketStatus.length > 0) {
-                    o.orderStatus = dataTicketStatus;
-                }
+                o.orderStatus = [json valueForKey:@"status"];
+
+                
+                NSString *strURL = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_query_tickets/?order_id=%@",o.orderID];
+                
+                [self.network httpJsonResponse:strURL byController:self];
             }
-         */
-        
-    }
-    if ([json isKindOfClass:[NSArray class]]) {
-        
-        NSDictionary *data = (NSDictionary *)[json lastObject];
-        
-        NSString *orderID = [data valueForKey:@"order_id"];
-        NSString *ticketID = [data valueForKey:@"ticket_number"];
-        NSString *ticketPassword = [data valueForKey:@"ticket_pwd"];
-        NSString *ticketExpirationDate = [data valueForKey:@"expiration_date"];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID=%@)",orderID];
-        [request setPredicate:predicate];
-        
-        NSError *error;
-        NSArray *objects = [context executeFetchRequest:request error:&error];
-        
-        if ([objects count] == 0) {
-            NSLog(@"no matches");
+            
+            
         }
-        else{
-            OrderEntity *o = [objects objectAtIndex:0];
-            o.ticketID = ticketID;
-            o.ticketPassword = ticketPassword;
-            o.expirationDate = ticketExpirationDate;
+    }
+    else if([path isEqualToString:@"/api/group_query_tickets"]){
+        if ([json isKindOfClass:[NSArray class]]) {
+            NSArray *array = (NSArray *)json;
+            NSDictionary *d = [array lastObject];
+               NSString *orderID = [d valueForKey:@"order_id"];
+                NSString *ticketID = [d valueForKey:@"ticket_number"];
+                NSString *ticketPassword = [d valueForKey:@"ticket_pwd"];
+                NSString *ticketExpirationDate = [d valueForKey:@"expiration_date"];
+                NSString *ticketStatus = [d valueForKey:@"ticket_status"];
+               
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID=%@)",orderID];
+                [fetchRequest setPredicate:predicate];
+                
+                NSError *error;
+                NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
+                
+                if ([objects count] == 0) {
+                    NSLog(@"no matches");
+                }
+                else{
+                    OrderEntity *o = [objects objectAtIndex:0];
+                    o.ticketID = ticketID;
+                    o.ticketPassword = ticketPassword;
+                    o.expirationDate = ticketExpirationDate;
+                    o.orderStatus = ticketStatus;
+                    
+                }
+            
+        }
+        else if ([json isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *d = (NSDictionary *)json;
+            NSLog(@"@124,%@",d);
         }
         
         MOrderDetailController *controller =  [[[MOrderDetailController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+        controller.orderID = orderID;
         
         [self.navigationController pushViewController:controller animated:YES];
         
-        //NSString *strURL = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_cancel_tickets/?ticket_no=%@",ticketID];
-        
     }
-    [request release];
     NSError *error;
-    
+        
     if (![context save:&error]) {
         NSLog(@"error!");
     }else {
         NSLog(@"save order ok.");
     }
-
+    [fetchRequest release];
 }
 
 #pragma mark -- load table view data
@@ -125,16 +137,17 @@
     [request setEntity:entity];
     
     NSArray *results = [context executeFetchRequest:request error:nil];
-    self.orderEntitys = [[NSMutableArray alloc] init];
+    NSMutableArray *objects = [[[NSMutableArray alloc] init] autorelease];
     
     for (id object in results) {
         if ([object isKindOfClass:[OrderEntity class]]) {
             OrderEntity *o = (OrderEntity *)object;
             NSLog(@"@48,%@",o);
-            [self.orderEntitys addObject:o];
+            [objects addObject:o];
         }
     }
     
+    self.orderEntitys = [NSMutableArray arrayWithArray:objects];
     [request release];
     
     [self.tableView reloadData];
@@ -194,13 +207,13 @@
     if (cell == nil) {
         cell = [[[MOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
-        OrderEntity *o = [self.orderEntitys objectAtIndex:row];
-        
-        cell.textLabel.text = o.productName;
-        cell.detailTextLabel.text = o.orderStatus;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
     }
+    
+    OrderEntity *o = [self.orderEntitys objectAtIndex:row];
+    
+    cell.textLabel.text = o.productName;
+    cell.detailTextLabel.text = o.orderStatus;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     // Configure the cell...
     UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
     
@@ -244,9 +257,16 @@
     
     OrderEntity *o = [self.orderEntitys objectAtIndex:row];
     
-    NSString *strURl = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_query_tickets/?order_id=%@",o.orderID];
+    NSDate *date = [NSDate date];
     
-    [self.network httpJsonResponse:strURl byController:self];
+    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"yyyy-MM-dd"];
+    NSString *strToday = [formater stringFromDate:date];
+    
+    NSString *strURL = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_order_list/?order_id=%@&begin_date=%@&end_date=%@",o.orderID,strToday,strToday];
+    
+    
+    [self.network httpJsonResponse:strURL byController:self];
 }
 
 

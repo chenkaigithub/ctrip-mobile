@@ -11,6 +11,7 @@
 #import "Utility.h"
 #import "OrderEntity.h"
 #import "RococoAppDelegate.h"
+#import "UIAlertView+Blocks.h"
 @interface MOrderCreateController ()
 
 @end
@@ -84,7 +85,7 @@
     [self.network httpJsonResponse:url byController:self];
 }
 
--(void) setJson:(id)json
+-(void) setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
     if ([json isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dic = (NSDictionary *)json;
@@ -104,7 +105,7 @@
         NSManagedObjectContext *context = [(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         OrderEntity *o = (OrderEntity *)[NSEntityDescription insertNewObjectForEntityForName:@"OrderEntity" inManagedObjectContext:context];
         o.orderID = self.order.orderID;
-        o.orderStatus = @"尚未支付";//self.order.status;
+        o.orderStatus = @"未提交";//self.order.status;
         o.orderEmail = self.order.email;
         o.orderTel = self.order.mobile;
         o.orderPrice = self.order.price;
@@ -121,8 +122,21 @@
             NSLog(@"save order ok.");
         }
         
+        RIButtonItem *okItem = [RIButtonItem item];
+        okItem.label = @"确定";
+        okItem.action = ^{
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            
+        };
+        RIButtonItem *cancelItem = [RIButtonItem item];
+        cancelItem.label = @"取消";
         
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"即将打开Safari\n前往支付页面，是否继续？" message:nil cancelButtonItem:cancelItem otherButtonItems:okItem, nil];
+        
+        [alert show];
+        [alert release];
+        
         
         
     }
