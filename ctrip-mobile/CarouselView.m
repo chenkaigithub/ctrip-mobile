@@ -47,6 +47,7 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    
     UIImageView *backgroundView = [[[UIImageView alloc] initWithFrame:self.bounds] autorelease];
 	backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	backgroundView.image = [UIImage imageNamed:@"background.png"];

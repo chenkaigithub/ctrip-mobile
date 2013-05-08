@@ -24,7 +24,7 @@
 @synthesize tag;
 @synthesize dataList;
 
--(void)setJson:(id)json
+-(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
     MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
     

@@ -146,16 +146,15 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MItemCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
         
-        Item *item = [items objectAtIndex:[indexPath row]];
-        
-        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
-        
-        cell.nameLabel.text = item.name;
-        cell.priceLabel.text = [NSString stringWithFormat:@"价格：%@",item.price];
-        cell.descLabel.text = item.desc;
-        
-        
     }
+    
+    Item *item = [items objectAtIndex:[indexPath row]];
+    
+    [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
+    
+    cell.nameLabel.text = item.name;
+    cell.priceLabel.text = [NSString stringWithFormat:@"价格：¥ %@",item.price];
+    cell.descLabel.text = item.desc;
     
     UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
     
@@ -179,7 +178,7 @@
     
     NSLog(@"@145, product_id=%d",productID);
     
-    NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_product_info/?product_id=%d",productID];
+    NSString *url = [NSString stringWithFormat:@"%@%@/?product_id=%d",API_BASE_URL,GROUP_PRODUCT_PARAMTER,productID];
     
     [self.network httpJsonResponse:url byController:self];
 }

@@ -316,8 +316,8 @@ static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_lis
     splashView.image = [UIImage imageNamed:@"Default.png"];
     
     UIImageView *houseView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 256, 256)] autorelease];
-    houseView.image = [UIImage imageNamed:@"House-icon.png"];
-    houseView.center = CGPointMake(screenWidth/2, screenHeight/2);
+    houseView.image = [UIImage imageNamed:@"HOME.png"];
+    houseView.center = CGPointMake(screenWidth/2, screenHeight*3/5);
     [splashView addSubview:houseView];
     
     UIImageView *planeView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 155, 100)];

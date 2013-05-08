@@ -12,6 +12,7 @@
 #import "OrderEntity.h"
 #import "RococoAppDelegate.h"
 #import "UIAlertView+Blocks.h"
+#import "Const.h"
 @interface MOrderCreateController ()
 
 @end
@@ -78,7 +79,7 @@
     
     
     
-    NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/create_group_order/?product_id=%@&email=%@&price=%@&mobile=%@&quantity=%@",self.order.productID,self.order.email,self.order.price,self.order.mobile,self.order.quantity];
+    NSString *url = [NSString stringWithFormat:@"%@%@/?product_id=%@&email=%@&price=%@&mobile=%@&quantity=%@",API_BASE_URL,GROUP_CREATE_ORDER_PARAMTER,self.order.productID,self.order.email,self.order.price,self.order.mobile,self.order.quantity];
     
     NSLog(@"80,%@",url);
     
@@ -95,7 +96,7 @@
         self.order.price = [dic valueForKey:@"price"];
         self.order.status = [dic valueForKey:@"status"];
         
-        NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/get_payment/?business_type=Tuan&order_type=6&description=%@&order_id=%@",[self.order.productName URLEncode],self.order.orderID];
+        NSString *url = [NSString stringWithFormat:@"%@%@/?business_type=Tuan&order_type=6&description=%@&order_id=%@",API_BASE_URL,PAYMENT_PARAMTER,[self.order.productName URLEncode],self.order.orderID];
         
         NSLog(@"@98,%@",url);
         
@@ -202,17 +203,17 @@
             
             
             if (row == 0) {
-                textField.placeholder = @"Email";
+                textField.placeholder = @"请输入您的Email...";
                 textField.tag = 100;
                 textField.keyboardType = UIKeyboardTypeEmailAddress;
             }
             else if (row == 1){
-                textField.placeholder =@"手机";
+                textField.placeholder =@"请输入您的手机号码...";
                 textField.tag = 101;
                 textField.keyboardType = UIKeyboardTypeNumberPad;
             }
             else{
-                textField.placeholder = @"数量";
+                textField.placeholder = @"请输入您要购买的数量...";
                 textField.tag = 102;
                 textField.keyboardType = UIKeyboardTypeNumberPad;
                 //textField.text = @"1";

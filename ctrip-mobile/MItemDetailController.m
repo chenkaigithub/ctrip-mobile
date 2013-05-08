@@ -72,7 +72,7 @@
     
     self.navigationItem.rightBarButtonItem = btnDone;
     
-    self.carouselView = [[[CarouselView alloc] initWithFrame:CGRectMake(0, 0, 320, 240)]autorelease];
+    self.carouselView = [[[CarouselView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
     self.carouselView.items = self.detail.imageList;
     
     [self.view addSubview:self.carouselView];
@@ -80,13 +80,13 @@
     
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    //CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
     
-    self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 240, 320, screenHeight-240-64)]autorelease];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 200, 320, screenHeight-200-64) style:UITableViewStyleGrouped] autorelease ];
+    
     [self.view addSubview:self.tableView];
     
+   
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -117,11 +117,11 @@
     // Do any additional setup after loading the view.
 }
 
--(CGFloat)getLabelHeight:(UILabel *)label
+-(CGRect)getResizeFrame:(UILabel *)label
 {
     [label setLineBreakMode:UILineBreakModeWordWrap];
     [label setNumberOfLines:0];
-    [label setFont:[UIFont fontWithName:@"Helvetica" size:10]];
+    [label setFont:[UIFont fontWithName:@"Helvetica" size:15]];
     
     CGSize labelSize = [label.text sizeWithFont:label.font
                               constrainedToSize:CGSizeMake(200, 999)
@@ -131,10 +131,20 @@
     
     label.frame=CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, labelHeight);
     
+    return label.frame;
+}
+
+-(CGFloat)getLabelHeight:(UILabel *)label
+{
+    
+    CGRect rect = [self getResizeFrame:label];
    
-    return label.frame.size.height;
+    return rect.size.height;
         
 }
+
+
+
 -(void)dealloc
 {
     [_cellHeightValues release];
@@ -171,112 +181,139 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    if (section<3) {
+        return 1;
+    }
+    
+    int row = 3;
+    
+    if (section == 3) {
+        
+        if (self.detail.tel.length == 0) {
+            row = row -1;
+        }
+        
+        if (self.detail.address.length == 0) {
+            row = row -1;
+        }
+    }
+    return row;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row  =[indexPath row];
-    NSString *cellIdentify = [NSString stringWithFormat:@"cell%d",row];
+    NSUInteger section =  [indexPath section];
+    NSString *cellIdentify = [NSString stringWithFormat:@"cell%d%d",row,section];
     
-    MDetailCell *cell = (MDetailCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentify];
-    
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MDetailCell" owner:self options:nil];
-        cell = (MDetailCell *)[nib objectAtIndex:0];
-        
-        switch (row) {
-            case 0:
-                cell.titleLabel.text = @"描述:";
-                cell.detailLabel.text = [self.detail.headDesc stringByConvertingHTMLToPlainText];
-                break;
-            case 1:
-                cell.titleLabel.text =@"包含项目:";
-                cell.detailLabel.text = [self.detail.desc stringByConvertingHTMLToPlainText];
-                break;
-            case 2:
-                cell.titleLabel.text =@"特别提示:";
-                cell.detailLabel.text =[self.detail.ruleDesc stringByConvertingHTMLToPlainText];
-                break;
-            case 3:
-                cell.titleLabel.text = @"价格:";
-                cell.detailLabel.text = self.detail.price;
-                break;
-            case 4:
-                cell.titleLabel.text =@"地址:";
-                cell.detailLabel.text =self.detail.address;
-                if (self.detail.address.length>0) {
-                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                }
-                break;
-            case 5:
-                cell.titleLabel.text = @"电话:";
-                cell.detailLabel.text = self.detail.tel;
-                if (self.detail.tel.length>0) {
-                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                }
-                break;
-            default:
-                break;
-        }
-        
-        UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
-        
-        UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
-        cellBackgroundView.image = background;
-        cell.backgroundView = cellBackgroundView;
-    }
-       
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentify];
     
 
+    
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentify] autorelease];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:15]];
+        
+        if (section < 3) {
+            [cell.textLabel setFrame:[self getResizeFrame:cell.textLabel]];
+        }
+        
+        
+        if (section == 0 && row ==0) {
+            cell.textLabel.text = [self.detail.headDesc stringByConvertingHTMLToPlainText];
+        }
+        
+        if (section == 1 && row == 0) {
+            cell.textLabel.text = [self.detail.desc stringByConvertingHTMLToPlainText];
+        }
+        
+        if (section ==2 && row == 0) {
+            cell.textLabel.text = [self.detail.ruleDesc stringByConvertingHTMLToPlainText];
+        }
+        
+        if (section == 3) {
+            switch (row) {
+                case 0:
+                    cell.textLabel.text = [NSString stringWithFormat:@"价格：¥ %@",self.detail.price];
+                    break;
+                case 1:
+                    cell.textLabel.text = [NSString stringWithFormat:@"地址：%@",self.detail.address];
+                    if (self.detail.address.length >0) {
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    }
+                    break;
+                case 2:
+                    cell.textLabel.text = [NSString stringWithFormat:@"电话：%@", self.detail.tel];
+                    
+                    if (self.detail.tel.length>0) {
+                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+    }
+    
     return cell;
     
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"描述";
+    }
+    
+    if (section == 1) {
+        return @"包含项目";
+    }
+    
+    if (section == 2) {
+        return @"特别提示";
+    }
+    return nil;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int row = [indexPath row];
     
-    CGFloat newHeight = 44;
+    NSUInteger section = [indexPath section];
+    //int row = [indexPath row];
     
-    switch (row) {
-        case 0:
-            newHeight = [[self.cellHeightValues objectAtIndex:0] floatValue];
-            break;
-        case 1:
-            newHeight = [[self.cellHeightValues objectAtIndex:1] floatValue];
-            break;
-        case 2:
-            newHeight = [[self.cellHeightValues objectAtIndex:2] floatValue];
-            break;
-        default:
-            break;
-    }
-     
-    if (newHeight+15 < 44) {
-        return 44;
+    if (section == 0) {
+        return [[self.cellHeightValues objectAtIndex:0] floatValue ];
     }
     
-    if (row>2) {
-        
-        return 44;
+    if (section == 1) {
+        return [[self.cellHeightValues objectAtIndex:1] floatValue];
     }
     
-    return newHeight+15;
+    if (section == 2) {
+        return [[self.cellHeightValues objectAtIndex:2] floatValue];
+    }
+    
+    return 44;
+    
+    //return newHeight+15;
     
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
+    int section = [indexPath section];
     
-    if (row == 4) {
+    if (section ==3 && row == 1) {
         //address view
         MMapController *controller = [[[MMapController alloc] init] autorelease];
         
@@ -288,8 +325,8 @@
         
     }
     
-    if (row == 5) {
-        //call
+    if (section == 3 && row == 2) {
+        
         NSString *num = self.detail.tel;
         UIAlertView *alert =[ [UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"是否确认拨打：%@",num] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         

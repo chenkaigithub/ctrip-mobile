@@ -8,7 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-#define BASE_URL @"http://ctrip.herokuapp.com/api/group_product_list/"
+#define API_BASE_URL                    @"http://ctrip.herokuapp.com/api"
+
+#define GROUP_LIST_PARAMTER             @"/group_product_list"
+#define GROUP_PRODUCT_PARAMTER          @"/group_product_info"
+#define GROUP_QUERY_TICKETS_PARAMTER    @"/group_query_tickets"
+#define GROUP_CREATE_ORDER_PARAMTER     @"/create_group_order"
+#define GROUP_CANCEL_TICKETS_PARAMTER   @"/group_cancel_tickets"
+
+#define PAYMENT_PARAMTER                @"/get_payment"
+
+#define PROVINCE_LIST_PARAMTER          @"/province_list"
+#define CITY_LIST_PARAMTER              @"/city_list"
+
+
+
 #define DAY_INTERVAL 60*60*24
 
 #define ONE_MONTH @"一个月内"

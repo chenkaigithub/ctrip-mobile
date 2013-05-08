@@ -15,6 +15,7 @@
 #import "Utility.h"
 #import "MOrderDetailController.h"
 #import "NSString+Category.h"
+#import "Const.h"
 @interface MMyOrderController ()
 
 @property (nonatomic,retain) NSMutableArray *orderEntitys;
@@ -66,7 +67,7 @@
                 o.orderStatus = [json valueForKey:@"status"];
 
                 
-                NSString *strURL = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_query_tickets/?order_id=%@",o.orderID];
+                NSString *strURL = [NSString stringWithFormat:@"%@%@/?order_id=%@",API_BASE_URL,GROUP_QUERY_TICKETS_PARAMTER,o.orderID];
                 
                 [self.network httpJsonResponse:strURL byController:self];
             }
@@ -211,8 +212,42 @@
     
     OrderEntity *o = [self.orderEntitys objectAtIndex:row];
     
-    cell.textLabel.text = o.productName;
-    cell.detailTextLabel.text = o.orderStatus;
+    //cell.textLabel.text = o.productName;
+    //cell.detailTextLabel.text = o.orderStatus;
+    
+    UILabel *productLabel = [[[UILabel alloc] init] autorelease];
+    
+    productLabel.text = o.productName;
+    
+    productLabel.backgroundColor = [UIColor clearColor];
+    
+    productLabel.frame = CGRectMake(20, 15, 280, 20);
+    
+    [cell addSubview:productLabel];
+    
+    UILabel *statusLabel = [[[UILabel alloc] init] autorelease];
+    
+    statusLabel.text = o.orderStatus;
+    
+    statusLabel.backgroundColor = [UIColor clearColor];
+    
+    statusLabel.textColor = [UIColor grayColor];
+    
+    statusLabel.frame = CGRectMake(20, 40, 100, 20);
+    
+    [cell addSubview:statusLabel];
+    
+    UILabel *priceLabel = [[[UILabel alloc] init]autorelease];
+    
+    priceLabel.text = [NSString stringWithFormat:@"¥ %@",o.orderPrice];
+    
+    priceLabel.textColor = [UIColor orangeColor];
+    
+    priceLabel.backgroundColor= [UIColor clearColor];
+    
+    [priceLabel setFrame:CGRectMake(240, 40, 100, 20)];
+    [cell addSubview:priceLabel];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     // Configure the cell...
     UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
@@ -263,7 +298,7 @@
     [formater setDateFormat:@"yyyy-MM-dd"];
     NSString *strToday = [formater stringFromDate:date];
     
-    NSString *strURL = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_order_list/?order_id=%@&begin_date=%@&end_date=%@",o.orderID,strToday,strToday];
+    NSString *strURL = [NSString stringWithFormat:@"%@/group_order_list/?order_id=%@&begin_date=%@&end_date=%@",api_,o.orderID,strToday,strToday];
     
     
     [self.network httpJsonResponse:strURL byController:self];

@@ -115,7 +115,12 @@
     [defaults synchronize];
     
     
-    NSString *str = [NSString stringWithFormat:@"%@?key_words=%@&city=%@&begin_date=%@&=end_date=%@&low_price=%@&upper_price=%@&sort_type=%@",BASE_URL,[userDefaults.keyWords URLEncode],[userDefaults.cityName URLEncode],userDefaults.beginDate,userDefaults.endDate,userDefaults.lowPrice,userDefaults.upperPrice,userDefaults.sortType];
+    NSString *str = [NSString stringWithFormat:@"%@%@/?key_words=%@&city=%@&begin_date=%@&=end_date=%@&low_price=%@&upper_price=%@&sort_type=%@",
+                     API_BASE_URL,GROUP_LIST_PARAMTER,
+                     [userDefaults.keyWords URLEncode],[userDefaults.cityName URLEncode],
+                     userDefaults.beginDate,userDefaults.endDate,
+                     userDefaults.lowPrice,userDefaults.upperPrice,
+                     userDefaults.sortType];
     
     return str;
 }
@@ -129,7 +134,7 @@
     
 }
 
--(void)setJson:(id)json
+-(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
     NSLog(@"@134,%@",json);
     if ([json isKindOfClass:[NSArray class]]) {
@@ -263,7 +268,7 @@
         }
         
         if (row ==0) {
-            cell.textField.placeholder = @"关键字";
+            cell.textField.placeholder = @"请输入查询关键字...";
             
             if (userDefaults.keyWords!=nil) {
                 cell.textField.text = userDefaults.keyWords;
@@ -272,7 +277,7 @@
         }
         else if (row ==1)
         {
-            cell.textField.placeholder = @"最低价格";
+            cell.textField.placeholder = @"请输入查询最低价格...";
             
             if (userDefaults.lowPrice!=nil) {
                 cell.textField.text = userDefaults.lowPrice;
@@ -283,7 +288,7 @@
         
         }
         else if (row ==2){
-            cell.textField.placeholder = @"最高价格";
+            cell.textField.placeholder = @"请输入查询最高价格...";
             
             if (userDefaults.upperPrice != nil) {
                 cell.textField.text = userDefaults.upperPrice;
@@ -364,7 +369,8 @@
         MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
         if (row ==0) {
             //cities
-            [self.network httpJsonResponse:@"http://ctrip.herokuapp.com/api/province_list/" byController:self];
+            NSString *strURL = [NSString stringWithFormat:@"%@%@/",API_BASE_URL,PROVINCE_LIST_PARAMTER];
+            [self.network httpJsonResponse:strURL byController:self];
             return;
             
         }

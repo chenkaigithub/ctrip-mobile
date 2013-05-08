@@ -12,6 +12,7 @@
 #import "UIAlertView+Blocks.h"
 #import "RococoAppDelegate.h"
 #import "Utility.h"
+
 @interface MOrderDetailController ()
 @property (nonatomic,retain)OrderEntity *order;
 @end
@@ -186,6 +187,9 @@
     }
     else
     {
+        if (self.order.ticketID == nil ||self.order.ticketID.length == 0) {
+            return 5;
+        }
         return 8;
     }
     
@@ -272,9 +276,8 @@
     NSUInteger row = [indexPath row];
     
     if (section == 0 && row == 0) {
-        //MItemDetailController *controller =  [[[MItemDetailController alloc] init]autorelease];
         
-        NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_product_info/?product_id=%@",self.order.productID];
+        NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_product_info/?product_id=%@",,self.order.productID];
         
         [self.network httpJsonResponse:url byController:self];
     }
