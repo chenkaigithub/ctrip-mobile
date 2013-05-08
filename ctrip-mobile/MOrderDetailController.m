@@ -12,7 +12,7 @@
 #import "UIAlertView+Blocks.h"
 #import "RococoAppDelegate.h"
 #import "Utility.h"
-
+#import "Const.h"
 @interface MOrderDetailController ()
 @property (nonatomic,retain)OrderEntity *order;
 @end
@@ -277,7 +277,7 @@
     
     if (section == 0 && row == 0) {
         
-        NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_product_info/?product_id=%@",,self.order.productID];
+        NSString *url = [NSString stringWithFormat:@"%@%@/?product_id=%@",API_BASE_URL,GROUP_PRODUCT_PARAMTER,self.order.productID];
         
         [self.network httpJsonResponse:url byController:self];
     }
@@ -294,7 +294,7 @@
             
             if ([self.order.orderStatus isEqualToString:@"支付成功"]) {
                 okItem.action = ^{
-                    NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/group_cancel_tickets/?ticket_no=%@",self.order.ticketID];
+                    NSString *url = [NSString stringWithFormat:@"%@%@/?ticket_no=%@",API_BASE_URL,GROUP_CANCEL_TICKETS_PARAMTER,self.order.ticketID];
                     [self.network httpJsonResponse:url byController:self];
                 };
                 
@@ -304,7 +304,7 @@
             }
             else{
                 okItem.action = ^{
-                    NSString *url = [NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/get_payment/?business_type=Tuan&order_type=6&description=%@&order_id=%@",[self.order.productName URLEncode],self.order.orderID];
+                    NSString *url = [NSString stringWithFormat:@"%@%@/?business_type=Tuan&order_type=6&description=%@&order_id=%@",API_BASE_URL,PAYMENT_PARAMTER,[self.order.productName URLEncode],self.order.orderID];
                     
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
                     

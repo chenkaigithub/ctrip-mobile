@@ -298,7 +298,7 @@
     [formater setDateFormat:@"yyyy-MM-dd"];
     NSString *strToday = [formater stringFromDate:date];
     
-    NSString *strURL = [NSString stringWithFormat:@"%@/group_order_list/?order_id=%@&begin_date=%@&end_date=%@",api_,o.orderID,strToday,strToday];
+    NSString *strURL = [NSString stringWithFormat:@"%@%@/?order_id=%@&begin_date=%@&end_date=%@",API_BASE_URL,GROUP_ORDER_LIST_PARAMTER,o.orderID,strToday,strToday];
     
     
     [self.network httpJsonResponse:strURL byController:self];

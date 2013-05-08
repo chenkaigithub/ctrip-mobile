@@ -14,6 +14,7 @@
 #define GROUP_PRODUCT_PARAMTER          @"/group_product_info"
 #define GROUP_QUERY_TICKETS_PARAMTER    @"/group_query_tickets"
 #define GROUP_CREATE_ORDER_PARAMTER     @"/create_group_order"
+#define GROUP_ORDER_LIST_PARAMTER       @"/group_order_list"
 #define GROUP_CANCEL_TICKETS_PARAMTER   @"/group_cancel_tickets"
 
 #define PAYMENT_PARAMTER                @"/get_payment"

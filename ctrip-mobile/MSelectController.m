@@ -219,7 +219,7 @@
     {
         NSString *city_encode = [[tableView cellForRowAtIndexPath:indexPath].textLabel.text URLEncode];
         
-        [self.network httpJsonResponse:[NSString stringWithFormat:@"http://ctrip.herokuapp.com/api/city_list/?province_name=%@",city_encode] byController:self];
+        [self.network httpJsonResponse:[NSString stringWithFormat:@"%@%@/?province_name=%@",API_BASE_URL,CITY_LIST_PARAMTER,city_encode] byController:self];
     }
     else if (self.tag == 101)
     {

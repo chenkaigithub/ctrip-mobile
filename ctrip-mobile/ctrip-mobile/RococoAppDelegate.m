@@ -23,7 +23,8 @@
 #import "UIAlertView+Blocks.h"
 #import "MOrderDetailController.h"
 
-static NSString *requireURL = @"http://ctrip.herokuapp.com/api/group_product_list/";
+#define requireURL  [NSString stringWithFormat:@"%@%@/",API_BASE_URL,GROUP_LIST_PARAMTER]
+
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
 
 @implementation RococoAppDelegate
