@@ -317,7 +317,7 @@
     splashView.image = [UIImage imageNamed:@"Default.png"];
     
     UIImageView *houseView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 256, 256)] autorelease];
-    houseView.image = [UIImage imageNamed:@"HOME.png"];
+    houseView.image = [UIImage imageNamed:@"House-256.png"];
     houseView.center = CGPointMake(screenWidth/2, screenHeight*3/5);
     [splashView addSubview:houseView];
     
