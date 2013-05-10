@@ -231,11 +231,6 @@
         [self.navigationController popToViewController:controller animated:YES];
     }
     
-    
-    
-        
-    
-    
 }
 
 -(void) requireDataWithURL:(NSString *) urlString ToController:(MSelectController *)controller {

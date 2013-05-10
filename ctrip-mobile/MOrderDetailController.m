@@ -204,6 +204,7 @@
         
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
     }
+    
     NSUInteger section = [indexPath section];
     NSUInteger row = [indexPath row];
     
@@ -219,7 +220,7 @@
             case 0:
                 cell.textLabel.text = @"订单状态";
                 cell.detailTextLabel.text = self.order.orderStatus;
-                if ([self.order.orderStatus isEqualToString:@"未提交"]||[self.order.orderStatus isEqualToString:@"支付成功"]) {
+                if ([self.order.orderStatus isEqualToString:@"未提交"]||[self.order.orderStatus isEqualToString:@"未完成支付"]||[self.order.orderStatus isEqualToString:@"支付成功"]) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
                 else

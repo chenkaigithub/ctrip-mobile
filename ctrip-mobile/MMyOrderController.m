@@ -204,52 +204,66 @@
     MOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     NSInteger row = [indexPath row];
+    OrderEntity *o = [self.orderEntitys objectAtIndex:row];
     
     if (cell == nil) {
         cell = [[[MOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
+        UILabel *productLabel = [[[UILabel alloc] init] autorelease];
+        
+        productLabel.text = o.productName;
+        
+        productLabel.backgroundColor = [UIColor clearColor];
+        
+        productLabel.frame = CGRectMake(20, 15, 280, 20);
+        
+        [cell addSubview:productLabel];
+        
+        UILabel *statusLabel = [[[UILabel alloc] init] autorelease];
+        
+        statusLabel.text = o.orderStatus;
+        
+        statusLabel.backgroundColor = [UIColor clearColor];
+        
+        statusLabel.textColor = [UIColor grayColor];
+        
+        statusLabel.frame = CGRectMake(20, 40, 100, 20);
+        
+        [cell addSubview:statusLabel];
+        
+        UILabel *priceLabel = [[[UILabel alloc] init]autorelease];
+        
+        priceLabel.text = [NSString stringWithFormat:@"¥ %@",o.orderPrice];
+        
+        priceLabel.textColor = [UIColor orangeColor];
+        
+        priceLabel.backgroundColor= [UIColor clearColor];
+        
+        [priceLabel setFrame:CGRectMake(240, 40, 100, 20)];
+        
+        [cell addSubview:priceLabel];
+        
+        productLabel.tag = 101;
+        statusLabel.tag = 102;
+        priceLabel.tag = 103;
+    }
+    else
+    {
+        UILabel *productLabel = (UILabel *)[cell viewWithTag:101];
+        productLabel.text = o.productName;
+        
+        UILabel  *statusLabel = (UILabel *)[cell viewWithTag:102];
+        statusLabel.text = o.orderStatus;
+        
+        UILabel *priceLabel = (UILabel *)[cell viewWithTag:103];
+        priceLabel.text = [NSString stringWithFormat:@"¥ %@",o.orderPrice];
     }
     
-    OrderEntity *o = [self.orderEntitys objectAtIndex:row];
     
-    //cell.textLabel.text = o.productName;
-    //cell.detailTextLabel.text = o.orderStatus;
-    
-    UILabel *productLabel = [[[UILabel alloc] init] autorelease];
-    
-    productLabel.text = o.productName;
-    
-    productLabel.backgroundColor = [UIColor clearColor];
-    
-    productLabel.frame = CGRectMake(20, 15, 280, 20);
-    
-    [cell addSubview:productLabel];
-    
-    UILabel *statusLabel = [[[UILabel alloc] init] autorelease];
-    
-    statusLabel.text = o.orderStatus;
-    
-    statusLabel.backgroundColor = [UIColor clearColor];
-    
-    statusLabel.textColor = [UIColor grayColor];
-    
-    statusLabel.frame = CGRectMake(20, 40, 100, 20);
-    
-    [cell addSubview:statusLabel];
-    
-    UILabel *priceLabel = [[[UILabel alloc] init]autorelease];
-    
-    priceLabel.text = [NSString stringWithFormat:@"¥ %@",o.orderPrice];
-    
-    priceLabel.textColor = [UIColor orangeColor];
-    
-    priceLabel.backgroundColor= [UIColor clearColor];
-    
-    [priceLabel setFrame:CGRectMake(240, 40, 100, 20)];
-    [cell addSubview:priceLabel];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    // Configure the cell...
+    
+    
     UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
     
     UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
