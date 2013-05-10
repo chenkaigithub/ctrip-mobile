@@ -17,6 +17,7 @@
 #import <MapKit/MapKit.h>
 #import "UIActionSheet+Blocks.h"
 #import "MMyOrderController.h"
+#import "NSString+Category.h"
 @interface MItemListController ()
     
 @end
@@ -150,7 +151,9 @@
     
     Item *item = [items objectAtIndex:[indexPath row]];
     
-    [cell.thumbnailView setImageWithURL:[NSURL URLWithString:item.thumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
+    NSString *strThumbnailURL = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,58,[item.thumbnailURL URLEncode]];
+    
+    [cell.thumbnailView setImageWithURL:[NSURL URLWithString:strThumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
     
     cell.nameLabel.text = item.name;
     cell.priceLabel.text = [NSString stringWithFormat:@"价格：¥ %@",item.price];

@@ -23,6 +23,8 @@
 #define CITY_LIST_PARAMTER              @"/city_list"
 
 
+#define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
+
 
 #define DAY_INTERVAL 60*60*24
 

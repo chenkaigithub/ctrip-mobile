@@ -9,6 +9,8 @@
 #import "CarouselView.h"
 #import "iCarousel.h"
 #import "UIImageView+AFNetworking.h"
+#import "NSString+Category.h"
+#import "Const.h"
 @interface CarouselView () <iCarouselDataSource, iCarouselDelegate>
 @property (nonatomic,retain) iCarousel *carousel;
 @end
@@ -68,7 +70,10 @@
 {
     if (view == nil)
     {
-        NSURL *url=[NSURL URLWithString: [items objectAtIndex:index]];
+        
+        NSString *strURL = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,285,[(NSString *)[items objectAtIndex:index] URLEncode]];
+        
+        NSURL *url=[NSURL URLWithString: strURL];
         
         view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 285, 190)] autorelease];
         
