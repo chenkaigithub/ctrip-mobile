@@ -115,8 +115,8 @@
     [defaults synchronize];
     
     
-    NSString *str = [NSString stringWithFormat:@"%@%@/?key_words=%@&city=%@&begin_date=%@&=end_date=%@&low_price=%@&upper_price=%@&sort_type=%@",
-                     API_BASE_URL,GROUP_LIST_PARAMTER,
+    NSString *str = [NSString stringWithFormat:@"%@%@/?page_index=%d%@&key_words=%@&city=%@&begin_date=%@&=end_date=%@&low_price=%@&upper_price=%@&sort_type=%@",
+                     API_BASE_URL,GROUP_LIST_PARAMTER,1,PAGE_SIZE_PARAMTER,
                      [userDefaults.keyWords URLEncode],[userDefaults.cityName URLEncode],
                      userDefaults.beginDate,userDefaults.endDate,
                      userDefaults.lowPrice,userDefaults.upperPrice,
@@ -127,16 +127,12 @@
 
 -(void) doSearch{
     NSString *urlString = [self makeURL];
-    
-    NSLog(@"62%@",urlString);
-    
     [self.network httpJsonResponse:urlString byController:self];
     
 }
 
 -(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
-    NSLog(@"@134,%@",json);
     if ([json isKindOfClass:[NSArray class]]) {
         
         NSArray *dataList = [NSArray arrayWithArray:json];
@@ -177,6 +173,32 @@
             
             controller.items = itemList;
             
+            NSString *query = [[request URL] query];
+            NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+            
+            for (NSString *param in [query componentsSeparatedByString:@"&"]) {
+                
+                NSArray *kv = [param componentsSeparatedByString:@"="];
+                
+                if ([kv count]<2) {
+                    
+                    [params setObject:@"" forKey:[kv objectAtIndex:0]];
+                    
+                    continue;
+                }
+                
+                id value = [kv objectAtIndex:1];
+                
+                if ([value isKindOfClass:[NSString class]]) {
+                    NSString *v = (NSString *)[value URLDecode];
+                    NSLog(@"@253,v==%@",v);
+                    [params setObject:v forKey:[kv objectAtIndex:0]];
+                    continue;
+                }
+                
+                [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
+            }
+            controller.keyWords = [params valueForKey:@"key_words"];
             [controller.tableView reloadData];
             [self.navigationController popViewControllerAnimated:YES];
         }
