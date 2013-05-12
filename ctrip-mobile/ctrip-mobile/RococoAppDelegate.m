@@ -23,7 +23,7 @@
 #import "UIAlertView+Blocks.h"
 #import "MOrderDetailController.h"
 
-#define requireURL  [NSString stringWithFormat:@"%@%@/",API_BASE_URL,GROUP_LIST_PARAMTER]
+#define requireURL  [NSString stringWithFormat:@"%@%@/?page_index=%d%@",API_BASE_URL,GROUP_LIST_PARAMTER,1,PAGE_SIZE_PARAMTER]
 
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
 
@@ -99,7 +99,7 @@
     
     if ([json isKindOfClass:[NSArray class]]) {
         NSArray *dataList = [NSArray arrayWithArray:json];
-        NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
+        NSMutableArray *itemList = [[NSMutableArray alloc] init];//[NSMutableArray arrayWithCapacity:100];
         for (id data in dataList) {
             if ([data isKindOfClass:[NSDictionary class]]) {
                 Item *i = [[Item new] autorelease];
@@ -140,7 +140,7 @@
         
         NSString *cityName = [placemark.locality stringByReplacingOccurrencesOfString:@"市" withString:@""];
         
-        [self.network httpJsonResponse:[NSString stringWithFormat:@"%@?city=%@",requireURL,[cityName URLEncode]] byController:self.viewController];
+        [self.network httpJsonResponse:[NSString stringWithFormat:@"%@&city=%@",requireURL,[cityName URLEncode]] byController:self.viewController];
         
         [self setDefaultValues:cityName];
         
@@ -153,7 +153,7 @@
     NSLog(@"error@50,%@",error);
     
     NSString *city = @"北京";
-    [self.network httpJsonResponse:[NSString stringWithFormat:@"%@?city=%@",requireURL,[city URLEncode]]byController:self.viewController];
+    [self.network httpJsonResponse:[NSString stringWithFormat:@"%@&city=%@",requireURL,[city URLEncode]]byController:self.viewController];
     
     [self setDefaultValues:city];
     
@@ -174,7 +174,7 @@
     [defaults setValue:city forKey:@"city"];
     [defaults setValue:@"0" forKey:@"low_price"];
     [defaults setValue:@"8000" forKey:@"upper_price"];
-    [defaults setValue:@"100" forKey:@"top_count"];
+    [defaults setValue:@"0" forKey:@"top_count"];
     [defaults setValue:@"0" forKey:@"sort_type"];
     [defaults setValue:[[[Const sharedObject]arrayForTimeRange] objectAtIndex:0] forKey:@"time_range"];
     
@@ -248,9 +248,6 @@
     
     self.viewController.title = @"宅宅团购";
     
-    
-    
-    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AlreadyBeenLaunched"]) {
         // This is our very first launch
         NSLog(@"value==%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"AlreadyBeenLaunched"]);
@@ -281,14 +278,14 @@
         }
         
         if (topCount.length ==0) {
-            topCount =@"100";
+            topCount =@"0";
         }
         
         if (sortType == nil) {
             sortType =@"";
         }
         
-        NSString *url = [NSString stringWithFormat:@"%@?city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",requireURL,[city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],@""];
+        NSString *url = [NSString stringWithFormat:@"%@&city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",requireURL,[city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],@""];
         
         NSLog(@"144@,%@,%@",[city URLEncode],city);
         

@@ -12,7 +12,6 @@
 @interface MItemListController : MBaseController<MBProgressHUDDelegate,UIActionSheetDelegate>{
     MBProgressHUD *hudView;
 }
-
+@property (retain,nonatomic) NSString *keyWords;
 @property(retain, nonatomic) NSMutableArray *items;
-@property(retain, nonatomic) NSString *title;
 @end

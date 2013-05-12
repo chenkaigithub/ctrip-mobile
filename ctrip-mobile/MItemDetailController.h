@@ -10,10 +10,9 @@
 #import "MNetWork.h"
 #import "CarouselView.h"
 #import "ItemDetail.h"
-
-@interface MItemDetailController :UIViewController <UIAlertViewDelegate,jsonDelegate,UITableViewDataSource,UITableViewDelegate>
+#import "MBaseController.h"
+@interface MItemDetailController :MBaseController <UIAlertViewDelegate,jsonDelegate>
 
 @property (retain,nonatomic)CarouselView *carouselView;
-@property (retain,nonatomic)UITableView *tableView;
 @property (retain,nonatomic)ItemDetail *detail;
 @end

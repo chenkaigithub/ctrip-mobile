@@ -8,23 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://ctrip.herokuapp.com/api"
+#define API_BASE_URL                    @"http://localhost:8000"
 
-#define GROUP_LIST_PARAMTER             @"/group_product_list"
-#define GROUP_PRODUCT_PARAMTER          @"/group_product_info"
-#define GROUP_QUERY_TICKETS_PARAMTER    @"/group_query_tickets"
-#define GROUP_CREATE_ORDER_PARAMTER     @"/create_group_order"
-#define GROUP_ORDER_LIST_PARAMTER       @"/group_order_list"
-#define GROUP_CANCEL_TICKETS_PARAMTER   @"/group_cancel_tickets"
+#define GROUP_LIST_PARAMTER             @"/api/group_product_list"
+#define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"
+#define GROUP_QUERY_TICKETS_PARAMTER    @"/api/group_query_tickets"
+#define GROUP_CREATE_ORDER_PARAMTER     @"/api/create_group_order"
+#define GROUP_ORDER_LIST_PARAMTER       @"/api/group_order_list"
+#define GROUP_CANCEL_TICKETS_PARAMTER   @"/api/group_cancel_tickets"
 
-#define PAYMENT_PARAMTER                @"/get_payment"
+#define PAYMENT_PARAMTER                @"/api/get_payment"
 
-#define PROVINCE_LIST_PARAMTER          @"/province_list"
-#define CITY_LIST_PARAMTER              @"/city_list"
+#define PROVINCE_LIST_PARAMTER          @"/api/province_list"
+#define CITY_LIST_PARAMTER              @"/api/city_list"
 
 
 #define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
-
+#define PAGE_SIZE_PARAMTER                       @"&page_size=2"
 
 #define DAY_INTERVAL 60*60*24
 

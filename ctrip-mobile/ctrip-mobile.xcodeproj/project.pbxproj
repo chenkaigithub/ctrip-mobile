@@ -105,6 +105,9 @@
 		80F21F6F173BDCC100D9A580 /* hotel1.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F6A173BDCC100D9A580 /* hotel1.png */; };
 		80F21F70173BDCC100D9A580 /* House-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F6B173BDCC100D9A580 /* House-256.png */; };
 		80F21F71173BDCC100D9A580 /* OldHouse.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F6C173BDCC100D9A580 /* OldHouse.png */; };
+		80F21F75173DF38100D9A580 /* iPhoneIcon_Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */; };
+		80F21F76173DF38100D9A580 /* iPhoneIcon_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */; };
+		80F21F78173DF48100D9A580 /* Home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F77173DF48100D9A580 /* Home-icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -266,6 +269,9 @@
 		80F21F6A173BDCC100D9A580 /* hotel1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotel1.png; sourceTree = "<group>"; };
 		80F21F6B173BDCC100D9A580 /* House-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "House-256.png"; sourceTree = "<group>"; };
 		80F21F6C173BDCC100D9A580 /* OldHouse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OldHouse.png; sourceTree = "<group>"; };
+		80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon_Big.png; sourceTree = "<group>"; };
+		80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon_Small.png; sourceTree = "<group>"; };
+		80F21F77173DF48100D9A580 /* Home-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home-icon.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +299,9 @@
 		2B17DD7A17163AC500C7AB97 = {
 			isa = PBXGroup;
 			children = (
+				80F21F77173DF48100D9A580 /* Home-icon.png */,
+				80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */,
+				80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */,
 				2BCB41831733AFDF00B4C12E /* Reachability.h */,
 				2BCB41841733AFDF00B4C12E /* Reachability.m */,
 				801343D8172FA8A4007FEBB1 /* Categories */,
@@ -652,6 +661,9 @@
 				80F21F6F173BDCC100D9A580 /* hotel1.png in Resources */,
 				80F21F70173BDCC100D9A580 /* House-256.png in Resources */,
 				80F21F71173BDCC100D9A580 /* OldHouse.png in Resources */,
+				80F21F75173DF38100D9A580 /* iPhoneIcon_Big.png in Resources */,
+				80F21F76173DF38100D9A580 /* iPhoneIcon_Small.png in Resources */,
+				80F21F78173DF48100D9A580 /* Home-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

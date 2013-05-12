@@ -25,6 +25,8 @@
 
 -(void)httpJsonResponse:(NSString *)str byController:(UIViewController *)controller
 {
+    NSLog(@"@28,%@",str);
+    
     NSURL *url = [NSURL URLWithString:str];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
