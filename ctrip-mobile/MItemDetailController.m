@@ -60,6 +60,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Add padding to the top of the table view
+    UIEdgeInsets inset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.contentInset = inset;
     //back button
     UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil] autorelease];
     
@@ -70,7 +74,6 @@
     UIBarButtonItem *btnDone = [[[UIBarButtonItem alloc] initWithTitle:@"预定" style:UIBarButtonItemStyleBordered target:self action:@selector(orderProduct)] autorelease];
     
     self.navigationItem.rightBarButtonItem = btnDone;
-    
     
     self.title = self.detail.name;
     
@@ -105,7 +108,7 @@
     [label setFont:[UIFont fontWithName:@"Helvetica" size:15]];
     
     CGSize labelSize = [label.text sizeWithFont:label.font
-                              constrainedToSize:CGSizeMake(200, 999)
+                              constrainedToSize:CGSizeMake(320, 999)
                                   lineBreakMode:label.lineBreakMode];
     
     CGFloat labelHeight = labelSize.height;
