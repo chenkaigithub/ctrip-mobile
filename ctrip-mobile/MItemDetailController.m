@@ -159,21 +159,32 @@
 
 -(NSInteger)numberOfPages
 {
-    return self.detail.imageList.count ;
+    return self.detail.imageDictList.count;
+    //return self.detail.imageList.count ;
 }
 
 -(UIView *) pageAtIndex:(NSInteger)index
 {
-    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)] autorelease];
-    NSString *str = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,285,[(NSString *)[self.detail.imageList objectAtIndex:index] URLEncode]];
+    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 20, 300, 180)] autorelease];
+    
+    NSDictionary *dict = [self.detail.imageDictList objectAtIndex:index];
+    
+    NSString *str = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,285,[(NSString *)[dict objectForKey:@"url"] URLEncode]];
     
     NSURL *url = [NSURL URLWithString:str];
     
     [imageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     
-    UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
+    UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)]autorelease];
     view.backgroundColor = [UIColor grayColor];
     [view addSubview:imageView];
+    
+    UILabel *titleLabel = [[[UILabel alloc] init]autorelease];
+    titleLabel.text = [dict objectForKey:@"title"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    [titleLabel sizeToFit];
+    titleLabel.center = CGPointMake(160, 10);
+    [view addSubview:titleLabel];
     
     return view;
 }
@@ -233,7 +244,7 @@
         
         
         if (section == 0) {
-            XLCycleScrollView *csView = [[[XLCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 215)] autorelease];
+            XLCycleScrollView *csView = [[[XLCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)] autorelease];
             csView.datasource =self;
             csView.delegate = self;
             csView.backgroundColor = [UIColor grayColor];
@@ -325,7 +336,7 @@
     NSUInteger section = [indexPath section];
     //int row = [indexPath row];
     if (section == 0) {
-        return 215;
+        return 220;
     }
     
     if (section == 2) {

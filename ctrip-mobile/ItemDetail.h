@@ -20,6 +20,6 @@
 @property (retain,nonatomic) NSString *address;
 @property (retain,nonatomic) NSString *tel;
 @property (assign,nonatomic) CLLocationCoordinate2D location;
-@property (assign,nonatomic) NSArray *imageList;
-
+@property (retain,nonatomic) NSArray *imageList;
+@property (retain,nonatomic) NSArray *imageDictList;
 @end

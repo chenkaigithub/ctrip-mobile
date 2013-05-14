@@ -20,5 +20,5 @@
 @synthesize tel;
 @synthesize location;
 @synthesize imageList;
-
+@synthesize imageDictList;
 @end

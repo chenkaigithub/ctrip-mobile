@@ -200,11 +200,7 @@
 
 -(void)setReachability
 {
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reachabilityChanged:)
-                                                 name:kReachabilityChangedNotification
-                                               object:nil];
-    */
+    
     Reachability * reach = [Reachability reachabilityWithHostname:@"www.apple.com"];
     
     reach.reachableBlock = ^(Reachability * reachability)

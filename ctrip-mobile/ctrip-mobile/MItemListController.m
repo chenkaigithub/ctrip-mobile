@@ -183,7 +183,7 @@
         UILabel *moreLabel = [[[UILabel alloc] init] autorelease];
         
         moreLabel.text = @"载入更多...";
-        
+        moreLabel.backgroundColor = [UIColor clearColor];
         [moreLabel sizeToFit];
         [moreLabel setCenter:cell.center];
         [cell addSubview:moreLabel];
@@ -309,6 +309,7 @@
         detail.price = [json valueForKey:@"price"];
         detail.address = [json valueForKey:@"address"];
         
+        
         CLLocationCoordinate2D loaction;
         
         loaction.latitude = [[json valueForKey:@"lat"] floatValue];
@@ -327,7 +328,14 @@
             [images addObject:url];
         }
         
+        
         detail.imageList = images;
+        
+        NSArray *imageList = [json objectForKey:@"image_list"];
+        
+        
+        detail.imageDictList = [NSArray arrayWithArray:imageList];
+        
         controller.detail = detail;
         
         [self.navigationController pushViewController:controller animated:YES];

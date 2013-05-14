@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://localhost:8000"
+#define API_BASE_URL                    @"http://ctrip.herokuapp.com"
 
 #define GROUP_LIST_PARAMTER             @"/api/group_product_list"
 #define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"
@@ -24,7 +24,7 @@
 
 
 #define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
-#define PAGE_SIZE_PARAMTER                       @"&page_size=2"
+#define PAGE_SIZE_PARAMTER                       @"&page_size=10"
 
 #define DAY_INTERVAL 60*60*24
 
