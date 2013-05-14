@@ -12,7 +12,8 @@
 #import "MOrderCreateController.h"
 #import "MMapController.h"
 #import "TOrder.h"
-
+#import "UIImageView+AFNetworking.h"
+#import "Const.h"
 @interface MItemDetailController ()
 
 @property (nonatomic,retain)NSArray *cellHeightValues;
@@ -154,6 +155,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark xlcycle delegate
+
+-(NSInteger)numberOfPages
+{
+    return self.detail.imageList.count ;
+}
+
+-(UIView *) pageAtIndex:(NSInteger)index
+{
+    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)] autorelease];
+    NSString *str = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,285,[(NSString *)[self.detail.imageList objectAtIndex:index] URLEncode]];
+    
+    NSURL *url = [NSURL URLWithString:str];
+    
+    [imageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    
+    UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
+    view.backgroundColor = [UIColor grayColor];
+    [view addSubview:imageView];
+    
+    return view;
+}
+
 #pragma mark table view delegate and datasource
 
 - (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -209,10 +233,13 @@
         
         
         if (section == 0) {
-            
-            self.carouselView = [[[CarouselView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
-            self.carouselView.items = self.detail.imageList;
-            [cell addSubview:self.carouselView];
+            XLCycleScrollView *csView = [[[XLCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 215)] autorelease];
+            csView.datasource =self;
+            csView.delegate = self;
+            csView.backgroundColor = [UIColor grayColor];
+            //self.carouselView = [[[CarouselView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
+            //self.carouselView.items = self.detail.imageList;
+            [cell addSubview:csView];
         }
         
         if (section == 1) {
@@ -298,7 +325,7 @@
     NSUInteger section = [indexPath section];
     //int row = [indexPath row];
     if (section == 0) {
-        return 200;
+        return 215;
     }
     
     if (section == 2) {
