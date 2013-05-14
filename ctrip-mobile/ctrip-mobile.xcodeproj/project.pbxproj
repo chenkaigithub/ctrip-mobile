@@ -40,6 +40,7 @@
 		2B189004171D24F2000CC570 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B188FFB171D24F2000CC570 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		2B289F98171F819100A3CE7B /* Const.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F97171F819100A3CE7B /* Const.m */; };
 		2B289F9C171FAF2700A3CE7B /* MSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F9B171FAF2700A3CE7B /* MSelectController.m */; };
+		2B2E7A651741FD5A0061B330 /* share this.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2E7A641741FD5A0061B330 /* share this.png */; };
 		2B774CA21720E5D400FFD9DF /* MWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA11720E5D400FFD9DF /* MWindow.m */; };
 		2B774CA51721051300FFD9DF /* CarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA41721051300FFD9DF /* CarouselView.m */; };
 		2B774CAB172105A000FFD9DF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CAA172105A000FFD9DF /* iCarousel.m */; };
@@ -176,6 +177,7 @@
 		2B289F97171F819100A3CE7B /* Const.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Const.m; sourceTree = "<group>"; };
 		2B289F9A171FAF2600A3CE7B /* MSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSelectController.h; sourceTree = "<group>"; };
 		2B289F9B171FAF2700A3CE7B /* MSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSelectController.m; sourceTree = "<group>"; };
+		2B2E7A641741FD5A0061B330 /* share this.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share this.png"; sourceTree = "<group>"; };
 		2B774CA01720E5D400FFD9DF /* MWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWindow.h; sourceTree = "<group>"; };
 		2B774CA11720E5D400FFD9DF /* MWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWindow.m; sourceTree = "<group>"; };
 		2B774CA31721051300FFD9DF /* CarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselView.h; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				80F21F77173DF48100D9A580 /* Home-icon.png */,
 				80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */,
 				80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */,
+				2B2E7A641741FD5A0061B330 /* share this.png */,
 				2BCB41831733AFDF00B4C12E /* Reachability.h */,
 				2BCB41841733AFDF00B4C12E /* Reachability.m */,
 				801343D8172FA8A4007FEBB1 /* Categories */,
@@ -664,6 +667,7 @@
 				80F21F75173DF38100D9A580 /* iPhoneIcon_Big.png in Resources */,
 				80F21F76173DF38100D9A580 /* iPhoneIcon_Small.png in Resources */,
 				80F21F78173DF48100D9A580 /* Home-icon.png in Resources */,
+				2B2E7A651741FD5A0061B330 /* share this.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

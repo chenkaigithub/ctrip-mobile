@@ -70,12 +70,24 @@
     self.navigationItem.backBarButtonItem =backButton;
     
     //order button
+    /*
+    UIImage *shareImage = [UIImage imageNamed:@"share this.png"];
+
     
-    UIBarButtonItem *btnDone = [[[UIBarButtonItem alloc] initWithTitle:@"预定" style:UIBarButtonItemStyleBordered target:self action:@selector(orderProduct)] autorelease];
+    UIButton *shareButton = [[[UIButton alloc] init] autorelease];
     
-    self.navigationItem.rightBarButtonItem = btnDone;
+    [shareButton setImage:shareImage forState:UIControlStateNormal];
     
-    self.title = self.detail.name;
+    [shareButton addTarget:self action:@selector(orderPrudoct) forControlEvents:UIControlEventTouchUpInside];
+    
+    [shareButton sizeToFit];
+    
+    UIBarButtonItem *barItem = [[[UIBarButtonItem alloc] initWithCustomView:shareButton] autorelease];
+    
+    self.navigationItem.rightBarButtonItem = barItem;
+    */
+    
+    self.title = @"酒店详情";//self.detail.name;
     
     UILabel *hiddenLabel = [[[UILabel alloc] init] autorelease];
     
@@ -164,28 +176,17 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section < 4) {
+    if (section < 5) {
         return 1;
     }
     
-    int row = 3;
-    
-    if (section == 4) {
-        
-        if (self.detail.tel.length == 0) {
-            row = row -1;
-        }
-        
-        if (self.detail.address.length == 0) {
-            row = row -1;
-        }
-    }
-    return row;
+   
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -205,6 +206,8 @@
         
         [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:15]];
         
+        
+        
         if (section == 0) {
             
             self.carouselView = [[[CarouselView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
@@ -212,39 +215,54 @@
             [cell addSubview:self.carouselView];
         }
         
-        if (section < 4) {
+        if (section == 1) {
+            cell.textLabel.text = self.detail.name;
+        }
+        
+        if (section < 5) {
             [cell.textLabel setFrame:[self getResizeFrame:cell.textLabel]];
         }
         
         
-        if (section == 1 && row ==0) {
+        if (section == 2 && row ==0) {
             cell.textLabel.text = [self.detail.headDesc stringByConvertingHTMLToPlainText];
         }
         
-        if (section == 2 && row == 0) {
+        if (section == 3 && row == 0) {
             cell.textLabel.text = [self.detail.desc stringByConvertingHTMLToPlainText];
         }
         
-        if (section ==3 && row == 0) {
+        if (section == 4 && row == 0) {
             cell.textLabel.text = [self.detail.ruleDesc stringByConvertingHTMLToPlainText];
         }
         
-        if (section == 4) {
+        if (section == 5) {
             switch (row) {
                 case 0:
                     cell.textLabel.text = [NSString stringWithFormat:@"价格：¥ %@",self.detail.price];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     break;
                 case 1:
-                    cell.textLabel.text = [NSString stringWithFormat:@"地址：%@",self.detail.address];
                     if (self.detail.address.length >0) {
+                        cell.textLabel.text = [NSString stringWithFormat:@"地址：%@",self.detail.address];
+                        
                         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    }
+                    else
+                    {
+                        cell.textLabel.text = @"地址：- -";
                     }
                     break;
                 case 2:
-                    cell.textLabel.text = [NSString stringWithFormat:@"电话：%@", self.detail.tel];
                     
                     if (self.detail.tel.length>0) {
+                        cell.textLabel.text = [NSString stringWithFormat:@"电话：%@", self.detail.tel];
+                        
                         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    }
+                    else
+                    {
+                        cell.textLabel.text = @"电话：- -";
                     }
                     break;
                 default:
@@ -260,15 +278,15 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == 2) {
         return @"描述";
     }
     
-    if (section == 2) {
+    if (section == 3) {
         return @"包含项目";
     }
     
-    if (section == 3) {
+    if (section == 4) {
         return @"特别提示";
     }
     
@@ -283,16 +301,16 @@
         return 200;
     }
     
-    if (section == 1) {
-        return [[self.cellHeightValues objectAtIndex:0] floatValue ];
-    }
-    
     if (section == 2) {
-        return [[self.cellHeightValues objectAtIndex:1] floatValue];
+        return [[self.cellHeightValues objectAtIndex:0] floatValue ]+20;
     }
     
     if (section == 3) {
-        return [[self.cellHeightValues objectAtIndex:2] floatValue];
+        return [[self.cellHeightValues objectAtIndex:1] floatValue]+20;
+    }
+    
+    if (section == 4) {
+        return [[self.cellHeightValues objectAtIndex:2] floatValue]+20;
     }
     
     return 44;
@@ -307,7 +325,7 @@
     int row = [indexPath row];
     int section = [indexPath section];
     
-    if (section == 4 && row == 1) {
+    if (section == 5 && row == 1) {
         //address view
         MMapController *controller = [[[MMapController alloc] init] autorelease];
         
@@ -319,7 +337,11 @@
         
     }
     
-    if (section == 4 && row == 2) {
+    if (section == 5 && row ==0) {
+        [self orderProduct];
+    }
+    
+    if (section == 5 && row == 2) {
         
         NSString *num = self.detail.tel;
         UIAlertView *alert =[ [UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"是否确认拨打：%@",num] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
