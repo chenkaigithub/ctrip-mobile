@@ -23,6 +23,17 @@
 	hud = nil;
 }
 
+-(void) showHUD:(MBProgressHUD *)hud
+{
+    [hud setLabelText:@"请稍后"];
+    
+    [hud setDetailsLabelText:@"正在读取数据..."];
+    
+    [hud setSquare:YES];
+    
+    [hud show:YES];
+}
+
 -(void)httpJsonResponse:(NSString *)str byController:(UIViewController *)controller
 {
     NSLog(@"@28,%@",str);
@@ -38,13 +49,8 @@
     [controller.view addSubview:hud];
     
     [hud setDelegate:self];
-    [hud setLabelText:@"请稍后"];
     
-    [hud setDetailsLabelText:@"正在读取数据..."];
-    
-    [hud setSquare:YES];
-    
-    [hud show:YES];
+    [self showHUD:hud];
     
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         

@@ -115,6 +115,17 @@
         
         self.viewController.items = itemList;
         
+        NSArray *params = [[[request URL] query] componentsSeparatedByString:@"&"];
+        NSString *title = @"";
+        
+        for (NSString *str in params) {
+            NSArray *kv = [str componentsSeparatedByString:@"="];
+            if ([[kv objectAtIndex:0] isEqualToString:@"city"]) {
+                title = [[kv objectAtIndex:1] URLDecode];
+            }
+        }
+        
+        self.viewController.title = title;
         [self.viewController.tableView reloadData];
     }
     
@@ -242,7 +253,7 @@
     
     self.window.rootViewController = self.nav;
     
-    self.viewController.title = @"宅宅团购";
+    //self.viewController.title = @"宅宅团购";
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AlreadyBeenLaunched"]) {
         // This is our very first launch
@@ -375,14 +386,12 @@
             [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
         }
         
-        NSLog(@"252,%@",params);
-        
-        NSString *amount = [params valueForKey:@"Amount"];
+        //NSString *amount = [params valueForKey:@"Amount"];
         //NSString *currencyCode = [params objectForKey:@"CurrencyCode"];
         //NSString *merchantData = [[params valueForKey:@"MerchantData"] URLDecode];
         NSString *orderID = [params objectForKey:@"OrderID"];
         NSInteger status = [[params objectForKey:@"Status"] intValue];
-        NSString *transactionID = [params objectForKey:@"TransactionID"];
+        //NSString *transactionID = [params objectForKey:@"TransactionID"];
         
         if (status==1) {
             

@@ -21,4 +21,5 @@
 @synthesize location;
 @synthesize imageList;
 @synthesize imageDictList;
+@synthesize oURL;
 @end

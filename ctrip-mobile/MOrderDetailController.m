@@ -13,6 +13,7 @@
 #import "RococoAppDelegate.h"
 #import "Utility.h"
 #import "Const.h"
+
 @interface MOrderDetailController ()
 @property (nonatomic,retain)OrderEntity *order;
 @end
@@ -107,7 +108,10 @@
         [images addObject:url];
     }
     
+    NSArray *imageObjects  = [json objectForKey:@"image_list"];
+    detail.imageDictList = [NSArray arrayWithArray:imageObjects];
     detail.imageList = images;
+    detail.oURL = [json valueForKey:@"ourl"];
     controller.detail = detail;
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -152,7 +156,7 @@
     
     [self loadDataFromDB];
 
-    self.title = self.order.productName;
+    self.title = @"订单详情";
     
 	// Do any additional setup after loading the view.
 }
@@ -220,7 +224,7 @@
             case 0:
                 cell.textLabel.text = @"订单状态";
                 cell.detailTextLabel.text = self.order.orderStatus;
-                if ([self.order.orderStatus isEqualToString:@"未提交"]||[self.order.orderStatus isEqualToString:@"未完成支付"]||[self.order.orderStatus isEqualToString:@"支付成功"]) {
+                if ([self.order.orderStatus isEqualToString:@"未提交"]||[self.order.orderStatus isEqualToString:@"支付成功"]) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
                 else
@@ -303,10 +307,10 @@
                 [alert show];
                 [alert release];
             }
-            else{
+            else if([self.order.orderStatus isEqualToString:@"未提交"]){
                 okItem.action = ^{
                     NSString *url = [NSString stringWithFormat:@"%@%@/?business_type=Tuan&order_type=6&description=%@&order_id=%@",API_BASE_URL,PAYMENT_PARAMTER,[self.order.productName URLEncode],self.order.orderID];
-                    
+                    NSLog(@"312,%@",url);
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
                     
                 };

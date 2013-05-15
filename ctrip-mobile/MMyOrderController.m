@@ -16,6 +16,8 @@
 #import "MOrderDetailController.h"
 #import "NSString+Category.h"
 #import "Const.h"
+#import "MBProgressHUD.h"
+#import "SBJSON.h"
 @interface MMyOrderController ()
 
 @property (nonatomic,retain) NSMutableArray *orderEntitys;
@@ -154,6 +156,78 @@
     [self.tableView reloadData];
 }
 
+-(void) refreshTableView
+{
+    //search all order first
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    [hud setLabelText:@"请稍后"];
+    
+    [hud setDetailsLabelText:@"正在读取数据..."];
+    
+    [hud setSquare:YES];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        
+        NSManagedObjectContext *context = [(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
+        [request setEntity:entity];
+        
+        NSArray *results = [context executeFetchRequest:request error:nil];
+        
+        for (OrderEntity *e in results) {
+            
+            NSDate *date = [NSDate date];
+            
+            NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+            
+            [formater setDateFormat:@"yyyy-MM-dd"];
+            
+            NSString *strToday = [formater stringFromDate:date];
+            
+            NSString *strURL = [NSString stringWithFormat:@"%@%@/?order_id=%@&begin_date=%@&end_date=%@",API_BASE_URL,GROUP_ORDER_LIST_PARAMTER,e.orderID,strToday,strToday];
+            
+            NSURL *url = [NSURL URLWithString:strURL];
+            
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            
+            
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([json isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = (NSDictionary *)json;
+                e.orderStatus = [dict valueForKey:@"status"];
+                [context save:nil];
+                //update to database
+            }
+            
+        }
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadDataFromDB];
+            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            
+           
+        
+        });
+    
+    });
+    
+    
+    
+    
+    
+    
+}
+
 #pragma mark -- viewcontroller
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -171,6 +245,10 @@
 
     // Remove table cell separator
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    UIBarButtonItem *refreshItem  = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshTableView)] autorelease];
+    
+    self.navigationItem.rightBarButtonItem = refreshItem;
     
     
 }
@@ -209,7 +287,10 @@
     if (cell == nil) {
         cell = [[[MOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
+        UIFont *font = [UIFont systemFontOfSize:14];
         UILabel *productLabel = [[[UILabel alloc] init] autorelease];
+        
+        
         
         productLabel.text = o.productName;
         
@@ -242,6 +323,10 @@
         [priceLabel setFrame:CGRectMake(240, 40, 100, 20)];
         
         [cell addSubview:priceLabel];
+        
+        [productLabel setFont:font];
+        [statusLabel setFont:font];
+        [priceLabel setFont:font];
         
         productLabel.tag = 101;
         statusLabel.tag = 102;

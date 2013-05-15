@@ -14,6 +14,7 @@
 #import "TOrder.h"
 #import "UIImageView+AFNetworking.h"
 #import "Const.h"
+#import <QuartzCore/QuartzCore.h>
 @interface MItemDetailController ()
 
 @property (nonatomic,retain)NSArray *cellHeightValues;
@@ -57,7 +58,16 @@
     [self.navigationController pushViewController:controller animated:YES];
     
 }
-
+-(void)share
+{
+    NSString *shareURL = self.detail.oURL;
+    NSArray *shareObjects = [NSArray arrayWithObjects:shareURL, nil];
+    UIActivityViewController *controller = [[[UIActivityViewController alloc] initWithActivityItems:shareObjects applicationActivities:nil] autorelease];
+    
+    controller.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeSaveToCameraRoll];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -70,23 +80,19 @@
     
     self.navigationItem.backBarButtonItem =backButton;
     
-    //order button
-    /*
-    UIImage *shareImage = [UIImage imageNamed:@"share this.png"];
-
+    //share button
+    NSLog(@"version:%@",[[UIDevice currentDevice] systemVersion]);
     
-    UIButton *shareButton = [[[UIButton alloc] init] autorelease];
+    float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     
-    [shareButton setImage:shareImage forState:UIControlStateNormal];
+    if (systemVersion>6.0) {
+        UIBarButtonItem *barItem = [[[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStyleBordered target:self action:@selector(share)] autorelease];
+        
+        self.navigationItem.rightBarButtonItem = barItem;
+    }
+        
     
-    [shareButton addTarget:self action:@selector(orderPrudoct) forControlEvents:UIControlEventTouchUpInside];
     
-    [shareButton sizeToFit];
-    
-    UIBarButtonItem *barItem = [[[UIBarButtonItem alloc] initWithCustomView:shareButton] autorelease];
-    
-    self.navigationItem.rightBarButtonItem = barItem;
-    */
     
     self.title = @"酒店详情";//self.detail.name;
     
@@ -165,7 +171,7 @@
 
 -(UIView *) pageAtIndex:(NSInteger)index
 {
-    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 20, 300, 180)] autorelease];
+    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)] autorelease];
     
     NSDictionary *dict = [self.detail.imageDictList objectAtIndex:index];
     
@@ -175,17 +181,14 @@
     
     [imageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     
-    UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)]autorelease];
+    CALayer *layer = [imageView layer];
+    [layer setMasksToBounds:YES];
+    [layer setCornerRadius:7.0];
+    
+    UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
     view.backgroundColor = [UIColor grayColor];
     [view addSubview:imageView];
-    
-    UILabel *titleLabel = [[[UILabel alloc] init]autorelease];
-    titleLabel.text = [dict objectForKey:@"title"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    [titleLabel sizeToFit];
-    titleLabel.center = CGPointMake(160, 10);
-    [view addSubview:titleLabel];
-    
+   
     return view;
 }
 

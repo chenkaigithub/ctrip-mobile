@@ -18,9 +18,11 @@
 #import "UIActionSheet+Blocks.h"
 #import "MMyOrderController.h"
 #import "NSString+Category.h"
+#import <QuartzCore/QuartzCore.h>
 @interface MItemListController ()
 {
     NSUInteger pageIndex;
+    BOOL maxPageFlag;
 }
     
 @end
@@ -38,6 +40,7 @@
     if (self) {
         // Custom initialization
         pageIndex = 1;
+        maxPageFlag = NO;
         self.keyWords = @"";
     }
     return self;
@@ -82,12 +85,12 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = self.title;
+    //self.navigationItem.title = self.title;
     
     UIBarButtonItem *actionButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)] autorelease];
     
     
-    self.navigationItem.rightBarButtonItem = actionButton;//settingsButton;//btnConfig;
+    self.navigationItem.rightBarButtonItem = actionButton;
     
     
     // Remove table cell separator
@@ -124,6 +127,10 @@
 {
     if ([self.items count]==0) {
         return 0;
+    }
+    
+    if (maxPageFlag == YES) {
+        return [self.items count];
     }
     
     return [self.items count]+1;
@@ -164,12 +171,17 @@
         
         NSString *strThumbnailURL = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,58,[item.thumbnailURL URLEncode]];
         
+        
         [cell.thumbnailView setImageWithURL:[NSURL URLWithString:strThumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
+        
+        CALayer *layer = [cell.thumbnailView layer];
+        [layer setMasksToBounds:YES];
+        [layer setCornerRadius:5.0];
         
         cell.nameLabel.text = item.name;
         cell.priceLabel.text = [NSString stringWithFormat:@"价格：¥ %@",item.price];
         cell.descLabel.text = item.desc;
-        
+        cell.descLabel.textColor = [UIColor redColor];
         
     }
     else
@@ -251,7 +263,7 @@
             sortType =@"";
         }
         
-        pageIndex +=pageIndex;
+        pageIndex =pageIndex+1;
         
         NSString *strURL=[NSString stringWithFormat:@"%@%@/?page_index=%d%@&city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",
                           API_BASE_URL,GROUP_LIST_PARAMTER,pageIndex ,PAGE_SIZE_PARAMTER,
@@ -287,6 +299,16 @@
                     NSUInteger row = [self.items count]-1;
                     
                     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationRight];
+                    
+                    NSUInteger pageSize = [[[PAGE_SIZE_PARAMTER componentsSeparatedByString:@"="] objectAtIndex:1] integerValue];
+                    if (dataList.count< pageSize ) {
+                        NSUInteger lastRowIndex = [self.tableView numberOfRowsInSection:0]-1;
+                        
+                        maxPageFlag = YES;
+                        
+                        //[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:lastRowIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                        
+                    }
                 }
             }
             
@@ -335,7 +357,7 @@
         
         
         detail.imageDictList = [NSArray arrayWithArray:imageList];
-        
+        detail.oURL = [json valueForKey:@"ourl"];
         controller.detail = detail;
         
         [self.navigationController pushViewController:controller animated:YES];

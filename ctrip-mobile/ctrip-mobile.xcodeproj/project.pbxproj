@@ -304,8 +304,6 @@
 		2B17DD7A17163AC500C7AB97 = {
 			isa = PBXGroup;
 			children = (
-				2B2E7A67174230440061B330 /* XLCycleScrollView.h */,
-				2B2E7A68174230440061B330 /* XLCycleScrollView.m */,
 				2B2E7A66174230320061B330 /* CycleScrollView */,
 				80F21F77173DF48100D9A580 /* Home-icon.png */,
 				80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */,
@@ -438,6 +436,8 @@
 		2B2E7A66174230320061B330 /* CycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				2B2E7A67174230440061B330 /* XLCycleScrollView.h */,
+				2B2E7A68174230440061B330 /* XLCycleScrollView.m */,
 			);
 			name = CycleScrollView;
 			sourceTree = "<group>";

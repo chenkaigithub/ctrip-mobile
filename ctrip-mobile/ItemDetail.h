@@ -22,4 +22,5 @@
 @property (assign,nonatomic) CLLocationCoordinate2D location;
 @property (retain,nonatomic) NSArray *imageList;
 @property (retain,nonatomic) NSArray *imageDictList;
+@property (retain,nonatomic) NSString *oURL;
 @end
