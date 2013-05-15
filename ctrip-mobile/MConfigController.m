@@ -133,7 +133,9 @@
 
 -(void)setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
-    if ([json isKindOfClass:[NSArray class]]) {
+    
+    NSString *path = [[request URL] path];
+    if ([path isEqualToString:PROVINCE_LIST_PARAMTER]) {
         
         NSArray *dataList = [NSArray arrayWithArray:json];
         NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
@@ -155,10 +157,13 @@
             
             [self.navigationController pushViewController:controller animated:YES];
         }
-        else{
-            MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
-            dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
-            for (id data in dataList) {
+    }
+    else if([path isEqualToString:GROUP_LIST_PARAMTER])
+    {
+        MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
+        NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
+        NSMutableArray *itemList= [[[NSMutableArray alloc] init]autorelease];
+        for (id data in dataList) {
                 if ([data isKindOfClass:[NSDictionary class]]) {
                     Item *i = [[Item new] autorelease];
                     i.name = [data valueForKey:@"name"];
@@ -171,38 +176,59 @@
                 }
             }
             
-            controller.items = itemList;
-            controller.itemTotalCount = [[json objectForKey:@"count"] integerValue];
-            NSString *query = [[request URL] query];
-            NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
+        controller.items = itemList;
+        
+        controller.itemTotalCount = [[json objectForKey:@"count"] integerValue];
+        
+        NSString *query = [[request URL] query];
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             
-            for (NSString *param in [query componentsSeparatedByString:@"&"]) {
+        
+        for (NSString *param in [query componentsSeparatedByString:@"&"]) {
                 
-                NSArray *kv = [param componentsSeparatedByString:@"="];
+        
+            NSArray *kv = [param componentsSeparatedByString:@"="];
                 
-                if ([kv count]<2) {
+            
+            if ([kv count]<2) {
                     
-                    [params setObject:@"" forKey:[kv objectAtIndex:0]];
+            
+                [params setObject:@"" forKey:[kv objectAtIndex:0]];
                     
-                    continue;
-                }
                 
-                id value = [kv objectAtIndex:1];
+                continue;
                 
-                if ([value isKindOfClass:[NSString class]]) {
-                    NSString *v = (NSString *)[value URLDecode];
-                    NSLog(@"@253,v==%@",v);
-                    [params setObject:v forKey:[kv objectAtIndex:0]];
-                    continue;
-                }
-                
-                [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
             }
-            controller.keyWords = [params valueForKey:@"key_words"];
-            [controller.tableView reloadData];
-            [self.navigationController popViewControllerAnimated:YES];
+                
+            
+            id value = [kv objectAtIndex:1];
+                
+            
+            if ([value isKindOfClass:[NSString class]]) {
+            
+                NSString *v = (NSString *)[value URLDecode];
+                
+                NSLog(@"@253,v==%@",v);
+                
+                [params setObject:v forKey:[kv objectAtIndex:0]];
+                
+                continue;
+                
+            }
+                
+            
+            [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
+            
         }
         
+        controller.title = [[params valueForKey:@"city"] URLDecode];
+        controller.keyWords = [params valueForKey:@"key_words"];
+        
+        [controller.tableView reloadData];
+        
+        [self.navigationController popViewControllerAnimated:YES];
         
     }
     else
