@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://ctrip.herokuapp.com"
+#define API_BASE_URL                    @"http://localhost:8000"
 
 #define GROUP_LIST_PARAMTER             @"/api/group_product_list"
 #define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"

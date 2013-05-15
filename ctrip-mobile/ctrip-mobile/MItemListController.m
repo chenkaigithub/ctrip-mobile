@@ -22,7 +22,6 @@
 @interface MItemListController ()
 {
     NSUInteger pageIndex;
-    BOOL maxPageFlag;
 }
     
 @end
@@ -30,7 +29,7 @@
 @implementation MItemListController
 @synthesize items=_items;
 @synthesize keyWords = _keyWords;
-
+@synthesize itemTotalCount = _itemTotalCount;
 
 #pragma mark -
 #pragma mark UIView
@@ -40,7 +39,6 @@
     if (self) {
         // Custom initialization
         pageIndex = 1;
-        maxPageFlag = NO;
         self.keyWords = @"";
     }
     return self;
@@ -128,12 +126,15 @@
     if ([self.items count]==0) {
         return 0;
     }
-    
-    if (maxPageFlag == YES) {
-        return [self.items count];
+    else
+    {
+        if (self.items.count < self.itemTotalCount) {
+            return self.items.count+1;
+        }
+        else{
+            return self.itemTotalCount;
+        }
     }
-    
-    return [self.items count]+1;
 }
 
 - (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -281,8 +282,8 @@
     
     if ([path isEqualToString:GROUP_LIST_PARAMTER]) {
         NSLog(@"load more...");
-        if ([json isKindOfClass:[NSArray class]]) {
-            NSArray *dataList = [NSArray arrayWithArray:json];
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
             for (id data in dataList) {
                 if ([data isKindOfClass:[NSDictionary class]]) {
                     Item *i = [[Item new] autorelease];
@@ -295,22 +296,19 @@
                     
                     [self.items addObject:i];
                     
-                    NSUInteger section = 0;
-                    NSUInteger row = [self.items count]-1;
+                    //NSUInteger section = 0;
+                    //NSUInteger row = [self.items count]-1;
                     
-                    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationRight];
                     
-                    NSUInteger pageSize = [[[PAGE_SIZE_PARAMTER componentsSeparatedByString:@"="] objectAtIndex:1] integerValue];
-                    if (dataList.count< pageSize ) {
-                        NSUInteger lastRowIndex = [self.tableView numberOfRowsInSection:0]-1;
-                        
-                        maxPageFlag = YES;
-                        
-                        //[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:lastRowIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-                        
-                    }
+                    //[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationRight];
+                    
+                    
                 }
             }
+            
+            [self.tableView reloadData];
+            
+          
             
         }
         

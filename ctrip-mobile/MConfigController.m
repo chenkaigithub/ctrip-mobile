@@ -157,7 +157,7 @@
         }
         else{
             MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
-            
+            dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
             for (id data in dataList) {
                 if ([data isKindOfClass:[NSDictionary class]]) {
                     Item *i = [[Item new] autorelease];
@@ -172,7 +172,7 @@
             }
             
             controller.items = itemList;
-            
+            controller.itemTotalCount = [[json objectForKey:@"count"] integerValue];
             NSString *query = [[request URL] query];
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             

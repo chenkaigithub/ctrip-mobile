@@ -14,4 +14,5 @@
 }
 @property (retain,nonatomic) NSString *keyWords;
 @property(retain, nonatomic) NSMutableArray *items;
+@property(assign,nonatomic) NSUInteger itemTotalCount;
 @end

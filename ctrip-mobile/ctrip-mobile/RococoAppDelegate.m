@@ -97,8 +97,8 @@
 {
     
     
-    if ([json isKindOfClass:[NSArray class]]) {
-        NSArray *dataList = [NSArray arrayWithArray:json];
+    if ([json isKindOfClass:[NSDictionary class]]) {
+        NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
         NSMutableArray *itemList = [[NSMutableArray alloc] init];//[NSMutableArray arrayWithCapacity:100];
         for (id data in dataList) {
             if ([data isKindOfClass:[NSDictionary class]]) {
@@ -112,7 +112,7 @@
                 
             }
         }
-        
+        self.viewController.itemTotalCount = [[json objectForKey:@"count"] integerValue];
         self.viewController.items = itemList;
         
         NSArray *params = [[[request URL] query] componentsSeparatedByString:@"&"];
