@@ -14,7 +14,6 @@
 #import "MItemDetailController.h"
 #import "Const.h"
 #import "ItemDetail.h"
-#import <MapKit/MapKit.h>
 #import "UIActionSheet+Blocks.h"
 #import "MMyOrderController.h"
 #import "NSString+Category.h"
@@ -170,7 +169,7 @@
     if (row<[self.items count]) {
         Item *item = [self.items objectAtIndex:[indexPath row]];
         
-        NSString *strThumbnailURL = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,58,[item.thumbnailURL URLEncode]];
+        NSString *strThumbnailURL = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,THUMBNAIL_ITEM_WIDTH,[item.thumbnailURL URLEncode]];
         
         
         [cell.thumbnailView setImageWithURL:[NSURL URLWithString:strThumbnailURL] placeholderImage:[UIImage imageNamed:@"thumbnail.png"]];
@@ -181,8 +180,11 @@
         
         cell.nameLabel.text = item.name;
         cell.priceLabel.text = [NSString stringWithFormat:@"价格：¥ %@",item.price];
+        UIFont *italicFont = [UIFont italicSystemFontOfSize:11];
+        cell.priceLabel.font = italicFont;
         cell.descLabel.text = item.desc;
         cell.descLabel.textColor = [UIColor redColor];
+        
         
     }
     else
@@ -268,7 +270,7 @@
         
         NSString *strURL=[NSString stringWithFormat:@"%@%@/?page_index=%d%@&city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",
                           API_BASE_URL,GROUP_LIST_PARAMTER,pageIndex ,PAGE_SIZE_PARAMTER,
-                          [city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],self.keyWords];
+                          [city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],[self.keyWords URLEncode]];
         [self.network httpJsonResponse:strURL byController:self];
         
     }
@@ -281,81 +283,21 @@
     NSString *path = [[request URL] path];
     
     if ([path isEqualToString:GROUP_LIST_PARAMTER]) {
-        NSLog(@"load more...");
-        if ([json isKindOfClass:[NSDictionary class]]) {
-            NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
-            for (id data in dataList) {
-                if ([data isKindOfClass:[NSDictionary class]]) {
-                    Item *i = [[Item new] autorelease];
-                    i.name = [data valueForKey:@"name"];
-                    i.price = [data valueForKey:@"price"];
-                    i.thumbnailURL = [data valueForKey:@"img"];
-                    i.productID = [[data valueForKey:@"product_id"] integerValue];
-                    i.desc = [[data valueForKey:@"description"] stringByConvertingHTMLToPlainText];
-                    
-                    
-                    [self.items addObject:i];
-                    
-                    //NSUInteger section = 0;
-                    //NSUInteger row = [self.items count]-1;
-                    
-                    
-                    //[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationRight];
-                    
-                    
-                }
-            }
-            
-            [self.tableView reloadData];
-            
-          
-            
-        }
+        
+        
+        NSArray *newItems = [[Const sharedObject] getProudctItemListFromRequest:request withJSON:json];
+    
+        self.items = [self.items arrayByAddingObjectsFromArray:newItems];
+        
+        [self.tableView reloadData];
         
     }
     else if([path isEqualToString:GROUP_PRODUCT_PARAMTER])
     {
         MItemDetailController *controller = [[[MItemDetailController alloc] initWithStyle:UITableViewStylePlain] autorelease];
         
-        ItemDetail *detail = [[[ItemDetail alloc] init] autorelease];
-        detail.productID = [[json valueForKey:@"product_id"] integerValue];
-        detail.name =[json valueForKey:@"name"];
+        ItemDetail *detail = [[[ItemDetail alloc] initWithDictionary:(NSDictionary *)json] autorelease];
         
-        detail.desc = [json valueForKey:@"description"];
-        detail.ruleDesc = [json valueForKey:@"rule_description"];
-        detail.headDesc = [json valueForKey:@"head_description"];
-        
-        detail.tel = [json valueForKey:@"tel"];
-        detail.price = [json valueForKey:@"price"];
-        detail.address = [json valueForKey:@"address"];
-        
-        
-        CLLocationCoordinate2D loaction;
-        
-        loaction.latitude = [[json valueForKey:@"lat"] floatValue];
-        loaction.longitude = [[json valueForKey:@"lon"] floatValue];
-        
-        detail.location = loaction;
-        
-        NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:5];
-        
-        NSArray *list = [json objectForKey:@"pictures"];
-        
-        for (id object in list) {
-            
-            NSString * url = [object valueForKey:@"url"];
-            
-            [images addObject:url];
-        }
-        
-        
-        detail.imageList = images;
-        
-        NSArray *imageList = [json objectForKey:@"image_list"];
-        
-        
-        detail.imageDictList = [NSArray arrayWithArray:imageList];
-        detail.oURL = [json valueForKey:@"ourl"];
         controller.detail = detail;
         
         [self.navigationController pushViewController:controller animated:YES];

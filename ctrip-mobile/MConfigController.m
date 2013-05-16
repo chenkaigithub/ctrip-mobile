@@ -42,6 +42,9 @@
     
     userDefaults.keyWords = [defaults valueForKey:@"key_words"];
     userDefaults.cityName = [defaults valueForKey:@"city"];
+    if ([userDefaults.cityName isEqual:nil]) {
+        userDefaults.cityName =@"";
+    }
     userDefaults.beginDate = [defaults valueForKey:@"begin_date"];
     userDefaults.endDate = [defaults valueForKey:@"end_date"];
     userDefaults.lowPrice = [defaults valueForKey:@"low_price"];
@@ -103,6 +106,9 @@
         userDefaults.upperPrice =upperPriceCell.textField.text;
     }
     
+    if (userDefaults.cityName.length==0) {
+        userDefaults.cityName = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]].detailTextLabel.text;
+    }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -111,7 +117,7 @@
     [defaults setValue:userDefaults.keyWords forKey:@"key_words"];
     [defaults setValue:userDefaults.lowPrice forKey:@"low_price"];
     [defaults setValue:userDefaults.upperPrice forKey:@"upper_price"];
-    
+    [defaults setValue:userDefaults.cityName forKey:@"city"];
     [defaults synchronize];
     
     
@@ -135,20 +141,21 @@
 {
     
     NSString *path = [[request URL] path];
+    
     if ([path isEqualToString:PROVINCE_LIST_PARAMTER]) {
         
         NSArray *dataList = [NSArray arrayWithArray:json];
-        NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:100];
         
         NSDictionary *dataItem = (NSDictionary *)[dataList lastObject];
         
         if ([[dataItem allKeys] count]==2) {
             MSelectController *controller = [[[MSelectController alloc] initWithStyle:UITableViewStyleGrouped]autorelease];
-            NSMutableArray *province_list = [NSMutableArray arrayWithCapacity:35];
+            
+            NSArray *province_list = [[[NSArray alloc] init]autorelease];
             
             for (NSDictionary *dic in (NSArray *)json) {
                 NSString *province = [dic valueForKey:@"name"];
-                [province_list addObject:province];
+                province_list = [province_list arrayByAddingObject:province];
             }
             
             controller.dataList = province_list;
@@ -161,74 +168,22 @@
     else if([path isEqualToString:GROUP_LIST_PARAMTER])
     {
         MItemListController *controller = [self.navigationController.viewControllers objectAtIndex:0];
-        NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
-        NSMutableArray *itemList= [[[NSMutableArray alloc] init]autorelease];
-        for (id data in dataList) {
-                if ([data isKindOfClass:[NSDictionary class]]) {
-                    Item *i = [[Item new] autorelease];
-                    i.name = [data valueForKey:@"name"];
-                    i.price = [data valueForKey:@"price"];
-                    i.thumbnailURL = [data valueForKey:@"img"];
-                    i.productID = [[data valueForKey:@"product_id"] integerValue];
-                    i.desc = [[data valueForKey:@"description"] stringByConvertingHTMLToPlainText];
-                    [itemList addObject:i];
-                    
-                }
-            }
-            
         
-        controller.items = itemList;
+        NSArray *newItems = [[Const sharedObject] getProudctItemListFromRequest:request withJSON:json];
+        NSInteger count = [[json objectForKey:@"count"] integerValue];
+        NSString *city = [[Const sharedObject] getQueryValueFromRequest:request byKey:@"city"];
+        NSString *keyWords = [[Const sharedObject] getQueryValueFromRequest:request byKey:@"key_words"];
         
-        controller.itemTotalCount = [[json objectForKey:@"count"] integerValue];
-        
-        NSString *query = [[request URL] query];
-        
-        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-            
-        
-        for (NSString *param in [query componentsSeparatedByString:@"&"]) {
-                
-        
-            NSArray *kv = [param componentsSeparatedByString:@"="];
-                
-            
-            if ([kv count]<2) {
-                    
-            
-                [params setObject:@"" forKey:[kv objectAtIndex:0]];
-                    
-                
-                continue;
-                
-            }
-                
-            
-            id value = [kv objectAtIndex:1];
-                
-            
-            if ([value isKindOfClass:[NSString class]]) {
-            
-                NSString *v = (NSString *)[value URLDecode];
-                
-                NSLog(@"@253,v==%@",v);
-                
-                [params setObject:v forKey:[kv objectAtIndex:0]];
-                
-                continue;
-                
-            }
-                
-            
-            [params setObject:[kv objectAtIndex:1] forKey:[kv objectAtIndex:0]];
-            
-        }
-        
-        controller.title = [[params valueForKey:@"city"] URLDecode];
-        controller.keyWords = [params valueForKey:@"key_words"];
+        controller.title = city;
+        controller.keyWords = keyWords;
+        controller.items = newItems;
+        controller.itemTotalCount = count;
         
         [controller.tableView reloadData];
         
         [self.navigationController popViewControllerAnimated:YES];
+        
+                
         
     }
     else
@@ -318,7 +273,7 @@
         if (row ==0) {
             cell.textField.placeholder = @"请输入查询关键字...";
             
-            if (userDefaults.keyWords!=nil) {
+            if (userDefaults.keyWords.length>0) {
                 cell.textField.text = userDefaults.keyWords;
                 
             }

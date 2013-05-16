@@ -78,40 +78,8 @@
     
     MItemDetailController *controller = [[[MItemDetailController alloc] init] autorelease];
     
-    ItemDetail *detail = [[[ItemDetail alloc] init] autorelease];
-    detail.productID = [[json valueForKey:@"product_id"] integerValue];
-    detail.name =[json valueForKey:@"name"];
+    ItemDetail *detail = [[[ItemDetail alloc] initWithDictionary:(NSDictionary *)json]autorelease];
     
-    detail.desc = [json valueForKey:@"description"];
-    detail.ruleDesc = [json valueForKey:@"rule_description"];
-    detail.headDesc = [json valueForKey:@"head_description"];
-    
-    detail.tel = [json valueForKey:@"tel"];
-    detail.price = [json valueForKey:@"price"];
-    detail.address = [json valueForKey:@"address"];
-    
-    CLLocationCoordinate2D loaction;
-    
-    loaction.latitude = [[json valueForKey:@"lat"] floatValue];
-    loaction.longitude = [[json valueForKey:@"lon"] floatValue];
-    
-    detail.location = loaction;
-    
-    NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:5];
-    
-    NSArray *list = [json objectForKey:@"pictures"];
-    
-    for (id object in list) {
-        
-        NSString * url = [object valueForKey:@"url"];
-        
-        [images addObject:url];
-    }
-    
-    NSArray *imageObjects  = [json objectForKey:@"image_list"];
-    detail.imageDictList = [NSArray arrayWithArray:imageObjects];
-    detail.imageList = images;
-    detail.oURL = [json valueForKey:@"ourl"];
     controller.detail = detail;
     
     [self.navigationController pushViewController:controller animated:YES];

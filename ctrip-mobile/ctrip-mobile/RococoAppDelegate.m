@@ -95,40 +95,21 @@
 
 -(void) setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
+    NSString *path = [[request URL] path];
     
-    
-    if ([json isKindOfClass:[NSDictionary class]]) {
-        NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
-        NSMutableArray *itemList = [[NSMutableArray alloc] init];//[NSMutableArray arrayWithCapacity:100];
-        for (id data in dataList) {
-            if ([data isKindOfClass:[NSDictionary class]]) {
-                Item *i = [[Item new] autorelease];
-                i.name = [data valueForKey:@"name"];
-                i.price = [data valueForKey:@"price"];
-                i.thumbnailURL = [data valueForKey:@"img"];
-                i.productID = [[data valueForKey:@"product_id"] integerValue];
-                i.desc = [[data valueForKey:@"description"] stringByConvertingHTMLToPlainText];
-                [itemList addObject:i];
-                
-            }
-        }
-        self.viewController.itemTotalCount = [[json objectForKey:@"count"] integerValue];
-        self.viewController.items = itemList;
+    if ([path isEqualToString:GROUP_LIST_PARAMTER]) {
+        NSArray *items = [[Const sharedObject] getProudctItemListFromRequest:request withJSON:json];
+        NSString *city = [[Const sharedObject] getQueryValueFromRequest:request byKey:@"city"];
         
-        NSArray *params = [[[request URL] query] componentsSeparatedByString:@"&"];
-        NSString *title = @"";
+        NSUInteger count = [[json objectForKey:@"count"] integerValue];
         
-        for (NSString *str in params) {
-            NSArray *kv = [str componentsSeparatedByString:@"="];
-            if ([[kv objectAtIndex:0] isEqualToString:@"city"]) {
-                title = [[kv objectAtIndex:1] URLDecode];
-            }
-        }
+        self.viewController.items = items;
+        self.viewController.itemTotalCount = count;
+        self.viewController.title = city;
         
-        self.viewController.title = title;
         [self.viewController.tableView reloadData];
+        
     }
-    
     
 }
 

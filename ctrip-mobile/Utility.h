@@ -17,4 +17,12 @@
 
 -(void)showNotificationWithMessage:(NSString *)message inController:(UIViewController *)controller;
 
+-(NSManagedObjectContext *)getManagedObjectContext;
+
+-(void) createOrderEntity:(NSString *)orderID name:(NSString *)name
+                   status:(NSString *)status email:(NSString *)email tel:(NSString *)tel price:(NSString *)price
+                 quantity:(NSString *)quantity product:(NSString *)productID;
+
+-(id) queryOrderEntityByOrderID:(NSString *)orderID;
+
 @end

@@ -23,4 +23,6 @@
 @property (retain,nonatomic) NSArray *imageList;
 @property (retain,nonatomic) NSArray *imageDictList;
 @property (retain,nonatomic) NSString *oURL;
+
+-(id) initWithDictionary:(NSDictionary *)dictionary;
 @end

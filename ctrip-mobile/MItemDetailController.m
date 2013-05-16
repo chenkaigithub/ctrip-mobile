@@ -24,7 +24,6 @@
     
 }
 
-@synthesize carouselView=_carouselView;
 @synthesize detail =_detail;
 @synthesize cellHeightValues = _cellHeightValues;
 
@@ -151,7 +150,6 @@
 -(void)dealloc
 {
     [_cellHeightValues release];
-    [_carouselView release];
     [_detail release];
     [super dealloc];
 }
@@ -175,7 +173,7 @@
     
     NSDictionary *dict = [self.detail.imageDictList objectAtIndex:index];
     
-    NSString *str = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,285,[(NSString *)[dict objectForKey:@"url"] URLEncode]];
+    NSString *str = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,THUMBNAIL_IMAGE_WIDTH,[(NSString *)[dict objectForKey:@"url"] URLEncode]];
     
     NSURL *url = [NSURL URLWithString:str];
     
@@ -251,8 +249,6 @@
             csView.datasource =self;
             csView.delegate = self;
             csView.backgroundColor = [UIColor grayColor];
-            //self.carouselView = [[[CarouselView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)]autorelease];
-            //self.carouselView.items = self.detail.imageList;
             [cell addSubview:csView];
         }
         
@@ -262,11 +258,13 @@
         
         if (section < 5) {
             [cell.textLabel setFrame:[self getResizeFrame:cell.textLabel]];
+            
         }
         
         
         if (section == 2 && row ==0) {
             cell.textLabel.text = [self.detail.headDesc stringByConvertingHTMLToPlainText];
+            
         }
         
         if (section == 3 && row == 0) {
@@ -275,12 +273,15 @@
         
         if (section == 4 && row == 0) {
             cell.textLabel.text = [self.detail.ruleDesc stringByConvertingHTMLToPlainText];
+            
         }
         
         if (section == 5) {
             switch (row) {
                 case 0:
                     cell.textLabel.text = [NSString stringWithFormat:@"价格：¥ %@",self.detail.price];
+                    cell.textLabel.textColor = [UIColor orangeColor];
+                    
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     break;
                 case 1:

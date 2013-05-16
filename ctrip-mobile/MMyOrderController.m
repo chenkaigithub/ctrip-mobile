@@ -20,7 +20,7 @@
 #import "SBJSON.h"
 @interface MMyOrderController ()
 
-@property (nonatomic,retain) NSMutableArray *orderEntitys;
+@property (nonatomic,retain) NSArray *orderEntitys;
 @end
 
 @implementation MMyOrderController
@@ -44,40 +44,25 @@
     
     NSLog(@"@38,%@",path);
     
-    if ([path isEqualToString:@"/api/group_order_list"]) {
+    if ([path isEqualToString:GROUP_ORDER_LIST_PARAMTER]) {
         if ([json isKindOfClass:[NSDictionary class]]) {
             if ([json objectForKey:@"error_msg"]) {
                 [[Utility sharedObject] setAlertView:@"" withMessage:[json valueForKey:@"error_msg"]];
-                [fetchRequest release];
+                //[fetchRequest release];
                 return;
             }
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
-            
-            [fetchRequest setPredicate:predicate];
-            
-            NSError *error;
-            
-            NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
-            
-            if ([objects count]==0) {
-                NSLog(@"no matches");
-            }
-            else{
-                OrderEntity *o = [objects objectAtIndex:0];
-                
-                o.orderStatus = [json valueForKey:@"status"];
-
-                
-                NSString *strURL = [NSString stringWithFormat:@"%@%@/?order_id=%@",API_BASE_URL,GROUP_QUERY_TICKETS_PARAMTER,o.orderID];
+  
+            OrderEntity *orderEntity = (OrderEntity *)[[Utility sharedObject] queryOrderEntityByOrderID:orderID];
+            if (orderEntity!=nil) {
+                orderEntity.orderStatus = [json valueForKey:@"status"];
+                NSString *strURL = [NSString stringWithFormat:@"%@%@/?order_id=%@",API_BASE_URL,GROUP_QUERY_TICKETS_PARAMTER,orderID];
                 
                 [self.network httpJsonResponse:strURL byController:self];
             }
             
-            
         }
     }
-    else if([path isEqualToString:@"/api/group_query_tickets"]){
+    else if([path isEqualToString:GROUP_QUERY_TICKETS_PARAMTER]){
         if ([json isKindOfClass:[NSArray class]]) {
             NSArray *array = (NSArray *)json;
             NSDictionary *d = [array lastObject];
@@ -140,17 +125,8 @@
     [request setEntity:entity];
     
     NSArray *results = [context executeFetchRequest:request error:nil];
-    NSMutableArray *objects = [[[NSMutableArray alloc] init] autorelease];
     
-    for (id object in results) {
-        if ([object isKindOfClass:[OrderEntity class]]) {
-            OrderEntity *o = (OrderEntity *)object;
-            NSLog(@"@48,%@",o);
-            [objects addObject:o];
-        }
-    }
-    
-    self.orderEntitys = [NSMutableArray arrayWithArray:objects];
+    self.orderEntitys = results;
     [request release];
     
     [self.tableView reloadData];
@@ -287,7 +263,9 @@
     if (cell == nil) {
         cell = [[[MOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
-        UIFont *font = [UIFont systemFontOfSize:14];
+        UIFont *font = [UIFont systemFontOfSize:13];
+        UIFont *italicFont = [UIFont italicSystemFontOfSize:13];
+        
         UILabel *productLabel = [[[UILabel alloc] init] autorelease];
         
         
@@ -326,7 +304,7 @@
         
         [productLabel setFont:font];
         [statusLabel setFont:font];
-        [priceLabel setFont:font];
+        [priceLabel setFont:italicFont];
         
         productLabel.tag = 101;
         statusLabel.tag = 102;

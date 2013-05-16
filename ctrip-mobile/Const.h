@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://ctrip.herokuapp.com"
+#define API_BASE_URL                    @"http://localhost:8000"
 
 #define GROUP_LIST_PARAMTER             @"/api/group_product_list"
 #define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"
@@ -24,9 +24,12 @@
 
 
 #define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
-#define PAGE_SIZE_PARAMTER                       @"&page_size=10"
+#define THUMBNAIL_ITEM_WIDTH            116
+#define THUMBNAIL_IMAGE_WIDTH           285
 
-#define DAY_INTERVAL 60*60*24
+#define PAGE_SIZE_PARAMTER              @"&page_size=10"
+
+#define DAY_INTERVAL                    60*60*24
 
 #define ONE_MONTH @"一个月内"
 #define THREE_MONTH @"三个月内"
@@ -38,5 +41,8 @@
 +(id) sharedObject;
 -(NSArray *) arrayForTimeRange;
 -(NSDictionary *) dictionaryForSortType;
+
+-(NSString *)getQueryValueFromRequest:(NSURLRequest *)request byKey:(NSString *)key;
+-(NSArray *)getProudctItemListFromRequest:(NSURLRequest *)request withJSON:(id)json;
 
 @end

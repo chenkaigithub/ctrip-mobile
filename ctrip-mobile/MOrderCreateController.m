@@ -102,26 +102,7 @@
         
         //save to local database
         //need data orderid = self.order.orderID & productid = self.order.productID
-        
-        NSManagedObjectContext *context = [(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-        OrderEntity *o = (OrderEntity *)[NSEntityDescription insertNewObjectForEntityForName:@"OrderEntity" inManagedObjectContext:context];
-        o.orderID = self.order.orderID;
-        o.orderStatus = @"未提交";//self.order.status;
-        o.orderEmail = self.order.email;
-        o.orderTel = self.order.mobile;
-        o.orderPrice = self.order.price;
-        o.orderQuantity = self.order.quantity;
-        
-        
-        o.productID = self.order.productID;
-        o.productName = self.order.productName;
-        NSError *error;
-        
-        if (![context save:&error]) {
-            NSLog(@"error!");
-        }else {
-            NSLog(@"save order ok.");
-        }
+        [[Utility sharedObject] createOrderEntity:self.order.orderID name:self.order.productName status:@"未提交" email:self.order.email tel:self.order.mobile price:self.order.price quantity:self.order.quantity product:self.order.productID];
         
         RIButtonItem *okItem = [RIButtonItem item];
         okItem.label = @"确定";
