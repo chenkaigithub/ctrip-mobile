@@ -193,32 +193,31 @@
 -(void)setReachability
 {
     
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.apple.com"];
-    
-    reach.reachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog( @"Block Says Reachable");
-        });
-    };
-    
-    reach.unreachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog( @"Block Says Unreachable");
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://www.apple.com"]];
+    [client setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        NSLog(@"%d", status);
+        
+        if (client.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN ||
+            client.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi ) {
+            
+            NSLog(@"connection");
+        }
+        else {
+            NSLog(@"fail");
+            
             [[Utility sharedObject] showNotificationWithMessage:@"你的网络连接断开了" inController:self.viewController];
-        });
-    };
+        }
+    }];
     
-    [reach startNotifier];
-}
-
--(void)reachabilityChanged:(NSNotification*)note
-{
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:8 * 1024 * 1024 diskCapacity:40 * 1024 * 1024 diskPath:nil];
+    
+    [NSURLCache setSharedURLCache:URLCache];
    
     
     self.window = [[[MWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
@@ -233,8 +232,6 @@
     self.nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
     
     self.window.rootViewController = self.nav;
-    
-    //self.viewController.title = @"宅宅团购";
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AlreadyBeenLaunched"]) {
         // This is our very first launch
