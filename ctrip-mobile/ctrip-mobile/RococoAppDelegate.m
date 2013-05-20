@@ -95,40 +95,21 @@
 
 -(void) setJSON:(id)json fromRequest:(NSURLRequest *)request
 {
+    NSString *path = [[request URL] path];
     
-    
-    if ([json isKindOfClass:[NSDictionary class]]) {
-        NSArray *dataList = [NSArray arrayWithArray:[json objectForKey:@"items"]];
-        NSMutableArray *itemList = [[NSMutableArray alloc] init];//[NSMutableArray arrayWithCapacity:100];
-        for (id data in dataList) {
-            if ([data isKindOfClass:[NSDictionary class]]) {
-                Item *i = [[Item new] autorelease];
-                i.name = [data valueForKey:@"name"];
-                i.price = [data valueForKey:@"price"];
-                i.thumbnailURL = [data valueForKey:@"img"];
-                i.productID = [[data valueForKey:@"product_id"] integerValue];
-                i.desc = [[data valueForKey:@"description"] stringByConvertingHTMLToPlainText];
-                [itemList addObject:i];
-                
-            }
-        }
-        self.viewController.itemTotalCount = [[json objectForKey:@"count"] integerValue];
-        self.viewController.items = itemList;
+    if ([path isEqualToString:GROUP_LIST_PARAMTER]) {
+        NSArray *items = [[Const sharedObject] getProudctItemListFromRequest:request withJSON:json];
+        NSString *city = [[Const sharedObject] getQueryValueFromRequest:request byKey:@"city"];
         
-        NSArray *params = [[[request URL] query] componentsSeparatedByString:@"&"];
-        NSString *title = @"";
+        NSUInteger count = [[json objectForKey:@"count"] integerValue];
         
-        for (NSString *str in params) {
-            NSArray *kv = [str componentsSeparatedByString:@"="];
-            if ([[kv objectAtIndex:0] isEqualToString:@"city"]) {
-                title = [[kv objectAtIndex:1] URLDecode];
-            }
-        }
+        self.viewController.items = items;
+        self.viewController.itemTotalCount = count;
+        self.viewController.title = city;
         
-        self.viewController.title = title;
         [self.viewController.tableView reloadData];
+        
     }
-    
     
 }
 
@@ -212,32 +193,31 @@
 -(void)setReachability
 {
     
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.apple.com"];
-    
-    reach.reachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog( @"Block Says Reachable");
-        });
-    };
-    
-    reach.unreachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog( @"Block Says Unreachable");
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://www.apple.com"]];
+    [client setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        NSLog(@"%d", status);
+        
+        if (client.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN ||
+            client.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi ) {
+            
+            NSLog(@"connection");
+        }
+        else {
+            NSLog(@"fail");
+            
             [[Utility sharedObject] showNotificationWithMessage:@"你的网络连接断开了" inController:self.viewController];
-        });
-    };
+        }
+    }];
     
-    [reach startNotifier];
-}
-
--(void)reachabilityChanged:(NSNotification*)note
-{
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:8 * 1024 * 1024 diskCapacity:40 * 1024 * 1024 diskPath:nil];
+    
+    [NSURLCache setSharedURLCache:URLCache];
    
     
     self.window = [[[MWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
@@ -252,8 +232,6 @@
     self.nav = [[[MNavigationController alloc] initWithRootViewController:self.viewController]autorelease];
     
     self.window.rootViewController = self.nav;
-    
-    //self.viewController.title = @"宅宅团购";
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AlreadyBeenLaunched"]) {
         // This is our very first launch

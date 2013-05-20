@@ -16,4 +16,5 @@
 @property (nonatomic,retain) NSString *desc;
 @property (nonatomic, retain) NSString *thumbnailURL;
 
+-(id)initWithDictionary:(NSDictionary *)dictionary;
 @end

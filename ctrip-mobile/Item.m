@@ -7,6 +7,7 @@
 //
 
 #import "Item.h"
+#import "NSString+Category.h"
 
 @implementation Item
 
@@ -15,6 +16,19 @@
 @synthesize price;
 @synthesize desc;
 @synthesize thumbnailURL;
+
+-(id) initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self) {
+        self.name = [dictionary valueForKey:@"name"];
+        self.price = [dictionary valueForKey:@"price"];
+        self.thumbnailURL = [dictionary valueForKey:@"img"];
+        self.productID = [[dictionary valueForKey:@"product_id"] integerValue];
+        self.desc = [[dictionary valueForKey:@"description"] stringByConvertingHTMLToPlainText];
+    }
+    return self;
+}
 
 
 @end

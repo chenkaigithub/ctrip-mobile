@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://ctrip.herokuapp.com"
+#define API_BASE_URL                    @"http://ctripapi.ap01.aws.af.cm/"
+                                        //@"http://ctrip.herokuapp.com"
 
 #define GROUP_LIST_PARAMTER             @"/api/group_product_list"
 #define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"
@@ -24,19 +25,31 @@
 
 
 #define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
-#define PAGE_SIZE_PARAMTER                       @"&page_size=10"
+#define THUMBNAIL_ITEM_WIDTH            116
+#define THUMBNAIL_IMAGE_WIDTH           285
 
-#define DAY_INTERVAL 60*60*24
+<<<<<<< HEAD
+=======
+#define PAGE_SIZE_PARAMTER              @"&page_size=10"
 
-#define ONE_MONTH @"一个月内"
-#define THREE_MONTH @"三个月内"
-#define HALF_A_YEAR @"六个月内"
-#define ONE_YEAR @"一年内"
+>>>>>>> 7808cda540acf028e16242346da216c34bc4371f
+#define DAY_INTERVAL                    60*60*24
+
+#define THUMBNAIL_ITEM_WIDTH            116
+#define THUMBNAIL_DETAIL_WIDTH          300
+
+#define ONE_MONTH                       @"一个月内"
+#define THREE_MONTH                     @"三个月内"
+#define HALF_A_YEAR                     @"六个月内"
+#define ONE_YEAR                        @"一年内"
 
 @interface Const : NSObject
 
 +(id) sharedObject;
 -(NSArray *) arrayForTimeRange;
 -(NSDictionary *) dictionaryForSortType;
+
+-(NSString *)getQueryValueFromRequest:(NSURLRequest *)request byKey:(NSString *)key;
+-(NSArray *)getProudctItemListFromRequest:(NSURLRequest *)request withJSON:(id)json;
 
 @end

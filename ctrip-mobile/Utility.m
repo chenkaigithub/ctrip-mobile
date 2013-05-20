@@ -9,8 +9,13 @@
 #import "Utility.h"
 #import "JSNotifier.h"
 #import "NSString+Category.h"
-//#import "NotiView.h"
-//#import "NSTimer+Blocks.h"
+<<<<<<< HEAD
+
+
+=======
+#import "RococoAppDelegate.h"
+#import "OrderEntity.h"
+>>>>>>> 7808cda540acf028e16242346da216c34bc4371f
 @implementation Utility
 
 static Utility *sharedObject = nil;
@@ -25,6 +30,79 @@ static Utility *sharedObject = nil;
     
     return sharedObject;
 }
+-(NSManagedObjectContext *)getManagedObjectContext
+{
+    return [(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+
+}
+
+-(void)saveContext:(NSManagedObjectContext *)context
+{
+    NSError *error;
+    
+    if (![context save:&error]) {
+        NSLog(@"error!");
+    }else {
+        NSLog(@"save order ok.");
+    }
+
+}
+
+-(void) createOrderEntity:(NSString *)orderID name:(NSString *)name
+status:(NSString *)status email:(NSString *)email tel:(NSString *)tel price:(NSString *)price
+quantity:(NSString *)quantity product:(NSString *)productID
+{
+    NSManagedObjectContext *context = [self getManagedObjectContext];
+    
+    OrderEntity *o = (OrderEntity *)[NSEntityDescription insertNewObjectForEntityForName:@"OrderEntity" inManagedObjectContext:context];
+    o.orderID = orderID;
+    o.orderStatus = status;//@"未提交";
+    o.orderEmail = email;
+    o.orderTel = tel;
+    o.orderPrice = price;
+    o.orderQuantity = quantity;
+    
+    
+    o.productID = productID;
+    o.productName = name;
+    
+    [self saveContext:context];
+    
+}
+
+-(id)queryOrderEntityByOrderID:(NSString *)orderID
+{
+    NSManagedObjectContext *context = [self getManagedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
+    
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error;
+    
+    NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    OrderEntity *orderEntity = nil;
+    
+    if ([objects count]==0) {
+        NSLog(@"no matches");
+    }
+    else{
+        orderEntity = [objects objectAtIndex:0];
+        
+    }
+    
+    [fetchRequest release];
+    
+    return orderEntity;
+}
+
 
 -(NSDictionary *)getRequestParams:(NSURLRequest *) request
 {

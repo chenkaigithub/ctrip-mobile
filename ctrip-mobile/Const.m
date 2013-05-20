@@ -7,7 +7,8 @@
 //
 
 #import "Const.h"
-
+#import "NSString+Category.h"
+#import "Item.h"
 @implementation Const
 
 static Const *sharedObject = nil;
@@ -41,6 +42,44 @@ static Const *sharedObject = nil;
                           @"即将开团",@"9",
                           @"即将到期",@"10", nil];
     return dict;
+}
+
+-(NSString *)getQueryValueFromRequest:(NSURLRequest *)request byKey:(NSString *)key
+{
+    NSArray *params = [[[request URL] query] componentsSeparatedByString:@"&"];
+    
+    NSString *result = @"";
+    
+    for (NSString *str in params) {
+        NSArray *kv = [str componentsSeparatedByString:@"="];
+        if ([[kv objectAtIndex:0] isEqualToString:key]) {
+            result = [[kv objectAtIndex:1] URLDecode];
+        }
+    }
+    
+    return result;
+
+}
+-(NSArray *)getProudctItemListFromRequest:(NSURLRequest *)request withJSON:(id)json
+{
+    NSString *path = [[request URL] path];
+    NSArray *itemList = [[[NSArray alloc] init]autorelease];
+    
+    if ([path isEqualToString:GROUP_LIST_PARAMTER]) {
+        NSArray *list = (NSArray *)[json objectForKey:@"items"];
+        
+        for (id data in list) {
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                
+                Item *item = [[[Item alloc] initWithDictionary:data] autorelease];
+                
+                itemList = [itemList arrayByAddingObject:item];
+                
+            }
+        }
+    }
+    
+    return itemList;
 }
 
 @end

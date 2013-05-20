@@ -43,8 +43,6 @@
 		2B2E7A651741FD5A0061B330 /* share this.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2E7A641741FD5A0061B330 /* share this.png */; };
 		2B2E7A69174230440061B330 /* XLCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E7A68174230440061B330 /* XLCycleScrollView.m */; };
 		2B774CA21720E5D400FFD9DF /* MWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA11720E5D400FFD9DF /* MWindow.m */; };
-		2B774CA51721051300FFD9DF /* CarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA41721051300FFD9DF /* CarouselView.m */; };
-		2B774CAB172105A000FFD9DF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CAA172105A000FFD9DF /* iCarousel.m */; };
 		2B774CAF17210E6A00FFD9DF /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B774CAC17210E6A00FFD9DF /* background.png */; };
 		2B774CB017210E6A00FFD9DF /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B774CAD17210E6A00FFD9DF /* page.png */; };
 		2B774CB517210ED800FFD9DF /* MItemDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CB417210ED800FFD9DF /* MItemDetailController.m */; };
@@ -183,10 +181,6 @@
 		2B2E7A68174230440061B330 /* XLCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLCycleScrollView.m; sourceTree = "<group>"; };
 		2B774CA01720E5D400FFD9DF /* MWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWindow.h; sourceTree = "<group>"; };
 		2B774CA11720E5D400FFD9DF /* MWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWindow.m; sourceTree = "<group>"; };
-		2B774CA31721051300FFD9DF /* CarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselView.h; sourceTree = "<group>"; };
-		2B774CA41721051300FFD9DF /* CarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarouselView.m; sourceTree = "<group>"; };
-		2B774CA9172105A000FFD9DF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		2B774CAA172105A000FFD9DF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		2B774CAC17210E6A00FFD9DF /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = ../background.png; sourceTree = "<group>"; };
 		2B774CAD17210E6A00FFD9DF /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page.png; path = ../page.png; sourceTree = "<group>"; };
 		2B774CB317210ED800FFD9DF /* MItemDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MItemDetailController.h; sourceTree = "<group>"; };
@@ -442,15 +436,6 @@
 			name = CycleScrollView;
 			sourceTree = "<group>";
 		};
-		2B774CA8172105A000FFD9DF /* iCarousel */ = {
-			isa = PBXGroup;
-			children = (
-				2B774CA9172105A000FFD9DF /* iCarousel.h */,
-				2B774CAA172105A000FFD9DF /* iCarousel.m */,
-			);
-			path = iCarousel;
-			sourceTree = "<group>";
-		};
 		2B774CB217210EA000FFD9DF /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,7 +485,6 @@
 			children = (
 				80D379AB172EDE72008075AF /* JSNotifier.h */,
 				80D379AC172EDE72008075AF /* JSNotifier.m */,
-				2B774CA8172105A000FFD9DF /* iCarousel */,
 				2B82CB93171E2E4000A5A4EC /* MItemCell.xib */,
 				2B82CB90171E2AEC00A5A4EC /* MItemCell.h */,
 				2B82CB91171E2AEC00A5A4EC /* MItemCell.m */,
@@ -510,8 +494,6 @@
 				2B82CBBB171E8A6B00A5A4EC /* MTextFieldCell.h */,
 				2B82CBBC171E8A6B00A5A4EC /* MTextFieldCell.m */,
 				2B82CBBE171E8AD600A5A4EC /* MTextFieldCell.xib */,
-				2B774CA31721051300FFD9DF /* CarouselView.h */,
-				2B774CA41721051300FFD9DF /* CarouselView.m */,
 				2B8725491724F62B00FC5FC7 /* MDetailCell.xib */,
 				2B0A0D62172628D30057D9DD /* MDetailCell.h */,
 				2B0A0D63172628D30057D9DD /* MDetailCell.m */,
@@ -715,8 +697,6 @@
 				2B289F98171F819100A3CE7B /* Const.m in Sources */,
 				2B289F9C171FAF2700A3CE7B /* MSelectController.m in Sources */,
 				2B774CA21720E5D400FFD9DF /* MWindow.m in Sources */,
-				2B774CA51721051300FFD9DF /* CarouselView.m in Sources */,
-				2B774CAB172105A000FFD9DF /* iCarousel.m in Sources */,
 				2B774CB517210ED800FFD9DF /* MItemDetailController.m in Sources */,
 				2B774CBA172129BD00FFD9DF /* MNetWork.m in Sources */,
 				2B87254F1724FD6200FC5FC7 /* ItemDetail.m in Sources */,

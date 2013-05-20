@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MNetWork.h"
-#import "CarouselView.h"
 #import "ItemDetail.h"
 #import "MBaseController.h"
 #import "XLCycleScrollView.h"
 @interface MItemDetailController :UITableViewController <UIAlertViewDelegate,jsonDelegate,XLCycleScrollViewDatasource,XLCycleScrollViewDelegate>
 
-@property (retain,nonatomic)CarouselView *carouselView;
 @property (retain,nonatomic)ItemDetail *detail;
 @end
