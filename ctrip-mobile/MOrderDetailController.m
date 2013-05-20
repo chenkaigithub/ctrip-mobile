@@ -27,47 +27,30 @@
     NSURL *url = [request URL];
     NSString *path = [url path];
     
-    if ([path isEqualToString:@"/api/group_cancel_tickets"]) {
+    if ([path isEqualToString:GROUP_CANCEL_TICKETS_PARAMTER]) {
         if ([json isKindOfClass:[NSDictionary class]]) {
             if ([json objectForKey:@"error_msg"]) {
                 [[Utility sharedObject] setAlertView:[json objectForKey:@"error_msg"] withMessage:nil];
                 return;
             }
-            NSManagedObjectContext *context =[(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
-            [fetchRequest setEntity:entity];
+            
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(ticketID = %@)",self.order.ticketID];
             
-            [fetchRequest setPredicate:predicate];
+            NSArray *objects = [[Utility sharedObject] getQueryObjectByPredicate:predicate entityForName:@"OrderEntity"];
             
-            NSError *error;
-            
-            NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
-            
-            if ([objects count]==0) {
-                NSLog(@"no matches");
-            }
-            else{
+            if ([objects count]>0) {
+                
                 OrderEntity *o = [objects objectAtIndex:0];
                 
                 NSDictionary *data = (NSDictionary *)json;
                 
-                NSLog(@"@53,%@",data);
-                
                 o.orderStatus = [data valueForKey:@"ticket_status"];
-                
-                
+                 
             }
-            NSError *e;
+                       
+            [[Utility sharedObject] saveSharedContext];
             
-            if (![context save:&e]) {
-                NSLog(@"error!");
-            }else {
-                NSLog(@"save order ok.");
-            }
-
-            [fetchRequest release];
+                       
             [self loadDataFromDB];
             [[Utility sharedObject] setAlertView:@"申请退款成功。" withMessage:nil];
             
@@ -94,28 +77,19 @@
 }
 -(void)loadDataFromDB
 {
-    NSManagedObjectContext *context =[(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
+   
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",self.orderID];
     
-    [fetchRequest setPredicate:predicate];
+    NSArray *objects = [[Utility sharedObject]getQueryObjectByPredicate:predicate entityForName:@"OrderEntity"];
     
-    NSError *error;
-    
-    NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
-    
-    if ([objects count]==0) {
-        NSLog(@"no matches");
-    }
-    else{
+    if ([objects count]>0) {
+        
         OrderEntity *o = [objects objectAtIndex:0];
         
         self.order = o;
         
     }
-    [fetchRequest release];
+    
     [self.tableView reloadData];
 }
 - (void)viewDidLoad

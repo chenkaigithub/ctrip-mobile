@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://ctripapi.ap01.aws.af.cm/"
-                                        //@"http://ctrip.herokuapp.com"
+#define API_BASE_URL                    @"http://ctripapi.ap01.aws.af.cm" //@"http://ctrip.herokuapp.com"
+                                        
 
 #define GROUP_LIST_PARAMTER             @"/api/group_product_list"
 #define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"
@@ -24,15 +24,14 @@
 #define CITY_LIST_PARAMTER              @"/api/city_list"
 
 
-#define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
+#define THUMBNAIL_URL                   @"http://thumbnail.ap01.aws.af.cm/thumb/"//@"http://thumbnail.herokuapp.com/app/"
 #define THUMBNAIL_ITEM_WIDTH            116
 #define THUMBNAIL_IMAGE_WIDTH           285
 
-<<<<<<< HEAD
-=======
-#define PAGE_SIZE_PARAMTER              @"&page_size=10"
 
->>>>>>> 7808cda540acf028e16242346da216c34bc4371f
+#define PAGE_SIZE_PARAMTER              @"&page_size=25"
+
+
 #define DAY_INTERVAL                    60*60*24
 
 #define THUMBNAIL_ITEM_WIDTH            116

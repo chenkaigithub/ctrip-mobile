@@ -177,6 +177,7 @@
         controller.title = city;
         controller.keyWords = keyWords;
         controller.items = newItems;
+        controller.pageIndex = 1;
         controller.itemTotalCount = count;
         
         [controller.tableView reloadData];

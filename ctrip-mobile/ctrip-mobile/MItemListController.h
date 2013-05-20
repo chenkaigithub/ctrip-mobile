@@ -14,5 +14,7 @@
 }
 @property (retain,nonatomic) NSString *keyWords;
 @property(retain, nonatomic) NSArray *items;
+
 @property(assign,nonatomic) NSUInteger itemTotalCount;
+@property(assign,nonatomic) NSUInteger pageIndex;
 @end
