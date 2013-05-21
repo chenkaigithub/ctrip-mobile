@@ -22,7 +22,7 @@
 #import "OrderEntity.h"
 #import "UIAlertView+Blocks.h"
 #import "MOrderDetailController.h"
-
+#import "SDURLCache.h"
 #define requireURL  [NSString stringWithFormat:@"%@%@/?page_index=%d%@",API_BASE_URL,GROUP_LIST_PARAMTER,1,PAGE_SIZE_PARAMTER]
 
 #define kAlreadyBeenLaunched @"AlreadyBeenLaunched"
@@ -215,7 +215,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:8 * 1024 * 1024 diskCapacity:40 * 1024 * 1024 diskPath:nil];
+    SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:8 * 1024 * 1024 diskCapacity:40 * 1024 * 1024 diskPath:nil];
     
     [NSURLCache setSharedURLCache:URLCache];
    
