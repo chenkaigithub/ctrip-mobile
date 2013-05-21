@@ -23,6 +23,10 @@
                    status:(NSString *)status email:(NSString *)email tel:(NSString *)tel price:(NSString *)price
                  quantity:(NSString *)quantity product:(NSString *)productID;
 
+-(NSArray *)getQueryObjectByPredicate:(NSPredicate *)predicate entityForName:(NSString *)entityName;
+
 -(id) queryOrderEntityByOrderID:(NSString *)orderID;
+
+-(void)saveSharedContext;
 
 @end

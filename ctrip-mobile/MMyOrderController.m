@@ -37,10 +37,6 @@
     //get order id from url 
     NSString *orderID = [params valueForKey:@"order_id"];
     
-    NSManagedObjectContext *context =[(RococoAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
     
     NSLog(@"@38,%@",path);
     
@@ -53,6 +49,7 @@
             }
   
             OrderEntity *orderEntity = (OrderEntity *)[[Utility sharedObject] queryOrderEntityByOrderID:orderID];
+            
             if (orderEntity!=nil) {
                 orderEntity.orderStatus = [json valueForKey:@"status"];
                 NSString *strURL = [NSString stringWithFormat:@"%@%@/?order_id=%@",API_BASE_URL,GROUP_QUERY_TICKETS_PARAMTER,orderID];
@@ -66,29 +63,32 @@
         if ([json isKindOfClass:[NSArray class]]) {
             NSArray *array = (NSArray *)json;
             NSDictionary *d = [array lastObject];
-               NSString *orderID = [d valueForKey:@"order_id"];
-                NSString *ticketID = [d valueForKey:@"ticket_number"];
-                NSString *ticketPassword = [d valueForKey:@"ticket_pwd"];
-                NSString *ticketExpirationDate = [d valueForKey:@"expiration_date"];
-                NSString *ticketStatus = [d valueForKey:@"ticket_status"];
+            
+            NSString *orderID = [d valueForKey:@"order_id"];
+            
+            NSString *ticketID = [d valueForKey:@"ticket_number"];
+            
+            NSString *ticketPassword = [d valueForKey:@"ticket_pwd"];
+            
+            NSString *ticketExpirationDate = [d valueForKey:@"expiration_date"];
+            
+            NSString *ticketStatus = [d valueForKey:@"ticket_status"];
                
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID=%@)",orderID];
-                [fetchRequest setPredicate:predicate];
-                
-                NSError *error;
-                NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
-                
-                if ([objects count] == 0) {
-                    NSLog(@"no matches");
-                }
-                else{
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID=%@)",orderID];
+            
+            
+            NSArray *objects = [[Utility sharedObject] getQueryObjectByPredicate:predicate entityForName:@"OrderEntity"];
+            
+            if ([objects count] > 0) {
                     OrderEntity *o = [objects objectAtIndex:0];
                     o.ticketID = ticketID;
                     o.ticketPassword = ticketPassword;
                     o.expirationDate = ticketExpirationDate;
                     o.orderStatus = ticketStatus;
                     
-                }
+            
+            }
             
         }
         else if ([json isKindOfClass:[NSDictionary class]])
@@ -103,14 +103,9 @@
         [self.navigationController pushViewController:controller animated:YES];
         
     }
-    NSError *error;
-        
-    if (![context save:&error]) {
-        NSLog(@"error!");
-    }else {
-        NSLog(@"save order ok.");
-    }
-    [fetchRequest release];
+    
+    [[Utility sharedObject] saveSharedContext];
+    
 }
 
 #pragma mark -- load table view data

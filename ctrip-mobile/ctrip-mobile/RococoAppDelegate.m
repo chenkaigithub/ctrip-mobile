@@ -373,35 +373,20 @@
         
         if (status==1) {
             
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:[self managedObjectContext]];
-            [request setEntity:entity];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
             
-            [request setPredicate:predicate];
             
-            NSError *error;
-            
-            NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
+            NSArray *objects = [[Utility sharedObject] getQueryObjectByPredicate:predicate entityForName:@"OrderEntity"];
             
             if ([objects count]==0) {
-                NSLog(@"no matches");
-            }
-            else{
+            
                 OrderEntity *o = [objects objectAtIndex:0];
                 o.orderStatus = @"已提交";//[NSString stringWithFormat:@"%d",status];
-                NSError *error;
                 
-                if (![[self managedObjectContext] save:&error]) {
-                    NSLog(@"error!");
-                }else {
-                    NSLog(@"save order ok.");
-                }
-
+            
             }
-            [request release];
+            [[Utility sharedObject] saveSharedContext];
             
             if ([[[self.nav viewControllers] lastObject] isKindOfClass:[MOrderDetailController class]]) {
                 MOrderDetailController *controller = (MOrderDetailController *)[[self.nav viewControllers] lastObject];

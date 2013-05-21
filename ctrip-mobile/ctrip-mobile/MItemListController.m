@@ -19,9 +19,7 @@
 #import "NSString+Category.h"
 #import <QuartzCore/QuartzCore.h>
 @interface MItemListController ()
-{
-    NSUInteger pageIndex;
-}
+
     
 @end
 
@@ -29,6 +27,7 @@
 @synthesize items=_items;
 @synthesize keyWords = _keyWords;
 @synthesize itemTotalCount = _itemTotalCount;
+@synthesize pageIndex = _pageIndex;
 
 #pragma mark -
 #pragma mark UIView
@@ -37,7 +36,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        pageIndex = 1;
+        self.pageIndex = 1;
         self.keyWords = @"";
     }
     return self;
@@ -82,7 +81,6 @@
 {
     [super viewDidLoad];
     
-    //self.navigationItem.title = self.title;
     
     UIBarButtonItem *actionButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)] autorelease];
     
@@ -169,6 +167,7 @@
     if (row<[self.items count]) {
         Item *item = [self.items objectAtIndex:[indexPath row]];
         
+
         NSString *strThumbnailURL = [NSString stringWithFormat:@"%@%d/?url=%@",THUMBNAIL_URL,THUMBNAIL_ITEM_WIDTH,[item.thumbnailURL URLEncode]];
         
         
@@ -266,10 +265,10 @@
             sortType =@"";
         }
         
-        pageIndex =pageIndex+1;
+        self.pageIndex =self.pageIndex+1;
         
         NSString *strURL=[NSString stringWithFormat:@"%@%@/?page_index=%d%@&city=%@&low_price=%@&upper_price=%@&top_count=%@&sort_type=%@&key_words=%@",
-                          API_BASE_URL,GROUP_LIST_PARAMTER,pageIndex ,PAGE_SIZE_PARAMTER,
+                          API_BASE_URL,GROUP_LIST_PARAMTER,self.pageIndex ,PAGE_SIZE_PARAMTER,
                           [city URLEncode],[lowPrice URLEncode],[upperPrice URLEncode],[topCount URLEncode],[sortType URLEncode],[self.keyWords URLEncode]];
         [self.network httpJsonResponse:strURL byController:self];
         

@@ -11,6 +11,7 @@
 #import "NSString+Category.h"
 #import "RococoAppDelegate.h"
 #import "OrderEntity.h"
+
 @implementation Utility
 
 static Utility *sharedObject = nil;
@@ -43,6 +44,13 @@ static Utility *sharedObject = nil;
 
 }
 
+-(void)saveSharedContext
+{
+    NSManagedObjectContext *context = [self getManagedObjectContext];
+    
+    [self saveContext:context];
+}
+
 -(void) createOrderEntity:(NSString *)orderID name:(NSString *)name
 status:(NSString *)status email:(NSString *)email tel:(NSString *)tel price:(NSString *)price
 quantity:(NSString *)quantity product:(NSString *)productID
@@ -65,35 +73,47 @@ quantity:(NSString *)quantity product:(NSString *)productID
     
 }
 
--(id)queryOrderEntityByOrderID:(NSString *)orderID
+-(NSArray *)getQueryObjectByPredicate:(NSPredicate *)predicate entityForName:(NSString *)entityName
 {
     NSManagedObjectContext *context = [self getManagedObjectContext];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderEntity" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
     
-    [fetchRequest setEntity:entity];
+    [request setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
-    
-    [fetchRequest setPredicate:predicate];
+    [request setPredicate:predicate];
     
     NSError *error;
     
-    NSArray *objects = [context executeFetchRequest:fetchRequest error:&error];
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    
+    if ([objects count] == 0) {
+        
+        NSLog(@"No matches");
+    }
+    
+    [request release];
+    
+    return objects;
+}
+
+-(id)queryOrderEntityByOrderID:(NSString *)orderID
+{
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(orderID = %@)",orderID];
+    
+    NSArray *objects = [self getQueryObjectByPredicate:predicate entityForName:@"OrderEntity"];
     
     OrderEntity *orderEntity = nil;
     
-    if ([objects count]==0) {
-        NSLog(@"no matches");
-    }
-    else{
+    if ([objects count]>0) {
+       
         orderEntity = [objects objectAtIndex:0];
         
     }
     
-    [fetchRequest release];
     
     return orderEntity;
 }
