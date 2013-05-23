@@ -24,5 +24,9 @@
 @property (retain,nonatomic) NSArray *imageDictList;
 @property (retain,nonatomic) NSString *oURL;
 
+@property (retain,nonatomic) NSArray *descList;
+@property (retain,nonatomic) NSArray *ruleDescList;
+@property (retain,nonatomic) NSArray *headDescList;
+
 -(id) initWithDictionary:(NSDictionary *)dictionary;
 @end

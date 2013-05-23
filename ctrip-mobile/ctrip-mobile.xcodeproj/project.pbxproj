@@ -94,6 +94,7 @@
 		802E60941734C99300E7BBE3 /* MMyOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 802E60931734C99300E7BBE3 /* MMyOrderController.m */; };
 		8083EF421748FAA100228EA7 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083EF411748FAA100228EA7 /* SDURLCache.m */; };
 		8083EF461748FAE900228EA7 /* SDCachedURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083EF451748FAE900228EA7 /* SDCachedURLResponse.m */; };
+		80997627174E62DF0000615B /* InsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 80997626174E62DF0000615B /* InsetsLabel.m */; };
 		80C963321736339A007A983A /* OrderEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C963311736339A007A983A /* OrderEntity.m */; };
 		80C9633917363E1C007A983A /* MOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C9633817363E1C007A983A /* MOrderCell.m */; };
 		80C9633C17364E6A007A983A /* MOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C9633B17364E6A007A983A /* MOrderDetailController.m */; };
@@ -255,6 +256,8 @@
 		8083EF411748FAA100228EA7 /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDURLCache.m; sourceTree = "<group>"; };
 		8083EF441748FAE900228EA7 /* SDCachedURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCachedURLResponse.h; sourceTree = "<group>"; };
 		8083EF451748FAE900228EA7 /* SDCachedURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCachedURLResponse.m; sourceTree = "<group>"; };
+		80997625174E62DF0000615B /* InsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetsLabel.h; sourceTree = "<group>"; };
+		80997626174E62DF0000615B /* InsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetsLabel.m; sourceTree = "<group>"; };
 		80C963301736339A007A983A /* OrderEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderEntity.h; sourceTree = "<group>"; };
 		80C963311736339A007A983A /* OrderEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderEntity.m; sourceTree = "<group>"; };
 		80C9633717363E1C007A983A /* MOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOrderCell.h; sourceTree = "<group>"; };
@@ -304,6 +307,8 @@
 		2B17DD7A17163AC500C7AB97 = {
 			isa = PBXGroup;
 			children = (
+				80997625174E62DF0000615B /* InsetsLabel.h */,
+				80997626174E62DF0000615B /* InsetsLabel.m */,
 				8083EF441748FAE900228EA7 /* SDCachedURLResponse.h */,
 				8083EF451748FAE900228EA7 /* SDCachedURLResponse.m */,
 				8083EF401748FAA100228EA7 /* SDURLCache.h */,
@@ -729,6 +734,7 @@
 				2B2E7A69174230440061B330 /* XLCycleScrollView.m in Sources */,
 				8083EF421748FAA100228EA7 /* SDURLCache.m in Sources */,
 				8083EF461748FAE900228EA7 /* SDCachedURLResponse.m in Sources */,
+				80997627174E62DF0000615B /* InsetsLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
