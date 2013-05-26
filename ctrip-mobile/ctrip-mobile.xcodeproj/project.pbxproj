@@ -92,6 +92,7 @@
 		802E60871733DE7500E7BBE3 /* MDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 802E60851733DE7500E7BBE3 /* MDB.xcdatamodeld */; };
 		802E608A1733E0B600E7BBE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802E60891733E0B600E7BBE3 /* CoreData.framework */; };
 		802E60941734C99300E7BBE3 /* MMyOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 802E60931734C99300E7BBE3 /* MMyOrderController.m */; };
+		803ED5221751A2E500CA2C47 /* MDescriptionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 803ED5211751A2E500CA2C47 /* MDescriptionController.m */; };
 		8083EF421748FAA100228EA7 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083EF411748FAA100228EA7 /* SDURLCache.m */; };
 		8083EF461748FAE900228EA7 /* SDCachedURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083EF451748FAE900228EA7 /* SDCachedURLResponse.m */; };
 		80997627174E62DF0000615B /* InsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 80997626174E62DF0000615B /* InsetsLabel.m */; };
@@ -252,6 +253,8 @@
 		802E60891733E0B600E7BBE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		802E60921734C99300E7BBE3 /* MMyOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyOrderController.h; sourceTree = "<group>"; };
 		802E60931734C99300E7BBE3 /* MMyOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyOrderController.m; sourceTree = "<group>"; };
+		803ED5201751A2E500CA2C47 /* MDescriptionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDescriptionController.h; sourceTree = "<group>"; };
+		803ED5211751A2E500CA2C47 /* MDescriptionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDescriptionController.m; sourceTree = "<group>"; };
 		8083EF401748FAA100228EA7 /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDURLCache.h; sourceTree = "<group>"; };
 		8083EF411748FAA100228EA7 /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDURLCache.m; sourceTree = "<group>"; };
 		8083EF441748FAE900228EA7 /* SDCachedURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCachedURLResponse.h; sourceTree = "<group>"; };
@@ -561,6 +564,8 @@
 				802E60931734C99300E7BBE3 /* MMyOrderController.m */,
 				80C9633A17364E6A007A983A /* MOrderDetailController.h */,
 				80C9633B17364E6A007A983A /* MOrderDetailController.m */,
+				803ED5201751A2E500CA2C47 /* MDescriptionController.h */,
+				803ED5211751A2E500CA2C47 /* MDescriptionController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -735,6 +740,7 @@
 				8083EF421748FAA100228EA7 /* SDURLCache.m in Sources */,
 				8083EF461748FAE900228EA7 /* SDCachedURLResponse.m in Sources */,
 				80997627174E62DF0000615B /* InsetsLabel.m in Sources */,
+				803ED5221751A2E500CA2C47 /* MDescriptionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

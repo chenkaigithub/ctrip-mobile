@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define API_BASE_URL                    @"http://localhost:8000"
+#define API_BASE_URL                    @"http://ctripapi.ap01.aws.af.cm"
 
 #define GROUP_LIST_PARAMTER             @"/api/group_product_list"
 #define GROUP_PRODUCT_PARAMTER          @"/api/group_product_info"
@@ -23,7 +23,7 @@
 #define CITY_LIST_PARAMTER              @"/api/city_list"
 
 
-#define THUMBNAIL_URL                   @"http://thumbnail.herokuapp.com/app/"
+#define THUMBNAIL_URL                   @"http://thumbnail.ap01.aws.af.cm/thumb/"
 #define THUMBNAIL_ITEM_WIDTH            116
 #define THUMBNAIL_IMAGE_WIDTH           285
 
