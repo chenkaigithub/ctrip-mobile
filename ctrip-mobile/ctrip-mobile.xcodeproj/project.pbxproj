@@ -38,9 +38,10 @@
 		2B189002171D24F2000CC570 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B188FF7171D24F2000CC570 /* AFURLConnectionOperation.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		2B189003171D24F2000CC570 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B188FF9171D24F2000CC570 /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		2B189004171D24F2000CC570 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B188FFB171D24F2000CC570 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		2B196BBF1749E14200E9BBC6 /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B196BBD1749E14200E9BBC6 /* app-icon.png */; };
+		2B196BC01749E14200E9BBC6 /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B196BBE1749E14200E9BBC6 /* app-icon@2x.png */; };
 		2B289F98171F819100A3CE7B /* Const.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F97171F819100A3CE7B /* Const.m */; };
 		2B289F9C171FAF2700A3CE7B /* MSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B289F9B171FAF2700A3CE7B /* MSelectController.m */; };
-		2B2E7A651741FD5A0061B330 /* share this.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2E7A641741FD5A0061B330 /* share this.png */; };
 		2B2E7A69174230440061B330 /* XLCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E7A68174230440061B330 /* XLCycleScrollView.m */; };
 		2B774CA21720E5D400FFD9DF /* MWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B774CA11720E5D400FFD9DF /* MWindow.m */; };
 		2B774CAF17210E6A00FFD9DF /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B774CAC17210E6A00FFD9DF /* background.png */; };
@@ -105,9 +106,6 @@
 		80F21F6F173BDCC100D9A580 /* hotel1.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F6A173BDCC100D9A580 /* hotel1.png */; };
 		80F21F70173BDCC100D9A580 /* House-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F6B173BDCC100D9A580 /* House-256.png */; };
 		80F21F71173BDCC100D9A580 /* OldHouse.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F6C173BDCC100D9A580 /* OldHouse.png */; };
-		80F21F75173DF38100D9A580 /* iPhoneIcon_Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */; };
-		80F21F76173DF38100D9A580 /* iPhoneIcon_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */; };
-		80F21F78173DF48100D9A580 /* Home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F21F77173DF48100D9A580 /* Home-icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -172,11 +170,12 @@
 		2B188FF9171D24F2000CC570 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		2B188FFA171D24F2000CC570 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		2B188FFB171D24F2000CC570 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		2B196BBD1749E14200E9BBC6 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon.png"; sourceTree = "<group>"; };
+		2B196BBE1749E14200E9BBC6 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
 		2B289F96171F819100A3CE7B /* Const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
 		2B289F97171F819100A3CE7B /* Const.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Const.m; sourceTree = "<group>"; };
 		2B289F9A171FAF2600A3CE7B /* MSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSelectController.h; sourceTree = "<group>"; };
 		2B289F9B171FAF2700A3CE7B /* MSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSelectController.m; sourceTree = "<group>"; };
-		2B2E7A641741FD5A0061B330 /* share this.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share this.png"; sourceTree = "<group>"; };
 		2B2E7A67174230440061B330 /* XLCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLCycleScrollView.h; sourceTree = "<group>"; };
 		2B2E7A68174230440061B330 /* XLCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLCycleScrollView.m; sourceTree = "<group>"; };
 		2B774CA01720E5D400FFD9DF /* MWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWindow.h; sourceTree = "<group>"; };
@@ -268,9 +267,6 @@
 		80F21F6A173BDCC100D9A580 /* hotel1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotel1.png; sourceTree = "<group>"; };
 		80F21F6B173BDCC100D9A580 /* House-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "House-256.png"; sourceTree = "<group>"; };
 		80F21F6C173BDCC100D9A580 /* OldHouse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OldHouse.png; sourceTree = "<group>"; };
-		80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon_Big.png; sourceTree = "<group>"; };
-		80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon_Small.png; sourceTree = "<group>"; };
-		80F21F77173DF48100D9A580 /* Home-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home-icon.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,11 +294,9 @@
 		2B17DD7A17163AC500C7AB97 = {
 			isa = PBXGroup;
 			children = (
+				2B196BBD1749E14200E9BBC6 /* app-icon.png */,
+				2B196BBE1749E14200E9BBC6 /* app-icon@2x.png */,
 				2B2E7A66174230320061B330 /* CycleScrollView */,
-				80F21F77173DF48100D9A580 /* Home-icon.png */,
-				80F21F73173DF38100D9A580 /* iPhoneIcon_Big.png */,
-				80F21F74173DF38100D9A580 /* iPhoneIcon_Small.png */,
-				2B2E7A641741FD5A0061B330 /* share this.png */,
 				2BCB41831733AFDF00B4C12E /* Reachability.h */,
 				2BCB41841733AFDF00B4C12E /* Reachability.m */,
 				801343D8172FA8A4007FEBB1 /* Categories */,
@@ -659,10 +653,8 @@
 				80F21F6F173BDCC100D9A580 /* hotel1.png in Resources */,
 				80F21F70173BDCC100D9A580 /* House-256.png in Resources */,
 				80F21F71173BDCC100D9A580 /* OldHouse.png in Resources */,
-				80F21F75173DF38100D9A580 /* iPhoneIcon_Big.png in Resources */,
-				80F21F76173DF38100D9A580 /* iPhoneIcon_Small.png in Resources */,
-				80F21F78173DF48100D9A580 /* Home-icon.png in Resources */,
-				2B2E7A651741FD5A0061B330 /* share this.png in Resources */,
+				2B196BBF1749E14200E9BBC6 /* app-icon.png in Resources */,
+				2B196BC01749E14200E9BBC6 /* app-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,15 +788,15 @@
 		2B17DDA717163AC600C7AB97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: guangyao cao (7L9YX9GNEA)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: guangyao cao (7L9YX9GNEA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kenji nishimoto (2E4FAEW9BE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kenji nishimoto (2E4FAEW9BE)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ctrip-mobile/ctrip-mobile-Prefix.pch";
 				INFOPLIST_FILE = "ctrip-mobile/ctrip-mobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BECB79F1-4F75-4398-BC76-F7996AE438A3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BECB79F1-4F75-4398-BC76-F7996AE438A3";
+				PROVISIONING_PROFILE = "187AE655-730E-4E5D-934D-95F698BF5B2D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "187AE655-730E-4E5D-934D-95F698BF5B2D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -812,15 +804,15 @@
 		2B17DDA817163AC600C7AB97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: guangyao cao (7L9YX9GNEA)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: guangyao cao (7L9YX9GNEA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kenji nishimoto (2E4FAEW9BE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kenji nishimoto (2E4FAEW9BE)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ctrip-mobile/ctrip-mobile-Prefix.pch";
 				INFOPLIST_FILE = "ctrip-mobile/ctrip-mobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BECB79F1-4F75-4398-BC76-F7996AE438A3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BECB79F1-4F75-4398-BC76-F7996AE438A3";
+				PROVISIONING_PROFILE = "187AE655-730E-4E5D-934D-95F698BF5B2D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "187AE655-730E-4E5D-934D-95F698BF5B2D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

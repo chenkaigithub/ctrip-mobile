@@ -271,7 +271,7 @@
             cell = [nib objectAtIndex:0];
         }
         
-        if (row ==0) {
+        if (row == 0) {
             cell.textField.placeholder = @"请输入查询关键字...";
             
             if (userDefaults.keyWords.length>0) {
