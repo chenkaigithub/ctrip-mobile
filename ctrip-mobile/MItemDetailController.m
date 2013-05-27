@@ -15,6 +15,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "Const.h"
 #import <QuartzCore/QuartzCore.h>
+#import "InsetsLabel.h"
+#import "MDescriptionController.h"
 @interface MItemDetailController ()
 
 @property (nonatomic,retain)NSArray *cellHeightValues;
@@ -71,16 +73,17 @@
 {
     [super viewDidLoad];
     
+    //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    
     // Add padding to the top of the table view
     UIEdgeInsets inset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.tableView.contentInset = inset;
     //back button
     UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil] autorelease];
     
-    self.navigationItem.backBarButtonItem =backButton;
+    self.navigationItem.backBarButtonItem = backButton;
     
-    //share button
-    NSLog(@"version:%@",[[UIDevice currentDevice] systemVersion]);
     
     float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     
@@ -94,55 +97,7 @@
     
     
     self.title = @"酒店详情";//self.detail.name;
-    
-    UILabel *hiddenLabel = [[[UILabel alloc] init] autorelease];
-    
-    hiddenLabel.text = [self.detail.headDesc stringByConvertingHTMLToPlainText];
-    CGFloat h1 = [self getLabelHeight:hiddenLabel];
-    
-    hiddenLabel.text = [self.detail.desc stringByConvertingHTMLToPlainText];
-    
-    CGFloat h2 = [self getLabelHeight:hiddenLabel];
-    
-    hiddenLabel.text = [self.detail.ruleDesc stringByConvertingHTMLToPlainText];
-    
-    CGFloat h3 = [self getLabelHeight:hiddenLabel];
-    
-    
-    self.cellHeightValues = [NSArray arrayWithObjects:
-                        [NSNumber numberWithFloat:h1],
-                        [NSNumber numberWithFloat:h2],
-                        [NSNumber numberWithFloat:h3],
-                        nil];
-    
-    
     // Do any additional setup after loading the view.
-}
-
--(CGRect)getResizeFrame:(UILabel *)label
-{
-    [label setLineBreakMode:UILineBreakModeWordWrap];
-    [label setNumberOfLines:0];
-    [label setFont:[UIFont fontWithName:@"Helvetica" size:15]];
-    
-    CGSize labelSize = [label.text sizeWithFont:label.font
-                              constrainedToSize:CGSizeMake(320, 999)
-                                  lineBreakMode:label.lineBreakMode];
-    
-    CGFloat labelHeight = labelSize.height;
-    
-    label.frame=CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, labelHeight);
-    
-    return label.frame;
-}
-
--(CGFloat)getLabelHeight:(UILabel *)label
-{
-    
-    CGRect rect = [self getResizeFrame:label];
-   
-    return rect.size.height;
-        
 }
 
 
@@ -192,33 +147,38 @@
 
 #pragma mark table view delegate and datasource
 
-- (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSInteger rowCount = [self tableView:[self tableView] numberOfRowsInSection:0];
-    NSInteger rowIndex = indexPath.row;
-    UIImage *background = nil;
-    
-    if (rowIndex == 0) {
-        background = [UIImage imageNamed:@"cell_top.png"];
-    } else if (rowIndex == rowCount - 1) {
-        background = [UIImage imageNamed:@"cell_bottom.png"];
-    } else {
-        background = [UIImage imageNamed:@"cell_middle.png"];
-    }
-    
-    return background;
-}
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 6;
+    return 3;
+    //return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section < 5) {
+    if (section == 0) {
         return 1;
+    }
+    
+    if (section ==1) {
+        return 1;
+    }
+    
+    if (section == 2) {
+        return 3+3;
+    }
+    
+    if (section == 3) {
+        return self.detail.headDescList.count;
+    }
+    
+    if (section == 4) {
+        return self.detail.descList.count;
+    }
+    
+    if (section == 5) {
+        return self.detail.ruleDescList.count;
     }
     
    
@@ -256,27 +216,8 @@
             cell.textLabel.text = self.detail.name;
         }
         
-        if (section < 5) {
-            [cell.textLabel setFrame:[self getResizeFrame:cell.textLabel]];
-            
-        }
         
-        
-        if (section == 2 && row ==0) {
-            cell.textLabel.text = [self.detail.headDesc stringByConvertingHTMLToPlainText];
-            
-        }
-        
-        if (section == 3 && row == 0) {
-            cell.textLabel.text = [self.detail.desc stringByConvertingHTMLToPlainText];
-        }
-        
-        if (section == 4 && row == 0) {
-            cell.textLabel.text = [self.detail.ruleDesc stringByConvertingHTMLToPlainText];
-            
-        }
-        
-        if (section == 5) {
+        if (section == 2) {
             switch (row) {
                 case 0:
                     cell.textLabel.text = [NSString stringWithFormat:@"价格：¥ %@",self.detail.price];
@@ -307,10 +248,23 @@
                         cell.textLabel.text = @"电话：- -";
                     }
                     break;
+                case 3:
+                    cell.textLabel.text =@"描述";
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    break;
+                case 4:
+                    cell.textLabel.text = @"包含项目";
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    break;
+                case 5:
+                    cell.textLabel.text = @"特别提示";
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    break;
                 default:
                     break;
             }
         }
+        
         
     }
     
@@ -318,46 +272,16 @@
     
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == 2) {
-        return @"描述";
-    }
-    
-    if (section == 3) {
-        return @"包含项目";
-    }
-    
-    if (section == 4) {
-        return @"特别提示";
-    }
-    
-    return nil;
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     NSUInteger section = [indexPath section];
-    //int row = [indexPath row];
     if (section == 0) {
         return 220;
     }
     
-    if (section == 2) {
-        return [[self.cellHeightValues objectAtIndex:0] floatValue ]+20;
-    }
-    
-    if (section == 3) {
-        return [[self.cellHeightValues objectAtIndex:1] floatValue]+20;
-    }
-    
-    if (section == 4) {
-        return [[self.cellHeightValues objectAtIndex:2] floatValue]+20;
-    }
-    
     return 44;
     
-    //return newHeight+15;
     
 }
 
@@ -367,7 +291,7 @@
     int row = [indexPath row];
     int section = [indexPath section];
     
-    if (section == 5 && row == 1) {
+    if (section == 2 && row == 1) {
         //address view
         MMapController *controller = [[[MMapController alloc] init] autorelease];
         
@@ -379,11 +303,11 @@
         
     }
     
-    if (section == 5 && row ==0) {
+    if (section == 2 && row ==0) {
         [self orderProduct];
     }
     
-    if (section == 5 && row == 2) {
+    if (section == 2 && row == 2) {
         
         NSString *num = self.detail.tel;
         UIAlertView *alert =[ [UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"是否确认拨打：%@",num] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -392,6 +316,17 @@
         
         [alert release];
         
+    }
+    
+    NSArray *titleList = @[@"描述",@"包含项目",@"特别提示"];
+    NSArray *descriptionList = @[self.detail.descList,self.detail.headDescList,self.detail.ruleDescList];
+    
+    if (section ==2 && row > 2) {
+        MDescriptionController *controller = [[[MDescriptionController alloc] initWithDescription:[descriptionList objectAtIndex:row-3]]autorelease];
+        
+        controller.title = [titleList objectAtIndex:row-3];
+        
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

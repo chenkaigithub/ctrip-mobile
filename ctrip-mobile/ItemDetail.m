@@ -23,6 +23,10 @@
 @synthesize imageDictList;
 @synthesize oURL;
 
+@synthesize descList;
+@synthesize ruleDescList;
+@synthesize headDescList;
+
 -(id) initWithDictionary:(NSDictionary *)dictionary
 {
     
@@ -64,6 +68,9 @@
         self.imageList = images;
         self.oURL = [dictionary valueForKey:@"ourl"];
         
+        self.descList = [dictionary objectForKey:@"description_list"];
+        self.headDescList = [dictionary objectForKey:@"head_description_list"];
+        self.ruleDescList = [dictionary objectForKey:@"rule_description_list"];
     }
 
     return self;
